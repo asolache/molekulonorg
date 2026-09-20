@@ -1,0 +1,17 @@
+# molekulon.org · un lloc estàtic i prou
+#
+# No hi ha build: les pàgines es generen al repositori amb `node tools/build.js`
+# i s'hi commiten. Netlify només les serveix. El motiu és el de sempre en aquest
+# projecte — el que se serveix ha de ser exactament el que algú pot llegir al
+# repositori, sense una passa intermèdia que ningú mira.
+
+[build]
+  publish = "."
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"

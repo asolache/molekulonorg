@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La banda · Comando Molekulon</title>
+<meta name="description" content="Els capítols, els videoclips, els temes i els directes del Comando. I el que encara no té adreça, dit com el que és.">
+<link rel="canonical" href="https://molekulon.org/musica">
+<meta property="og:title" content="La banda · Comando Molekulon">
+<meta property="og:description" content="Els capítols, els videoclips, els temes i els directes del Comando. I el que encara no té adreça, dit com el que és.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://molekulon.org/musica">
+<meta property="og:locale" content="ca_ES">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"La banda","description":"Els capítols, els videoclips, els temes i els directes del Comando. I el que encara no té adreça, dit com el que és.","url":"https://molekulon.org/musica","inLanguage":"ca","isPartOf":{"@type":"WebSite","name":"Comando Molekulon","url":"https://molekulon.org/"},"publisher":{"@type":"Organization","name":"TeamTowers Humà","url":"https://teamtowershuma.com"}}</script>
+<style>
+:root{--bg:#0b0b12;--panel:#141420;--card:#1a1a28;--text:#f5f5f7;--muted:#82828d;--light:#c7c7d1;
+  --purple:#e040fb;--blue:#00b0ff;--green:#00e676;--orange:#ff9100;--gold:#ffd700;
+  --border:rgba(255,255,255,.09);--mono:'SF Mono',Monaco,Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);line-height:1.55;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+img{max-width:100%}
+a{color:var(--blue)}
+h1,h2,h3,h4{line-height:1.2;margin:0}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:.6rem;top:.6rem;background:var(--purple);color:#0b0b12;padding:.5rem .9rem;border-radius:8px;z-index:9}
+
+nav.barra{display:flex;gap:.2rem;flex-wrap:wrap;align-items:center;
+  padding:.6rem 1.2rem;border-bottom:1px solid var(--border);background:var(--panel);position:sticky;top:0;z-index:5}
+nav.barra .marca{font-weight:800;letter-spacing:-.02em;margin-right:.8rem;text-decoration:none;color:var(--text)}
+nav.barra .marca span{color:var(--purple)}
+nav.barra a.l{text-decoration:none;color:var(--light);font-size:.86rem;padding:.35rem .7rem;border-radius:8px}
+nav.barra a.l:hover{background:var(--card);color:var(--text)}
+nav.barra a.l[aria-current]{background:var(--card);color:var(--text);font-weight:700}
+nav.barra .dret{margin-left:auto;font-size:.82rem}
+
+.hero{padding:3.2rem 1.5rem 2rem;text-align:center;
+  background:radial-gradient(ellipse at top,rgba(224,64,251,.16),transparent 60%),
+             radial-gradient(ellipse at bottom right,rgba(0,176,255,.13),transparent 55%),var(--bg)}
+.hero-inner{max-width:880px;margin:0 auto}
+.tag{display:inline-block;background:rgba(224,64,251,.14);color:var(--purple);padding:.3rem .8rem;border-radius:20px;
+  font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
+.hero h1{font-size:clamp(1.9rem,5.2vw,3.1rem);margin:0 0 .9rem;font-weight:800;line-height:1.06}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#e040fb,#00b0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{font-size:clamp(1rem,2.1vw,1.15rem);color:var(--light);max-width:740px;margin:0 auto}
+.hero .sub strong{color:var(--text)}
+.acts{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:1.4rem}
+.acts a{text-decoration:none;font-size:.88rem;font-weight:600;padding:.6rem 1.1rem;border-radius:10px;
+  border:1px solid var(--border);background:var(--card);color:var(--text)}
+.acts a.pri{background:var(--purple);border-color:var(--purple);color:#0b0b12}
+
+.wrap{max-width:1060px;margin:0 auto;padding:0 1.2rem 4rem}
+.avis{max-width:880px;margin:1.4rem auto 0;padding:.7rem 1rem;border:1px solid var(--border);
+  border-left:3px solid var(--orange);border-radius:8px;background:var(--panel);
+  font-size:.82rem;color:var(--light);text-align:left}
+.avis strong{color:var(--text)}
+
+section.box{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.2rem;margin:1rem 0}
+section.box h2{font-size:1.15rem;margin-bottom:.5rem}
+section.box h3{font-size:1.02rem;margin-bottom:.5rem}
+.lead{color:var(--light);font-size:.9rem;margin:.2rem 0 .9rem}
+.lead strong,.lead b{color:var(--text)}
+.mut{color:var(--muted);font-size:.78rem}
+.mono{font-family:var(--mono)}
+
+.xifres{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;margin:1.2rem 0}
+.xifra{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem}
+.xifra b{display:block;font-size:1.5rem;font-family:var(--mono);color:var(--purple);line-height:1.1}
+.xifra span{font-size:.78rem;color:var(--muted)}
+
+.graella{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.7rem;margin:.9rem 0}
+.fitxa{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.85rem .9rem}
+.fitxa .ic{font-size:1.3rem;line-height:1}
+.fitxa h3{font-size:.98rem;margin:.35rem 0 .3rem}
+.fitxa p{margin:.2rem 0;font-size:.84rem;color:var(--light)}
+.fitxa a{font-size:.82rem;font-weight:600;text-decoration:none}
+.fitxa .k{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+.heroi{background:var(--card);border:1px solid var(--border);border-top:2px solid var(--purple);
+  border-radius:12px;padding:.9rem}
+.heroi h3{font-size:1rem}
+.heroi .rol{color:var(--purple);font-size:.8rem;font-weight:600;margin:.15rem 0 .5rem}
+.heroi dl{margin:0;font-size:.83rem}
+.heroi dt{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.45rem}
+.heroi dd{margin:.1rem 0 0;color:var(--light)}
+.heroi .lletra{font-style:italic;color:var(--light);font-size:.82rem;border-left:2px solid var(--border);padding-left:.55rem;margin-top:.6rem}
+
+.taula{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.83rem}
+th,td{padding:.5rem .55rem;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+td.n,th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+tr.te td{background:rgba(0,230,118,.06)}
+
+.est{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.13rem .45rem;border-radius:20px;white-space:nowrap}
+.est.si{background:rgba(0,230,118,.16);color:var(--green)}
+.est.no{background:rgba(255,145,0,.16);color:var(--orange)}
+
+.nota{font-size:.84rem;color:var(--light);border-left:2px solid var(--border);padding-left:.65rem;margin:.8rem 0}
+.nota b{color:var(--text)}
+
+footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
+footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
+footer a{color:var(--light)}
+@media (max-width:560px){nav.barra{padding:.5rem .7rem}nav.barra .dret{display:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#principal">Ves al contingut</a>
+<nav class="barra" aria-label="Principal">
+<a class="marca" href="/">Comando <span>Molekulon</span></a>
+<a class="l" href="/">Inici</a>
+<a class="l" href="/personatges">Els personatges</a>
+<a class="l" href="/peli">La pel·lícula</a>
+<a class="l" href="/musica" aria-current="page">La banda</a>
+<a class="l dret" href="https://teamtowershuma.com/sos" rel="noopener">Obre el SOS ↗</a>
+</nav>
+<main id="principal">
+<header class="hero">
+<div class="hero-inner">
+<span class="tag">Música i vídeo</span>
+<h1>La banda del <em>Comando</em></h1>
+<p class="sub">13 peces publicades i 4 que encara no tenen
+adreça. <strong>Les segones també surten</strong>: una porta que no obre és pitjor que
+no tenir-la, però amagar que existeix és pitjor que totes dues.</p>
+<p class="avis">Mazinguer i Horacio Motomachi no tenien talents aparents, i van fer el
+que fan els Blues Brothers: <strong>muntar una banda</strong> i recórrer els pobles per
+trobar, un a un, els 150.000 superherois amagats a plena vista. La banda no
+il·lustra el projecte: és com es recluta.</p>
+</div>
+</header>
+
+<div class="wrap">
+<section class="box">
+<h2>La sèrie</h2>
+<div class="graella">
+<div class="fitxa">
+<h3>Els capítols del Comando</h3>
+
+<p>La sèrie sencera. A cada capítol es presenta un superheroi i un supervilà del Mundo Muerto.</p>
+<p><a href="https://youtube.com/playlist?list=PLMB33ApQeOYWbPLQRbf9B5gMpgs0cL5NB" rel="noopener">Obre ↗</a></p>
+</div>
+</div>
+</section>
+<section class="box">
+<h2>Videoclip</h2>
+<div class="graella">
+<div class="fitxa">
+<h3>Horacio Motomachi</h3>
+<p class="k">Horacio Motomachi</p>
+<p>El videoclip del tema que obre la intro.</p>
+<p><a href="https://youtu.be/3Kf36tpHk98" rel="noopener">Obre ↗</a></p>
+</div>
+<div class="fitxa">
+<h3>Reciclator</h3>
+<p class="k">Reciclator</p>
+<p>Construeix les superarmes de la banda amb el que els altres han llençat: d'allà en surten la Bomba Amor i el Rayo Cagón.</p>
+<p><a href="https://youtu.be/Py44l1WsSO4" rel="noopener">Obre ↗</a></p>
+</div>
+<div class="fitxa">
+<h3>Supergerminador</h3>
+<p class="k">Supergerminador</p>
+<p>Ensenya a germinar per menjar superaliments, i canta amb la seva rialla.</p>
+<p><a href="https://youtu.be/RyAkyIp6P10" rel="noopener">Obre ↗</a></p>
+</div>
+<div class="fitxa">
+<h3>La Medusa Andaluza</h3>
+<p class="k">La Medusa Andaluza</p>
+<p>El node central que creua informació entre parts que no es parlaven.</p>
+<p><a href="https://youtu.be/5FAvOvi2P30" rel="noopener">Obre ↗</a></p>
+</div>
+<div class="fitxa">
+<h3>La Bomba Disco</h3>
+<p class="k">Guiri-Guay · Flying Frog</p>
+<p>El tema que trenca la cuirassa d'Afrodito, per Guiri-Guay i Flying Frog.</p>
+<p><a href="https://youtu.be/JsEAeiQ-fc0" rel="noopener">Obre ↗</a></p>
+</div>
+<div class="fitxa">
+<h3>Flying Frog</h3>
+<p class="k">Flying Frog</p>
+<p>La que posa el color al còmic del Comando.</p>
+<p><a href="https://youtu.be/WfpclzQod2g" rel="noopener">Obre ↗</a></p>
+</div>
+<div class="fitxa">
+<h3>La Formiga Atòmica</h3>
+<p class="k">Formiga Atòmica</p>
+<p>Modista, amb la superarma Pistola Amor.</p>
+<p><a href="https://youtu.be/yjQ5WnGChh0" rel="noopener">Obre ↗</a></p>
+</div>
+<div class="fitxa">
+<h3>El Risitas i el Príncep de Bekelar</h3>
+<p class="k">El Risitas · Príncep de Bekelar</p>
+<p>El nòvio de la Formiga Atòmica, i el Príncep.</p>
+<p><a href="https://youtu.be/bg4N48q_dtI" rel="noopener">Obre ↗</a></p>
+</div>
+<div class="fitxa">
+<h3>Mr. McGragor</h3>
+<p class="k">Mr. McGragor</p>
+<p>El supervilà que ofereix en comptes d'atacar. L'autor el llegeix com a premonitori de l'actualitat.</p>
+<p><a href="https://youtu.be/C6-7B2O5dDY" rel="noopener">Obre ↗</a></p>
+</div>
+<div class="fitxa">
+<h3>Pigmentón</h3>
+<p class="k">Pigmentón</p>
+<p>Qui dibuixa la xarxa i dona a cadascú el color que li toca perquè pugui operar.</p>
+<p><span class="est no">encara no té adreça</span></p>
+</div>
+</div>
+</section>
+<section class="box">
+<h2>Tema</h2>
+<div class="graella">
+<div class="fitxa">
+<h3>El tema d'Horacio Motomachi</h3>
+<p class="k">Horacio Motomachi</p>
+<p>La cançó sencera, allotjada aquí. Sona també a la intro.</p>
+<p><a href="https://teamtowershuma.com/SOS/media/comando-horacio.mp3" rel="noopener">Obre ↗</a></p>
+</div>
+<div class="fitxa">
+<h3>El tema del Guiri-Guay</h3>
+<p class="k">Guiri-Guay</p>
+<p>Curació neuro-rítmica: sana ferides i torna a moure el cervell del grup.</p>
+<p><a href="https://youtu.be/Q15My_6qb4A" rel="noopener">Obre ↗</a></p>
+</div>
+<div class="fitxa">
+<h3>Fraktalman</h3>
+<p class="k">Fraktalman</p>
+<p>La forma que es repeteix a totes les escales, convertida en cançó.</p>
+<p><span class="est no">encara no té adreça</span></p>
+</div>
+<div class="fitxa">
+<h3>Tekno Kartoffeln</h3>
+
+<p>El tema que enceta la saga del tercer còmic: el punxi per rematar la fauna i trobar els que falten.</p>
+<p><span class="est no">encara no té adreça</span></p>
+</div>
+</div>
+</section>
+<section class="box">
+<h2>Directe</h2>
+<div class="graella">
+<div class="fitxa">
+<h3>La Bomba Disco, a la Floresta</h3>
+
+<p>La banda del Comando en directe. És la prova que això no és una marca: hi ha gent que hi puja.</p>
+<p><a href="https://youtu.be/PNFy7V8UbQs" rel="noopener">Obre ↗</a></p>
+</div>
+<div class="fitxa">
+<h3>Un taller, filmat</h3>
+
+<p>Una sessió de la Fàbrica de Superherois tal com passa, sense muntatge.</p>
+<p><span class="est no">encara no té adreça</span></p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<footer>
+<div class="f">
+<span>Comando Molekulon · un projecte de <a href="https://teamtowershuma.com" rel="noopener">TeamTowers Humà</a></span>
+<span>L'eina que hi ha a sota és el <a href="https://teamtowershuma.com/sos" rel="noopener">SOS</a>, i és lliure</span>
+<span class="mut">Aquesta web es genera de les dades, no s'escriu a mà.</span>
+</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# Tot obert. Aquí no hi ha res que no es pugui llegir.
+User-agent: *
+Allow: /
+
+Sitemap: https://molekulon.org/sitemap.xml

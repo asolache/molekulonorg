@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Els personatges · Comando Molekulon</title>
+<meta name="description" content="Els catorze herois canònics del Comando: el seu poder al còmic, la seva superarma i què vol dir cadascun dins d'un equip de debò.">
+<link rel="canonical" href="https://molekulon.org/personatges">
+<meta property="og:title" content="Els personatges · Comando Molekulon">
+<meta property="og:description" content="Els catorze herois canònics del Comando: el seu poder al còmic, la seva superarma i què vol dir cadascun dins d'un equip de debò.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://molekulon.org/personatges">
+<meta property="og:locale" content="ca_ES">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Els personatges","description":"Els catorze herois canònics del Comando: el seu poder al còmic, la seva superarma i què vol dir cadascun dins d'un equip de debò.","url":"https://molekulon.org/personatges","inLanguage":"ca","isPartOf":{"@type":"WebSite","name":"Comando Molekulon","url":"https://molekulon.org/"},"publisher":{"@type":"Organization","name":"TeamTowers Humà","url":"https://teamtowershuma.com"}}</script>
+<style>
+:root{--bg:#0b0b12;--panel:#141420;--card:#1a1a28;--text:#f5f5f7;--muted:#82828d;--light:#c7c7d1;
+  --purple:#e040fb;--blue:#00b0ff;--green:#00e676;--orange:#ff9100;--gold:#ffd700;
+  --border:rgba(255,255,255,.09);--mono:'SF Mono',Monaco,Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);line-height:1.55;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+img{max-width:100%}
+a{color:var(--blue)}
+h1,h2,h3,h4{line-height:1.2;margin:0}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:.6rem;top:.6rem;background:var(--purple);color:#0b0b12;padding:.5rem .9rem;border-radius:8px;z-index:9}
+
+nav.barra{display:flex;gap:.2rem;flex-wrap:wrap;align-items:center;
+  padding:.6rem 1.2rem;border-bottom:1px solid var(--border);background:var(--panel);position:sticky;top:0;z-index:5}
+nav.barra .marca{font-weight:800;letter-spacing:-.02em;margin-right:.8rem;text-decoration:none;color:var(--text)}
+nav.barra .marca span{color:var(--purple)}
+nav.barra a.l{text-decoration:none;color:var(--light);font-size:.86rem;padding:.35rem .7rem;border-radius:8px}
+nav.barra a.l:hover{background:var(--card);color:var(--text)}
+nav.barra a.l[aria-current]{background:var(--card);color:var(--text);font-weight:700}
+nav.barra .dret{margin-left:auto;font-size:.82rem}
+
+.hero{padding:3.2rem 1.5rem 2rem;text-align:center;
+  background:radial-gradient(ellipse at top,rgba(224,64,251,.16),transparent 60%),
+             radial-gradient(ellipse at bottom right,rgba(0,176,255,.13),transparent 55%),var(--bg)}
+.hero-inner{max-width:880px;margin:0 auto}
+.tag{display:inline-block;background:rgba(224,64,251,.14);color:var(--purple);padding:.3rem .8rem;border-radius:20px;
+  font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
+.hero h1{font-size:clamp(1.9rem,5.2vw,3.1rem);margin:0 0 .9rem;font-weight:800;line-height:1.06}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#e040fb,#00b0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{font-size:clamp(1rem,2.1vw,1.15rem);color:var(--light);max-width:740px;margin:0 auto}
+.hero .sub strong{color:var(--text)}
+.acts{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:1.4rem}
+.acts a{text-decoration:none;font-size:.88rem;font-weight:600;padding:.6rem 1.1rem;border-radius:10px;
+  border:1px solid var(--border);background:var(--card);color:var(--text)}
+.acts a.pri{background:var(--purple);border-color:var(--purple);color:#0b0b12}
+
+.wrap{max-width:1060px;margin:0 auto;padding:0 1.2rem 4rem}
+.avis{max-width:880px;margin:1.4rem auto 0;padding:.7rem 1rem;border:1px solid var(--border);
+  border-left:3px solid var(--orange);border-radius:8px;background:var(--panel);
+  font-size:.82rem;color:var(--light);text-align:left}
+.avis strong{color:var(--text)}
+
+section.box{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.2rem;margin:1rem 0}
+section.box h2{font-size:1.15rem;margin-bottom:.5rem}
+section.box h3{font-size:1.02rem;margin-bottom:.5rem}
+.lead{color:var(--light);font-size:.9rem;margin:.2rem 0 .9rem}
+.lead strong,.lead b{color:var(--text)}
+.mut{color:var(--muted);font-size:.78rem}
+.mono{font-family:var(--mono)}
+
+.xifres{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;margin:1.2rem 0}
+.xifra{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem}
+.xifra b{display:block;font-size:1.5rem;font-family:var(--mono);color:var(--purple);line-height:1.1}
+.xifra span{font-size:.78rem;color:var(--muted)}
+
+.graella{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.7rem;margin:.9rem 0}
+.fitxa{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.85rem .9rem}
+.fitxa .ic{font-size:1.3rem;line-height:1}
+.fitxa h3{font-size:.98rem;margin:.35rem 0 .3rem}
+.fitxa p{margin:.2rem 0;font-size:.84rem;color:var(--light)}
+.fitxa a{font-size:.82rem;font-weight:600;text-decoration:none}
+.fitxa .k{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+.heroi{background:var(--card);border:1px solid var(--border);border-top:2px solid var(--purple);
+  border-radius:12px;padding:.9rem}
+.heroi h3{font-size:1rem}
+.heroi .rol{color:var(--purple);font-size:.8rem;font-weight:600;margin:.15rem 0 .5rem}
+.heroi dl{margin:0;font-size:.83rem}
+.heroi dt{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.45rem}
+.heroi dd{margin:.1rem 0 0;color:var(--light)}
+.heroi .lletra{font-style:italic;color:var(--light);font-size:.82rem;border-left:2px solid var(--border);padding-left:.55rem;margin-top:.6rem}
+
+.taula{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.83rem}
+th,td{padding:.5rem .55rem;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+td.n,th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+tr.te td{background:rgba(0,230,118,.06)}
+
+.est{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.13rem .45rem;border-radius:20px;white-space:nowrap}
+.est.si{background:rgba(0,230,118,.16);color:var(--green)}
+.est.no{background:rgba(255,145,0,.16);color:var(--orange)}
+
+.nota{font-size:.84rem;color:var(--light);border-left:2px solid var(--border);padding-left:.65rem;margin:.8rem 0}
+.nota b{color:var(--text)}
+
+footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
+footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
+footer a{color:var(--light)}
+@media (max-width:560px){nav.barra{padding:.5rem .7rem}nav.barra .dret{display:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#principal">Ves al contingut</a>
+<nav class="barra" aria-label="Principal">
+<a class="marca" href="/">Comando <span>Molekulon</span></a>
+<a class="l" href="/">Inici</a>
+<a class="l" href="/personatges" aria-current="page">Els personatges</a>
+<a class="l" href="/peli">La pel·lícula</a>
+<a class="l" href="/musica">La banda</a>
+<a class="l dret" href="https://teamtowershuma.com/sos" rel="noopener">Obre el SOS ↗</a>
+</nav>
+<main id="principal">
+<header class="hero">
+<div class="hero-inner">
+<span class="tag">El repartiment</span>
+<h1>Els <em>14 personatges</em> canònics</h1>
+<p class="sub">Cadascun porta tres coses: <strong>el seu poder al còmic</strong>,
+<strong>la seva superarma</strong> i <strong>què vol dir dins d'un equip de debò</strong>.
+La tercera és la que fa que aquest relat visqui dins d'una eina de gestió i no en un fullet a part.</p>
+<p class="avis"><strong>El repartiment no està tancat.</strong> Aquests catorze són
+els que surten als còmics i als vídeos. Els següents surten de qui hi entri: un personatge
+del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
+</div>
+</header>
+
+<div class="wrap">
+<div class="graella">
+<article class="heroi">
+<h3>Mazinguer</h3>
+<p class="rol">Líder estratega i DJ</p>
+<dl>
+<dt>Poder</dt><dd>Coneix el pla i guia la banda. Sense superpoder aparent: l'ego perdut és el seu poder</dd>
+<dt>Superarma</dt><dd>La Bomba Disco i els plats de DJ</dd>
+<dt>En un equip</dt><dd>Qui munta la plataforma i atrau els primers nodes. El cap de colla</dd>
+<dt>On surt</dt><dd>Còmic 1</dd>
+</dl>
+<p class="lletra">«Mazinguer: aunque no lo parecía siempre sabía lo que hay que hacer.»</p>
+</article>
+<article class="heroi">
+<h3>Horacio Motomachi</h3>
+<p class="rol">El savi que rep el mandat</p>
+<dl>
+<dt>Poder</dt><dd>Coprotagonista de l'encàrrec original. Converteix l'experiència en relat</dd>
+<dt>Superarma</dt><dd>La Bomba Disco i els plats de DJ</dd>
+<dt>En un equip</dt><dd>La visió de conjunt: qui sap explicar cap on va tot plegat</dd>
+<dt>On surt</dt><dd>Còmic 1</dd>
+</dl>
+<p class="lletra">«Horacio: muy sabio, buena onda y tener un palacio.»</p>
+</article>
+<article class="heroi">
+<h3>Guiri-Guay</h3>
+<p class="rol">Cuidador i sanador</p>
+<dl>
+<dt>Poder</dt><dd>Curació neuro-rítmica: sana ferides i torna a moure el cervell del grup</dd>
+<dt>Superarma</dt><dd>Guitarra acústica country</dd>
+<dt>En un equip</dt><dd>Qui té cura de l'equip: sosté la moral i cura les friccions abans que es podreixin</dd>
+<dt>On surt</dt><dd>Còmic 1</dd>
+</dl>
+<p class="lletra">«Con mi guitarra curo heridas, bailando se mueven las neuronas.»</p>
+</article>
+<article class="heroi">
+<h3>Purpleman</h3>
+<p class="rol">Transmutador</p>
+<dl>
+<dt>Poder</dt><dd>Entra a les tenebres i els gasos tòxics i els torna benestar immediat</dd>
+<dt>Superarma</dt><dd>El Rayo Eliminador</dd>
+<dt>En un equip</dt><dd>Qui absorbeix la toxicitat de l'ambient i la torna clima. Si no té nom, no ho fa ningú</dd>
+<dt>On surt</dt><dd>Còmic 1</dd>
+</dl>
+<p class="lletra">«Elimino a los malos olores con mi rayo eliminador y huele todo a flor y amor.»</p>
+</article>
+<article class="heroi">
+<h3>Afrodito</h3>
+<p class="rol">Motor passional</p>
+<dl>
+<dt>Poder</dt><dd>Holometabolisme: la seva identitat musical li trenca l'armadura que el mantenia alienat</dd>
+<dt>Superarma</dt><dd>El ritme Soul Train</dd>
+<dt>En un equip</dt><dd>El talent amagat. Passió en cru que només necessita un lloc segur per treure's la cuirassa</dd>
+<dt>On surt</dt><dd>Còmic 1</dd>
+</dl>
+<p class="lletra">«Sexy motherfunky mito. Piensa con el corazón.»</p>
+</article>
+<article class="heroi">
+<h3>El Aviador</h3>
+<p class="rol">Suport tàctic</p>
+<dl>
+<dt>Poder</dt><dd>Orientació i rescat in extremis: apareix del cel quan l'equip s'ha perdut</dd>
+<dt>Superarma</dt><dd>El Bajo Volador</dd>
+<dt>En un equip</dt><dd>L'executor hiperespecialitzat. Ni el més carismàtic ni el líder: el que desencalla projectes</dd>
+<dt>On surt</dt><dd>Còmic 1</dd>
+</dl>
+<p class="lletra">«No tiene mojo, no tiene duende, no tiene don, pero tiene un bajo volador.»</p>
+</article>
+<article class="heroi">
+<h3>Pigmentón</h3>
+<p class="rol">Mapador i dissenyador</p>
+<dl>
+<dt>Poder</dt><dd>Assigna identitats. Capaç d'il·luminar fins i tot els forats negres</dd>
+<dt>Superarma</dt><dd>El Güengüentón i el pinzell creador</dd>
+<dt>En un equip</dt><dd>Qui dibuixa la xarxa i dona a cadascú el color que li toca perquè pugui operar</dd>
+<dt>On surt</dt><dd>Còmic 1</dd>
+</dl>
+<p class="lletra">«De colores pintó el maestro Pigmentón el mundo para que todo pueda tener el color que le corresponda.»</p>
+</article>
+<article class="heroi">
+<h3>La Medusa Andaluza</h3>
+<p class="rol">Connectora · el hub</p>
+<dl>
+<dt>Poder</dt><dd>Sincronització i fusió cultural. És qui dona llum interconnectant tot el grup</dd>
+<dt>Superarma</dt><dd>Cables connectors i una ampolla de Jack Daniel's</dd>
+<dt>En un equip</dt><dd>El node central que creua informació entre parts que no es parlaven</dd>
+<dt>On surt</dt><dd>Còmic 1</dd>
+</dl>
+<p class="lletra">«En mi cabeza se cruzan los cables ¿Te echo uno tío? Pa' que conectes con mi són.»</p>
+</article>
+<article class="heroi">
+<h3>Electroplasman</h3>
+<p class="rol">Impulsor de recursos</p>
+<dl>
+<dt>Poder</dt><dd>Injecta liquiditat al sistema nerviós central del comando i a les naus que no enlairaven</dd>
+<dt>Superarma</dt><dd>La viola · violí electrònic</dd>
+<dt>En un equip</dt><dd>Qui porta el capital —diners o energia— que fa passar un projecte de aturat a enlairat</dd>
+<dt>On surt</dt><dd>Còmic 1</dd>
+</dl>
+<p class="lletra">«Parecía muy tranquilo pero era un volcán. Toca Shostakovich como el gasgas.»</p>
+</article>
+<article class="heroi">
+<h3>El Anguila</h3>
+<p class="rol">Bateria</p>
+<dl>
+<dt>Poder</dt><dd>S'escapoleix de qualsevol lloc: on el grup queda encallat, hi troba l'escletxa</dd>
+<dt>Superarma</dt><dd>La bateria i la percussió</dd>
+<dt>En un equip</dt><dd>Qui marca el ritme operatiu. La pinya no aguanta sense un compàs</dd>
+<dt>On surt</dt><dd>Còmic 1</dd>
+</dl>
+<p class="lletra">«El Anguila: con un buen groove y una birra se espabila.»</p>
+</article>
+<article class="heroi">
+<h3>Barbamuda</h3>
+<p class="rol">Segona baixista</p>
+<dl>
+<dt>Poder</dt><dd>Fa supertratges i ensenya des del silenci. No explica: deixa que ho vegis</dd>
+<dt>Superarma</dt><dd>El baix i el silenci tàctic</dd>
+<dt>En un equip</dt><dd>L'estabilitat estructural. Qui no es mou quan tot es mou és el que evita la caiguda</dd>
+<dt>On surt</dt><dd>Còmic</dd>
+</dl>
+<p class="lletra">«Barbamuda: que habla solo cuando debe y todo se la suda.»</p>
+</article>
+<article class="heroi">
+<h3>Reciclator</h3>
+<p class="rol">Fabricant de superarmes</p>
+<dl>
+<dt>Poder</dt><dd>Construeix les superarmes de la banda a partir del que els altres han llençat</dd>
+<dt>Superarma</dt><dd>El taller: el que ja existeix i ningú volia. D'allà en surten la Bomba Amor i el Rayo Cagón</dd>
+<dt>En un equip</dt><dd>Qui fa que no calgui comprar res nou perquè ja hi és, en un altre lloc i amb una altra forma</dd>
+<dt>On surt</dt><dd>Vídeo</dd>
+</dl>
+
+</article>
+<article class="heroi">
+<h3>Supergerminador</h3>
+<p class="rol">Mestre del germinat</p>
+<dl>
+<dt>Poder</dt><dd>Ensenya a germinar per menjar superaliments. I canta amb la seva rialla</dd>
+<dt>Superarma</dt><dd>Les llavors, i la pròpia rialla</dd>
+<dt>En un equip</dt><dd>Qui ensenya el mètode en comptes de fer la feina: el que ensenya es replica sol i no cal tornar-lo a comprar</dd>
+<dt>On surt</dt><dd>Vídeo i web pròpia</dd>
+</dl>
+
+</article>
+<article class="heroi">
+<h3>Fraktalman</h3>
+<p class="rol">Ordre a partir del caos</p>
+<dl>
+<dt>Poder</dt><dd>Converteix el caos en ordre sense aplanar-lo</dd>
+<dt>Superarma</dt><dd>La forma que es repeteix a totes les escales</dd>
+<dt>En un equip</dt><dd>El que funciona en un lloc té la mateixa forma en un altre. Replicar sense uniformar</dd>
+<dt>On surt</dt><dd>Té tema propi</dd>
+</dl>
+<p class="lletra">«Es uno y son mil millones… convierte el caos en orden.»</p>
+</article>
+</div>
+
+<section class="box">
+<h3>I el teu</h3>
+<p class="lead">Nom, població, fins a cinc superpoders i les teves superarmes —el que
+saps fer i el que pots deixar. Es fa al navegador, no puja enlloc i si te'n vas t'ho endús tot.</p>
+<p><a href="https://teamtowershuma.com/sos#/alta" rel="noopener">Fes el teu personatge ↗</a></p>
+</section>
+</div>
+</main>
+<footer>
+<div class="f">
+<span>Comando Molekulon · un projecte de <a href="https://teamtowershuma.com" rel="noopener">TeamTowers Humà</a></span>
+<span>L'eina que hi ha a sota és el <a href="https://teamtowershuma.com/sos" rel="noopener">SOS</a>, i és lliure</span>
+<span class="mut">Aquesta web es genera de les dades, no s'escriu a mà.</span>
+</div>
+</footer>
+</body>
+</html>

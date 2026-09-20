@@ -1,0 +1,22 @@
+# Les adreces curtes. La gent les escriu de memòria i sense extensió —«entra a
+# molekulon.org/peli»—, i Netlify serveix els camins tal com són: /peli.html
+# existeix i /peli no. Es declaren totes dues perquè la que s'escriu funcioni.
+/personatges   /personatges.html   200
+/peli          /peli.html          200
+/musica        /musica.html        200
+
+# El que encara viu al SOS. Aquestes adreces s'enllacen des d'aquí i des de fora,
+# i han de portar a la pàgina de debò i no a un 404 amb el nostre logotip.
+/molekulandia   https://teamtowershuma.com/molekulandia   301
+/estat-liquid   https://teamtowershuma.com/molekulon      301
+/escola         https://teamtowershuma.com/escola         301
+/formacio       https://teamtowershuma.com/formacio       301
+/banc-temps     https://teamtowershuma.com/banc-temps     301
+/biblioteca     https://teamtowershuma.com/biblioteca     301
+/joc            https://teamtowershuma.com/joc            301
+/blog           https://teamtowershuma.com/blog           301
+/sos            https://teamtowershuma.com/sos            301
+
+# Un sol domini canònic. Amb www i sense www serveixen el mateix contingut, i
+# dos llocs amb el mateix contingut es reparteixen les cerques entre ells.
+https://www.molekulon.org/*   https://molekulon.org/:splat   301!

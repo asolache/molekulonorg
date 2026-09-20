@@ -1,0 +1,22 @@
+name: Dades del Comando
+
+# Les dades venen del repositori teamtowershuma i aquí n'hi ha una còpia. Això
+# mira un cop per setmana si la còpia s'ha quedat vella. No corre a cada empenta
+# a posta: una guarda que depèn de la xarxa fallant un dimarts a la tarda no vol
+# dir que el codi estigui malament, i una guarda que falla per motius que no són
+# el seu s'acaba ignorant.
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  sincronia:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: La còpia d'aquí és la de dalt
+        run: node tools/sync.js --check

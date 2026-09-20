@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  guardes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Les pàgines del disc han de ser les que surten de les dades. Si algú
+      # n'edita una a mà, el proper `build.js` li ho desfarà sense avisar-lo:
+      # més val que ho digui aquí.
+      - name: Les pàgines surten de data/comando.json
+        run: node tools/build.js --check
+
+      # I el que cap generador veurà mai: canonical, enllaços morts, portes
+      # buides, els catorze noms i les xifres.
+      - name: La web compleix el que promet
+        run: node tools/check.js
