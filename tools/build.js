@@ -80,6 +80,32 @@ const mil = n => n.toLocaleString('ca-ES').replace(/ | | /g, '.');
 const mmss = t => `${t / 60 | 0}:${String(t % 60).padStart(2, '0')}`;
 const url = f => f === 'index.html' ? DOMINI + '/' : `${DOMINI}/${f.replace(/\.html$/, '')}`;
 
+/* ══ PER A QUÈ SERVEIX ═══════════════════════════════════════════════════════
+   Els sis eixos diuen **de què està fet** el projecte. Cap d'ells diu **per a
+   què serveix**, i qui arriba es fa aquesta pregunta abans que cap altra.
+
+   El to no és el d'un cartell d'autoajuda. La guia de marca prohibeix les
+   exclamacions i els superlatius sense prova, i amb motiu: una web que crida
+   que et canviarà la vida es llegeix com un anunci. El que motiva d'això no és
+   l'entusiasme sinó la concreció — que el que et demana es pot fer aquesta
+   setmana i que el que promet es pot comprovar. Per això les tres caselles són
+   verbs i no adjectius. */
+const PROPOSIT = {
+  crida: 'Tothom té un superpoder. El que sol faltar és on descobrir-lo, i a qui li serveix.',
+  titol: 'Per a què serveix, de debò',
+  entrada: 'Que cadascú <b>descobreixi el seu superheroi</b> i el posi a treballar al seu barri. ' +
+    'Multiplicat per prou gent, això té nom: una <b>societat del benestar a la molekulandesa</b> — ' +
+    'la que no s\'espera que la porti ningú, perquè se sosté amb el que els veïns ja saben fer.',
+  passes: [
+    { ic: '🔎', t: 'Descobreix què saps fer',
+      d: 'Ningú neix sabent quins són els seus. Per això hi ha aula, kit narratiu i un cromo que s\'omple: <b>un talent que no s\'ha nomenat no es pot oferir</b>.' },
+    { ic: '🤝', t: 'Posa\'l on serveixi a algú',
+      d: 'Un talent que no surt de casa no és un superpoder. Aportar-lo, i que algú altre ho confirmi, <b>és el que et fa la fitxa</b>.' },
+    { ic: '🌱', t: 'I el benestar surt d\'aquí',
+      d: 'Hores, objectes i saber que ja són al barri, comptats i tornats. No és caritat ni voluntariat: <b>és valor que circula i que es pot comprovar</b>.' }
+  ]
+};
+
 /* ══ EL VÍDEO DE FONS DE LA PORTADA ══════════════════════════════════════════
    La portada s'obre amb el videoclip d'Horacio Motomachi corrent al darrere.
    No és decoració: el pla 1 del guió i el tema que obre la intro són aquest
@@ -171,6 +197,8 @@ nav.barra .dret{margin-left:auto;font-size:.82rem}
 .hero h1 em{font-style:normal;background:linear-gradient(90deg,#e040fb,#00b0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero .sub{font-size:clamp(1rem,2.1vw,1.15rem);color:var(--light);max-width:740px;margin:0 auto}
 .hero .sub strong{color:var(--text)}
+.crida{font-size:clamp(1rem,2.3vw,1.22rem);font-weight:600;color:var(--text);margin:1.2rem auto 0;max-width:640px}
+.crida b{background:linear-gradient(90deg,#e040fb,#00b0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
 .acts{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:1.4rem}
 .acts a{text-decoration:none;font-size:.88rem;font-weight:600;padding:.6rem 1.1rem;border-radius:10px;
   border:1px solid var(--border);background:var(--card);color:var(--text)}
@@ -189,6 +217,20 @@ section.box h3{font-size:1.02rem;margin-bottom:.5rem}
 .lead strong,.lead b{color:var(--text)}
 .mut{color:var(--muted);font-size:.78rem}
 .mono{font-family:var(--mono)}
+
+/* El propòsit. Es distingeix de la resta de caixes a posta: és l'única que no
+   informa de res —diu per a què és tot plegat— i si es veiés igual que les
+   altres es llegiria com una més i se saltaria. */
+section.box.proposit{border-left:3px solid var(--purple);
+  background:linear-gradient(120deg,rgba(224,64,251,.08),rgba(0,176,255,.05) 60%,transparent),var(--panel)}
+section.box.proposit h2{font-size:clamp(1.2rem,2.6vw,1.5rem)}
+.gran{font-size:clamp(.98rem,2vw,1.1rem);color:var(--light);margin:.5rem 0 1rem;max-width:760px}
+.gran b{color:var(--text)}
+.passa{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.85rem .9rem}
+.passa .ic{font-size:1.4rem;line-height:1}
+.passa h3{font-size:.98rem;margin:.35rem 0 .3rem}
+.passa p{margin:0;font-size:.85rem;color:var(--light)}
+.passa p b{color:var(--text)}
 
 .xifres{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;margin:1.2rem 0}
 .xifra{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem}
@@ -312,6 +354,7 @@ ${fonsHtml()}
 <span class="tag">${esc(D.tesi.entrada)}</span>
 <h1><em>${esc(D.tesi.titol)}</em></h1>
 <p class="sub">${cap(D.tesi.sub)}</p>
+<p class="crida">${PROPOSIT.crida}</p>
 <div class="acts">
 <a class="pri" href="${SOS}/sos#/alta">Fes el teu personatge</a>
 <a href="/personatges">Els ${NUM.herois} personatges</a>
@@ -328,6 +371,21 @@ ho diu.</p>
 </header>
 
 <div class="wrap">
+
+<section class="box proposit">
+<h2>${esc(PROPOSIT.titol)}</h2>
+<p class="gran">${PROPOSIT.entrada}</p>
+<div class="graella">
+${PROPOSIT.passes.map(x => `<div class="passa">
+<div class="ic">${x.ic}</div>
+<h3>${esc(x.t)}</h3>
+<p>${x.d}</p>
+</div>`).join('\n')}
+</div>
+<p class="nota"><b>Molekulandia</b> és el poble on això ja està dibuixat: onze edificis
+on entrar i nou professions, i cap d'ells és un despatx.
+<a href="${SOS}/molekulandia" rel="noopener">Mira com és ↗</a></p>
+</section>
 
 <div class="xifres">
 <div class="xifra"><b>${mil(NUM.objectiu)}</b><span>superherois que falten. El comptador de debò és el registre públic, i comença a zero a posta.</span></div>
