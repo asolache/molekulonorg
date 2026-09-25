@@ -80,6 +80,31 @@ const mil = n => n.toLocaleString('ca-ES').replace(/ | | /g, '.');
 const mmss = t => `${t / 60 | 0}:${String(t % 60).padStart(2, '0')}`;
 const url = f => f === 'index.html' ? DOMINI + '/' : `${DOMINI}/${f.replace(/\.html$/, '')}`;
 
+/* ══ EL VÍDEO DE FONS DE LA PORTADA ══════════════════════════════════════════
+   La portada s'obre amb el videoclip d'Horacio Motomachi corrent al darrere.
+   No és decoració: el pla 1 del guió i el tema que obre la intro són aquest
+   vídeo, i qui arriba ha de veure de seguida que això ja existeix en imatge i
+   en so, no només en text.
+
+   Tres decisions que van amb això:
+
+   · **L'adreça surt de les dades, com tota la resta.** Es busca la peça pel
+     seu `id` i se n'extreu l'identificador. Si un dia aquella peça canvia
+     d'adreça o desapareix de la llista, la portada es queda amb el degradat de
+     sempre en comptes d'ensenyar un reproductor trencat.
+   · **`youtube-nocookie.com`.** És el mateix reproductor sense la galeta de
+     seguiment que posa el domini normal. Un projecte que promet que no es
+     recull res de ningú no pot obrir-se amb una pantalla que sí que ho fa.
+   · **Silenciat, sense controls i sense clic.** Un vídeo que sona sol a la
+     primera pantalla fa tancar la pestanya. El vídeo sencer, amb so, té el seu
+     enllaç a sota i a la pàgina de la banda. */
+const idYouTube = u => (String(u).match(/(?:youtu\.be\/|embed\/|[?&]v=)([A-Za-z0-9_-]{11})/) || [])[1] || null;
+const FONS = (() => {
+  const v = D.videos.find(x => x.id === 'horacio-clip' && x.url);
+  const id = v && idYouTube(v.url);
+  return id ? { id, titol: v.titol, url: v.url, qui: v.qui[0] || v.titol } : null;
+})();
+
 /* Les xifres. Totes derivades: cap número d'aquest fitxer s'escriu dues vegades. */
 const NUM = {
   objectiu: D.objectiu,
@@ -118,10 +143,28 @@ nav.barra a.l:hover{background:var(--card);color:var(--text)}
 nav.barra a.l[aria-current]{background:var(--card);color:var(--text);font-weight:700}
 nav.barra .dret{margin-left:auto;font-size:.82rem}
 
-.hero{padding:3.2rem 1.5rem 2rem;text-align:center;
+.hero{padding:3.2rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden;isolation:isolate;
   background:radial-gradient(ellipse at top,rgba(224,64,251,.16),transparent 60%),
              radial-gradient(ellipse at bottom right,rgba(0,176,255,.13),transparent 55%),var(--bg)}
 .hero-inner{max-width:880px;margin:0 auto}
+
+/* El vídeo de fons. La caixa cobreix la capçalera sencera i el vel el fa
+   llegible: un text blanc damunt d'un videoclip de colors saturats no es llegeix
+   a ple sol, i aquesta és la primera frase que llegeix tothom. */
+.fons{position:absolute;inset:0;z-index:-2;overflow:hidden;pointer-events:none;background:#000}
+.fons iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:100vw;height:56.25vw;min-height:100%;min-width:177.78vh;border:0}
+.vel{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(11,11,18,.88) 0%,rgba(11,11,18,.74) 40%,rgba(11,11,18,.97) 100%)}
+.hero.fosc{padding-top:4rem}
+.credit{margin:1.1rem 0 0;font-size:.78rem;color:var(--muted)}
+.credit a{color:var(--light)}
+
+/* Dos casos on el vídeo no es carrega, i cap dels dos és una avaria:
+   qui ha demanat menys moviment al sistema operatiu, i qui ho obre amb dades
+   mòbils. Els dos es queden amb el degradat, que ja era la portada d'abans. */
+@media (prefers-reduced-motion:reduce){.fons{display:none}}
+@media (max-width:700px){.fons,.vel{display:none}}
 .tag{display:inline-block;background:rgba(224,64,251,.14);color:var(--purple);padding:.3rem .8rem;border-radius:20px;
   font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
 .hero h1{font-size:clamp(1.9rem,5.2vw,3.1rem);margin:0 0 .9rem;font-weight:800;line-height:1.06}
@@ -255,8 +298,16 @@ const cap = txt => txt
   .replace(/href="index\.html#\/([a-z]+)"/g, `href="${SOS}/sos#/$1"`)
   .replace(/href="([a-z-]+)\.html"/g, `href="${SOS}/$1"`);
 
+const fonsHtml = () => FONS ? `
+<div class="fons" aria-hidden="true">
+<iframe title="${esc(FONS.titol)}" tabindex="-1" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"
+ src="https://www.youtube-nocookie.com/embed/${FONS.id}?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=${FONS.id}&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3"></iframe>
+</div>
+<div class="vel" aria-hidden="true"></div>` : '';
+
 const portada = () => `
-<header class="hero">
+<header class="hero${FONS ? ' fosc' : ''}">
+${fonsHtml()}
 <div class="hero-inner">
 <span class="tag">${esc(D.tesi.entrada)}</span>
 <h1><em>${esc(D.tesi.titol)}</em></h1>
@@ -266,6 +317,8 @@ const portada = () => `
 <a href="/personatges">Els ${NUM.herois} personatges</a>
 <a href="/peli">El guió de la intro</a>
 </div>
+${FONS ? `<p class="credit">De fons, el videoclip de <b>${esc(FONS.qui)}</b> —el tema que obre la intro—,
+sense so i sense controls. <a href="${FONS.url}" rel="noopener">Mira'l sencer ↗</a></p>` : ''}
 <p class="avis"><strong>Aquesta web s'està muntant.</strong> El projecte té deu anys de
 material —dos còmics, una banda, ${NUM.publicades} peces publicades i un programa d'aula—
 i fins ara vivia dins d'una eina de gestió. Aquí s'hi està traslladant. El que

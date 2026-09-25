@@ -136,5 +136,22 @@ if (faltants.length) {
     : ok(`res per http, i cap enllaç absolut al domini propi (${SOS} sí, que és una altra casa)`);
 }
 
+/* ── 8 · Cap vídeo que no surti de les dades ──────────────────────────────
+   La portada porta un videoclip de fons i la banda en porta tretze. Un
+   identificador de YouTube enganxat a mà al generador no petaria mai: el dia
+   que aquella peça canviï d'adreça a les dades, la pàgina seguiria servint la
+   vella i ningú ho sabria fins que algú la mirés. */
+{
+  const YT = /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/embed\/|[?&]v=)([A-Za-z0-9_-]{11})/g;
+  const bons = new Set();
+  for (const v of D.videos) { if (!v.url) continue; for (const m of v.url.matchAll(YT)) bons.add(m[1]); }
+  const forasters = [];
+  for (const p of PAGINES) {
+    for (const m of pag[p.f].matchAll(YT)) if (!bons.has(m[1])) forasters.push(`${p.f} · ${m[1]}`);
+  }
+  forasters.length ? bad(`${pl(forasters.length, 'vídeo', 'vídeos')} que no són a les dades: ${forasters.join(', ')}`)
+    : ok(`els vídeos de les pàgines són peces declarades (${bons.size} adreces a les dades)`);
+}
+
 console.log(fails ? `\n❌ ${pl(fails, 'problema', 'problemes')}.` : '\n✅ La web compleix el que promet.');
 process.exit(fails ? 1 : 0);
