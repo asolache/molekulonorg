@@ -111,6 +111,33 @@ section.box.proposit h2{font-size:clamp(1.2rem,2.6vw,1.5rem)}
 .fitxa a{font-size:.82rem;font-weight:600;text-decoration:none}
 .fitxa .k{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 
+/* ══ EL CROMO ════════════════════════════════════════════════════════════
+   La fitxa de text deia qui és cadascú i no feia que en volguessis un. Un cromo
+   sí: té cara, té número i es col·lecciona. La cara surt de la portada del segon
+   còmic, que és l'única imatge on hi surten tots tocant alhora.
+
+   El marc té proporció fixa encara que el retrat no hi sigui: una col·lecció on
+   les caselles ballen d'alçada no sembla una col·lecció, sembla una llista. */
+.cromos{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.8rem;margin:1rem 0}
+.cromo{background:linear-gradient(160deg,rgba(224,64,251,.12),rgba(0,176,255,.06) 55%,transparent),var(--card);
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.cromo .marc{position:relative;aspect-ratio:3/4;background:#05050a;overflow:hidden}
+.cromo .marc img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.cromo .buit{display:flex;align-items:center;justify-content:center;height:100%;
+  color:var(--muted);font-size:.76rem;text-align:center;padding:1rem;
+  background:repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 10px,transparent 10px 20px)}
+.cromo .num{position:absolute;top:.5rem;left:.5rem;font-family:var(--mono);font-size:.72rem;font-weight:700;
+  background:rgba(11,11,18,.82);color:var(--gold);padding:.15rem .45rem;border-radius:6px}
+.cromo .avis-retrat{position:absolute;bottom:0;left:0;right:0;font-size:.66rem;color:var(--light);
+  background:rgba(11,11,18,.78);padding:.25rem .45rem}
+.cromo .cos{padding:.8rem .85rem;display:flex;flex-direction:column;gap:.35rem}
+.cromo h3{font-size:1rem}
+.cromo .rol{color:var(--purple);font-size:.78rem;font-weight:600}
+.cromo dl{margin:0;font-size:.8rem}
+.cromo dt{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+.cromo dd{margin:.1rem 0 0;color:var(--light)}
+.cromo .lletra{font-style:italic;color:var(--light);font-size:.78rem;border-left:2px solid var(--border);padding-left:.5rem;margin-top:.5rem}
+
 .heroi{background:var(--card);border:1px solid var(--border);border-top:2px solid var(--purple);
   border-radius:12px;padding:.9rem}
 .heroi h3{font-size:1rem}
@@ -185,20 +212,33 @@ footer a{color:var(--light)}
 <main id="principal">
 <header class="hero">
 <div class="hero-inner">
-<span class="tag">El repartiment</span>
-<h1>Els <em>14 personatges</em> canònics</h1>
+<span class="tag">La col·lecció</span>
+<h1>Els <em>14 cromos</em> del Comando</h1>
 <p class="sub">Cadascun porta tres coses: <strong>el seu poder al còmic</strong>,
 <strong>la seva superarma</strong> i <strong>què vol dir dins d'un equip de debò</strong>.
 La tercera és la que fa que aquest relat visqui dins d'una eina de gestió i no en un fullet a part.</p>
-<p class="avis"><strong>El repartiment no està tancat.</strong> Aquests catorze són
-els que surten als còmics i als vídeos. Els següents surten de qui hi entri: un personatge
+<p class="avis"><strong>El repartiment no està tancat.</strong> Aquests 14 són
+els que surten als còmics i als vídeos; els següents surten de qui hi entri. Un personatge
 del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 </div>
 </header>
 
 <div class="wrap">
-<div class="graella">
-<article class="heroi">
+<section class="box">
+<h2>8 de 14 ja tenen cara</h2>
+<p class="lead">Les cares surten de <b>Portada del segon còmic · la banda sencera</b>, que és l'única imatge on
+hi surten tots tocant alhora. Els que encara no en tenen ho diuen: <b>un marc buit és més
+honest que la cara d'un altre</b>.</p>
+</section>
+
+<div class="cromos">
+<article class="cromo">
+<div class="marc">
+<span class="num">01 / 14</span>
+<img src="cromos/01.webp" alt="Mazinguer, retallat de la portada del segon còmic" loading="lazy">
+
+</div>
+<div class="cos">
 <h3>Mazinguer</h3>
 <p class="rol">Líder estratega i DJ</p>
 <dl>
@@ -208,8 +248,15 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Còmic 1</dd>
 </dl>
 <p class="lletra">«Mazinguer: aunque no lo parecía siempre sabía lo que hay que hacer.»</p>
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">02 / 14</span>
+<img src="cromos/06.webp" alt="Horacio Motomachi, retallat de la portada del segon còmic" loading="lazy">
+<span class="avis-retrat">Retrat a confirmar per l'autor</span>
+</div>
+<div class="cos">
 <h3>Horacio Motomachi</h3>
 <p class="rol">El savi que rep el mandat</p>
 <dl>
@@ -219,8 +266,15 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Còmic 1</dd>
 </dl>
 <p class="lletra">«Horacio: muy sabio, buena onda y tener un palacio.»</p>
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">03 / 14</span>
+<img src="cromos/08.webp" alt="Guiri-Guay, retallat de la portada del segon còmic" loading="lazy">
+
+</div>
+<div class="cos">
 <h3>Guiri-Guay</h3>
 <p class="rol">Cuidador i sanador</p>
 <dl>
@@ -230,8 +284,14 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Còmic 1</dd>
 </dl>
 <p class="lletra">«Con mi guitarra curo heridas, bailando se mueven las neuronas.»</p>
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">04 / 14</span>
+<div class="buit">Encara sense retrat</div>
+</div>
+<div class="cos">
 <h3>Purpleman</h3>
 <p class="rol">Transmutador</p>
 <dl>
@@ -241,8 +301,15 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Còmic 1</dd>
 </dl>
 <p class="lletra">«Elimino a los malos olores con mi rayo eliminador y huele todo a flor y amor.»</p>
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">05 / 14</span>
+<img src="cromos/09.webp" alt="Afrodito, retallat de la portada del segon còmic" loading="lazy">
+<span class="avis-retrat">Retrat a confirmar per l'autor</span>
+</div>
+<div class="cos">
 <h3>Afrodito</h3>
 <p class="rol">Motor passional</p>
 <dl>
@@ -252,8 +319,14 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Còmic 1</dd>
 </dl>
 <p class="lletra">«Sexy motherfunky mito. Piensa con el corazón.»</p>
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">06 / 14</span>
+<div class="buit">Encara sense retrat</div>
+</div>
+<div class="cos">
 <h3>El Aviador</h3>
 <p class="rol">Suport tàctic</p>
 <dl>
@@ -263,8 +336,14 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Còmic 1</dd>
 </dl>
 <p class="lletra">«No tiene mojo, no tiene duende, no tiene don, pero tiene un bajo volador.»</p>
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">07 / 14</span>
+<div class="buit">Encara sense retrat</div>
+</div>
+<div class="cos">
 <h3>Pigmentón</h3>
 <p class="rol">Mapador i dissenyador</p>
 <dl>
@@ -274,8 +353,15 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Còmic 1</dd>
 </dl>
 <p class="lletra">«De colores pintó el maestro Pigmentón el mundo para que todo pueda tener el color que le corresponda.»</p>
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">08 / 14</span>
+<img src="cromos/07.webp" alt="La Medusa Andaluza, retallat de la portada del segon còmic" loading="lazy">
+
+</div>
+<div class="cos">
 <h3>La Medusa Andaluza</h3>
 <p class="rol">Connectora · el hub</p>
 <dl>
@@ -285,8 +371,15 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Còmic 1</dd>
 </dl>
 <p class="lletra">«En mi cabeza se cruzan los cables ¿Te echo uno tío? Pa' que conectes con mi són.»</p>
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">09 / 14</span>
+<img src="cromos/02.webp" alt="Electroplasman, retallat de la portada del segon còmic" loading="lazy">
+<span class="avis-retrat">Retrat a confirmar per l'autor</span>
+</div>
+<div class="cos">
 <h3>Electroplasman</h3>
 <p class="rol">Impulsor de recursos</p>
 <dl>
@@ -296,8 +389,15 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Còmic 1</dd>
 </dl>
 <p class="lletra">«Parecía muy tranquilo pero era un volcán. Toca Shostakovich como el gasgas.»</p>
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">10 / 14</span>
+<img src="cromos/05.webp" alt="El Anguila, retallat de la portada del segon còmic" loading="lazy">
+
+</div>
+<div class="cos">
 <h3>El Anguila</h3>
 <p class="rol">Bateria</p>
 <dl>
@@ -307,8 +407,15 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Còmic 1</dd>
 </dl>
 <p class="lletra">«El Anguila: con un buen groove y una birra se espabila.»</p>
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">11 / 14</span>
+<img src="cromos/03.webp" alt="Barbamuda, retallat de la portada del segon còmic" loading="lazy">
+
+</div>
+<div class="cos">
 <h3>Barbamuda</h3>
 <p class="rol">Segona baixista</p>
 <dl>
@@ -318,8 +425,14 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Còmic</dd>
 </dl>
 <p class="lletra">«Barbamuda: que habla solo cuando debe y todo se la suda.»</p>
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">12 / 14</span>
+<div class="buit">Encara sense retrat</div>
+</div>
+<div class="cos">
 <h3>Reciclator</h3>
 <p class="rol">Fabricant de superarmes</p>
 <dl>
@@ -329,8 +442,14 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Vídeo</dd>
 </dl>
 
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">13 / 14</span>
+<div class="buit">Encara sense retrat</div>
+</div>
+<div class="cos">
 <h3>Supergerminador</h3>
 <p class="rol">Mestre del germinat</p>
 <dl>
@@ -340,8 +459,14 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Vídeo i web pròpia</dd>
 </dl>
 
+</div>
 </article>
-<article class="heroi">
+<article class="cromo">
+<div class="marc">
+<span class="num">14 / 14</span>
+<div class="buit">Encara sense retrat</div>
+</div>
+<div class="cos">
 <h3>Fraktalman</h3>
 <p class="rol">Ordre a partir del caos</p>
 <dl>
@@ -351,6 +476,7 @@ del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 <dt>On surt</dt><dd>Té tema propi</dd>
 </dl>
 <p class="lletra">«Es uno y son mil millones… convierte el caos en orden.»</p>
+</div>
 </article>
 </div>
 

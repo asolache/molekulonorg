@@ -111,6 +111,33 @@ section.box.proposit h2{font-size:clamp(1.2rem,2.6vw,1.5rem)}
 .fitxa a{font-size:.82rem;font-weight:600;text-decoration:none}
 .fitxa .k{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 
+/* ══ EL CROMO ════════════════════════════════════════════════════════════
+   La fitxa de text deia qui és cadascú i no feia que en volguessis un. Un cromo
+   sí: té cara, té número i es col·lecciona. La cara surt de la portada del segon
+   còmic, que és l'única imatge on hi surten tots tocant alhora.
+
+   El marc té proporció fixa encara que el retrat no hi sigui: una col·lecció on
+   les caselles ballen d'alçada no sembla una col·lecció, sembla una llista. */
+.cromos{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.8rem;margin:1rem 0}
+.cromo{background:linear-gradient(160deg,rgba(224,64,251,.12),rgba(0,176,255,.06) 55%,transparent),var(--card);
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.cromo .marc{position:relative;aspect-ratio:3/4;background:#05050a;overflow:hidden}
+.cromo .marc img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.cromo .buit{display:flex;align-items:center;justify-content:center;height:100%;
+  color:var(--muted);font-size:.76rem;text-align:center;padding:1rem;
+  background:repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 10px,transparent 10px 20px)}
+.cromo .num{position:absolute;top:.5rem;left:.5rem;font-family:var(--mono);font-size:.72rem;font-weight:700;
+  background:rgba(11,11,18,.82);color:var(--gold);padding:.15rem .45rem;border-radius:6px}
+.cromo .avis-retrat{position:absolute;bottom:0;left:0;right:0;font-size:.66rem;color:var(--light);
+  background:rgba(11,11,18,.78);padding:.25rem .45rem}
+.cromo .cos{padding:.8rem .85rem;display:flex;flex-direction:column;gap:.35rem}
+.cromo h3{font-size:1rem}
+.cromo .rol{color:var(--purple);font-size:.78rem;font-weight:600}
+.cromo dl{margin:0;font-size:.8rem}
+.cromo dt{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+.cromo dd{margin:.1rem 0 0;color:var(--light)}
+.cromo .lletra{font-style:italic;color:var(--light);font-size:.78rem;border-left:2px solid var(--border);padding-left:.5rem;margin-top:.5rem}
+
 .heroi{background:var(--card);border:1px solid var(--border);border-top:2px solid var(--purple);
   border-radius:12px;padding:.9rem}
 .heroi h3{font-size:1rem}

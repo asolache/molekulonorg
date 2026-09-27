@@ -35,6 +35,11 @@ const D = JSON.parse(readFileSync(join(ARREL, 'data', 'comando.json'), 'utf8'));
    dalt — `tema` hi és un `id` de `comando.json`. */
 const M = JSON.parse(readFileSync(join(ARREL, 'data', 'mostra.json'), 'utf8'));
 const PECA = Object.fromEntries(D.videos.map(v => [v.id, v]));
+/* Els retrats dels cromos. Van a part de `comando.json` perquè són una decisió
+   d'aquesta web —quin tros de quina vinyeta fa de cara de qui— i no una dada del
+   SOS. Qui mana sobre els noms segueix sent la llista canònica. */
+const C = JSON.parse(readFileSync(join(ARREL, 'data', 'cromos.json'), 'utf8'));
+const RETRAT = Object.fromEntries(C.retrats.map(r => [r.heroi, r]));
 const PAGS_MOSTRA = M.comics.reduce((a, c) => a + c.pagines.length, 0);
 const MOSTRA1 = M.comics[0].pagines.length;
 
@@ -271,6 +276,33 @@ section.box.proposit h2{font-size:clamp(1.2rem,2.6vw,1.5rem)}
 .fitxa p{margin:.2rem 0;font-size:.84rem;color:var(--light)}
 .fitxa a{font-size:.82rem;font-weight:600;text-decoration:none}
 .fitxa .k{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* ══ EL CROMO ════════════════════════════════════════════════════════════
+   La fitxa de text deia qui és cadascú i no feia que en volguessis un. Un cromo
+   sí: té cara, té número i es col·lecciona. La cara surt de la portada del segon
+   còmic, que és l'única imatge on hi surten tots tocant alhora.
+
+   El marc té proporció fixa encara que el retrat no hi sigui: una col·lecció on
+   les caselles ballen d'alçada no sembla una col·lecció, sembla una llista. */
+.cromos{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.8rem;margin:1rem 0}
+.cromo{background:linear-gradient(160deg,rgba(224,64,251,.12),rgba(0,176,255,.06) 55%,transparent),var(--card);
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.cromo .marc{position:relative;aspect-ratio:3/4;background:#05050a;overflow:hidden}
+.cromo .marc img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.cromo .buit{display:flex;align-items:center;justify-content:center;height:100%;
+  color:var(--muted);font-size:.76rem;text-align:center;padding:1rem;
+  background:repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 10px,transparent 10px 20px)}
+.cromo .num{position:absolute;top:.5rem;left:.5rem;font-family:var(--mono);font-size:.72rem;font-weight:700;
+  background:rgba(11,11,18,.82);color:var(--gold);padding:.15rem .45rem;border-radius:6px}
+.cromo .avis-retrat{position:absolute;bottom:0;left:0;right:0;font-size:.66rem;color:var(--light);
+  background:rgba(11,11,18,.78);padding:.25rem .45rem}
+.cromo .cos{padding:.8rem .85rem;display:flex;flex-direction:column;gap:.35rem}
+.cromo h3{font-size:1rem}
+.cromo .rol{color:var(--purple);font-size:.78rem;font-weight:600}
+.cromo dl{margin:0;font-size:.8rem}
+.cromo dt{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+.cromo dd{margin:.1rem 0 0;color:var(--light)}
+.cromo .lletra{font-style:italic;color:var(--light);font-size:.78rem;border-left:2px solid var(--border);padding-left:.5rem;margin-top:.5rem}
 
 .heroi{background:var(--card);border:1px solid var(--border);border-top:2px solid var(--purple);
   border-radius:12px;padding:.9rem}
@@ -512,23 +544,16 @@ ${AL_SOS.map(x => `<div class="fitxa">
 </div>`;
 
 /* ══ ELS PERSONATGES ═════════════════════════════════════════════════════════ */
-const personatges = () => `
-<header class="hero">
-<div class="hero-inner">
-<span class="tag">El repartiment</span>
-<h1>Els <em>${NUM.herois} personatges</em> canònics</h1>
-<p class="sub">Cadascun porta tres coses: <strong>el seu poder al còmic</strong>,
-<strong>la seva superarma</strong> i <strong>què vol dir dins d'un equip de debò</strong>.
-La tercera és la que fa que aquest relat visqui dins d'una eina de gestió i no en un fullet a part.</p>
-<p class="avis"><strong>El repartiment no està tancat.</strong> Aquests catorze són
-els que surten als còmics i als vídeos. Els següents surten de qui hi entri: un personatge
-del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
+const cromo = (h, i) => {
+  const r = RETRAT[h.name];
+  return `<article class="cromo">
+<div class="marc">
+<span class="num">${String(i + 1).padStart(2, '0')} / ${D.herois.length}</span>
+${r ? `<img src="${esc(r.img)}" alt="${esc(h.name)}, retallat de la portada del segon còmic" loading="lazy">
+${r.pendent ? '<span class="avis-retrat">Retrat a confirmar per l\'autor</span>' : ''}`
+  : '<div class="buit">Encara sense retrat</div>'}
 </div>
-</header>
-
-<div class="wrap">
-<div class="graella">
-${D.herois.map(h => `<article class="heroi">
+<div class="cos">
 <h3>${esc(h.name)}</h3>
 <p class="rol">${esc(h.role)}</p>
 <dl>
@@ -538,7 +563,34 @@ ${D.herois.map(h => `<article class="heroi">
 <dt>On surt</dt><dd>${esc(h.on)}</dd>
 </dl>
 ${h.lletra ? `<p class="lletra">${esc(h.lletra)}</p>` : ''}
-</article>`).join('\n')}
+</div>
+</article>`;
+};
+
+const personatges = () => `
+<header class="hero">
+<div class="hero-inner">
+<span class="tag">La col·lecció</span>
+<h1>Els <em>${NUM.herois} cromos</em> del Comando</h1>
+<p class="sub">Cadascun porta tres coses: <strong>el seu poder al còmic</strong>,
+<strong>la seva superarma</strong> i <strong>què vol dir dins d'un equip de debò</strong>.
+La tercera és la que fa que aquest relat visqui dins d'una eina de gestió i no en un fullet a part.</p>
+<p class="avis"><strong>El repartiment no està tancat.</strong> Aquests ${NUM.herois} són
+els que surten als còmics i als vídeos; els següents surten de qui hi entri. Un personatge
+del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
+</div>
+</header>
+
+<div class="wrap">
+<section class="box">
+<h2>${C.retrats.length} de ${NUM.herois} ja tenen cara</h2>
+<p class="lead">Les cares surten de <b>${esc(C.font.titol)}</b>, que és l'única imatge on
+hi surten tots tocant alhora. Els que encara no en tenen ho diuen: <b>un marc buit és més
+honest que la cara d'un altre</b>.</p>
+</section>
+
+<div class="cromos">
+${D.herois.map(cromo).join('\n')}
 </div>
 
 <section class="box">

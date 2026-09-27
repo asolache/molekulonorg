@@ -90,10 +90,10 @@ if (faltants.length) {
 {
   const s = pag['personatges.html'];
   const falten = D.herois.filter(h => !s.includes(`<h3>${h.name.replace(/&/g, '&amp;')}</h3>`)).map(h => h.name);
-  const quants = (s.match(/<article class="heroi">/g) || []).length;
+  const quants = (s.match(/<article class="cromo">/g) || []).length;
   if (falten.length) bad(`no surten a la pàgina: ${falten.join(', ')}`);
-  else if (quants !== D.herois.length) bad(`${quants} fitxes pintades i ${D.herois.length} herois a les dades`);
-  else ok(`els ${D.herois.length} herois de les dades surten, i no n'hi ha cap més`);
+  else if (quants !== D.herois.length) bad(`${quants} cromos pintats i ${D.herois.length} herois a les dades`);
+  else ok(`els ${D.herois.length} herois de les dades tenen cromo, i no n'hi ha cap més`);
 }
 
 /* ── 5 · El guió sencer, i la durada que diu ──────────────────────────────
@@ -174,6 +174,24 @@ if (faltants.length) {
   else if (alMenu !== n > 0) bad(alMenu ? 'la mostra és al menú i no té cap pàgina' : 'la mostra té pàgines i no és al menú');
   else ok(n ? `la mostra té ${pl(n, 'pàgina', 'pàgines')}, totes amb imatge i amb tema declarat`
     : 'la mostra encara és buida, i per això no és al menú ni al sitemap');
+}
+
+/* ── 10 · Els retrats dels cromos ─────────────────────────────────────────
+   Dues maneres que la col·lecció es podria podrir sense petar: un retrat
+   declarat i no pujat —marc negre buit amb aspecte d'avaria— i un retrat
+   assignat a un nom que la llista canònica ja no té, que deixaria una cara
+   òrfena i un heroi sense cara sense que ningú ho relacionés. */
+{
+  const C = JSON.parse(readFileSync(join(ARREL, 'data', 'cromos.json'), 'utf8'));
+  const noms = new Set(D.herois.map(h => h.name));
+  const senseFitxer = C.retrats.filter(r => !r.img || !existsSync(join(ARREL, r.img))).map(r => r.heroi);
+  const orfes = C.retrats.filter(r => !noms.has(r.heroi)).map(r => r.heroi);
+  const dups = C.retrats.map(r => r.heroi).filter((x, i, a) => a.indexOf(x) !== i);
+  if (senseFitxer.length) bad(`${pl(senseFitxer.length, 'retrat declarat', 'retrats declarats')} sense fitxer: ${senseFitxer.join(', ')}`);
+  else if (orfes.length) bad(`retrats d'un nom que no és a la llista canònica: ${orfes.join(', ')}`);
+  else if (dups.length) bad(`el mateix heroi amb dos retrats: ${dups.join(', ')}`);
+  else if (!existsSync(join(ARREL, C.font.img))) bad(`la imatge d'on surten els retrats no hi és: ${C.font.img}`);
+  else ok(`${pl(C.retrats.length, 'retrat', 'retrats')} de ${D.herois.length}, tots amb fitxer i amb nom de la llista`);
 }
 
 console.log(fails ? `\n❌ ${pl(fails, 'problema', 'problemes')}.` : '\n✅ La web compleix el que promet.');

@@ -80,8 +80,9 @@
           "url": "https://amzn.eu/d/0hiEpZfg"
         }
       ],
-      "portada": null,
-      "pagines": []
+      "portada": "mostra/comic-2/00-portada.webp",
+      "pagines": [],
+      "portada_alt": "Portada del segon còmic: la banda sencera tocant entre flames sobre fons estrellat, amb el rètol «¡¡¡El Mundo Muerto contraataca!!!» i el segell «Season 1, episodio II, incluye CD + bonus tracks»."
     }
   ]
 }
