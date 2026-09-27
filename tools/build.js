@@ -657,7 +657,12 @@ com es va publicar en paper.</p>`;
      línies de dades seria una petició més i un estat més per fallar. */
   const mapa = {};
   for (const t of temes) mapa[t.id] = { id: t.id, titol: t.titol, yt: idYouTube(t.url) };
-  return `<div class="lector" data-lector="${esc(c.id)}" data-temes="${esc(JSON.stringify(mapa))}">
+  /* Un tema que l'autor encara no ha confirmat es marca. Fer passar una
+     proposta meva per una decisió seva és la manera més fàcil que es quedi
+     així per sempre, perquè ningú sap que s'havia de mirar. */
+  const pendents = c.pagines.filter(p => p.tema_pendent).map(p => p.n);
+  return `<div class="lector" data-lector="${esc(c.id)}" data-temes="${esc(JSON.stringify(mapa))}"
+ data-pendents="${esc(JSON.stringify(pendents))}">
 <div class="full">
 ${c.pagines.map((p, i) => `<img src="${esc(p.img)}" alt="${esc(p.alt || `${c.titol}, pàgina ${p.n}`)}"${i ? ' hidden' : ''}${i > 1 ? ' loading="lazy"' : ''} data-tema="${esc(p.tema || '')}">`).join('\n')}
 </div>
@@ -667,7 +672,7 @@ ${c.pagines.map((p, i) => `<img src="${esc(p.img)}" alt="${esc(p.alt || `${c.tit
 <button type="button" data-va="1">Següent →</button>
 </div>
 <div class="so">
-<span>Sona: <b class="tema">${esc(temes[0] ? temes[0].titol : 'encara sense tema assignat')}</b></span>
+<span>Sona: <b class="tema">${esc(temes[0] ? temes[0].titol + (c.pagines[0].tema_pendent ? ' (proposta, a confirmar)' : '') : 'encara sense tema assignat')}</b></span>
 <button type="button" data-posa>▶ Posa-la</button>
 <span class="cap" aria-hidden="true"></span>
 </div>
@@ -726,6 +731,7 @@ for (const l of document.querySelectorAll('[data-lector]')) {
   const cap = l.querySelector('.cap');
   const posa = l.querySelector('[data-posa]');
   const TEMES = JSON.parse(l.dataset.temes || '{}');
+  const PENDENTS = new Set(JSON.parse(l.dataset.pendents || '[]'));
   let i = 0, sonant = null;
 
   const pinta = () => {
@@ -734,7 +740,8 @@ for (const l of document.querySelectorAll('[data-lector]')) {
     l.querySelector('[data-va="-1"]').disabled = i === 0;
     l.querySelector('[data-va="1"]').disabled = i === fulls.length - 1;
     const t = TEMES[fulls[i].dataset.tema];
-    tema.textContent = t ? t.titol : 'encara sense tema assignat';
+    tema.textContent = t ? (t.titol + (PENDENTS.has(i + 1) ? ' (proposta, a confirmar)' : ''))
+      : 'encara sense tema assignat';
     /* Si la pàgina nova porta el mateix tema, no es toca res: rebobinar una
        cançó a cada pàgina és la manera més ràpida que la tanquin. */
     if (sonant && t && t.id !== sonant) sona(t);

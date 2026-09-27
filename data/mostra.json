@@ -1,5 +1,5 @@
 {
-  "_": "La mostra dels dos còmics: quines pàgines es publiquen i quin tema sona a cada una. AIXÒ SÍ que s'edita a mà, al contrari de comando.json — és una decisió editorial d'aquesta web i no una dada del SOS. El camp `tema` és l'`id` d'una peça de data/comando.json: així la cançó de cada pàgina segueix sent la que està declarada a dalt, i una peça que canviï d'adreça no deixa cap pàgina muda.",
+  "_": "La mostra dels dos còmics: quines pàgines es publiquen i quin tema sona a cada una. AIXÒ SÍ que s'edita a mà, al contrari de comando.json — és una decisió editorial d'aquesta web i no una dada del SOS. El camp `tema` és l'`id` d'una peça de data/comando.json: així la cançó de cada pàgina segueix sent la que està declarada a dalt, i una peça que canviï d'adreça no deixa cap pàgina muda. `tema_pendent` vol dir que el tema d'aquella pàgina és una proposta i no l'ha confirmat l'autor; el lector ho diu en comptes de fer-ho passar per decidit.",
   "trailer": null,
   "comics": [
     {
@@ -8,7 +8,36 @@
       "sinopsi": "El Gran Molekulon mira la Terra i decideix que el que cal canviar no és el món: és la banda sonora. Envia Mazinguer i Horacio Motomachi a reclutar els cent cinquanta mil superherois que ja hi han nascut.",
       "compra": null,
       "portada": null,
-      "pagines": []
+      "pagines": [
+        {
+          "n": 1,
+          "img": "mostra/comic-1/01.webp",
+          "tema": "horacio-clip",
+          "tema_pendent": true,
+          "alt": "Pàgina 1: una escuadrilla de naus travessa l'hiperespai estrellat, sota el rètol «En algún lugar en el… hiperespacio»."
+        },
+        {
+          "n": 2,
+          "img": "mostra/comic-1/02.webp",
+          "tema": "horacio-clip",
+          "tema_pendent": true,
+          "alt": "Pàgina 2: l'escuadrilla passa inadvertida i els membres del Comando, presentats en medallons, es pregunten cap on van i quina és la seva missió."
+        },
+        {
+          "n": 3,
+          "img": "mostra/comic-1/03.webp",
+          "tema": "horacio-clip",
+          "tema_pendent": true,
+          "alt": "Pàgina 3: el Gran Molekulon, dibuixat com un cúmul de molècules i discos sobre fons negre, es pregunta per què li dol tant la Terra."
+        },
+        {
+          "n": 4,
+          "img": "mostra/comic-1/04.webp",
+          "tema": "horacio-clip",
+          "tema_pendent": true,
+          "alt": "Pàgina 4: el Gran Molekulon decideix canviar la banda sonora, i Mazinguer desperta Horacio Motomachi per dir-li que ha arribat l'hora."
+        }
+      ]
     },
     {
       "id": "comic-2",
