@@ -7,7 +7,7 @@
       "titol": "Comando Molekulon · el primer còmic",
       "sinopsi": "El Gran Molekulon mira la Terra i decideix que el que cal canviar no és el món: és la banda sonora. Envia Mazinguer i Horacio Motomachi a reclutar els cent cinquanta mil superherois que ja hi han nascut.",
       "compra": null,
-      "portada": null,
+      "portada": "mostra/comic-1/00-portada.webp",
       "pagines": [
         {
           "n": 1,
@@ -36,8 +36,30 @@
           "tema": "horacio-clip",
           "tema_pendent": true,
           "alt": "Pàgina 4: el Gran Molekulon decideix canviar la banda sonora, i Mazinguer desperta Horacio Motomachi per dir-li que ha arribat l'hora."
+        },
+        {
+          "n": 5,
+          "img": "mostra/comic-1/05.webp",
+          "tema": "horacio-clip",
+          "tema_pendent": true,
+          "alt": "Pàgina 5: el Gran Molekulon dona autoritat als seus dos deixebles i els encarrega un comando de 150.000 superherois; ells dubten que en puguin reunir tants."
+        },
+        {
+          "n": 6,
+          "img": "mostra/comic-1/06.webp",
+          "tema": "horacio-clip",
+          "tema_pendent": true,
+          "alt": "Pàgina 6: una allau d'espermatozoides somrients travessant la foscor cap a l'òvul, sota el rètol de la llegenda del Gran Molekulon."
+        },
+        {
+          "n": 7,
+          "img": "mostra/comic-1/07.webp",
+          "tema": "horacio-clip",
+          "tema_pendent": true,
+          "alt": "Pàgina 7: la cursa acaba i només un arriba; a les vinyetes de baix, Mazinguer li proposa a Horacio la idea d'una cançó nova."
         }
-      ]
+      ],
+      "portada_alt": "Portada del primer còmic: el títol «Comando Molekulon» dibuixat a llapis al voltant d'una esfera lluminosa, amb el segell «Precio redondo · también en cassette»."
     },
     {
       "id": "comic-2",

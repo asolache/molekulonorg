@@ -138,6 +138,11 @@ tr.te td{background:rgba(0,230,118,.06)}
    Una pàgina de còmic es llegeix en vertical i sencera: si cal fer scroll per
    veure'n el peu, els globus es llegeixen en dos temps i la pàgina es perd. Per
    això la imatge s'ajusta a l'alçada de la finestra i no a l'amplada. */
+/* La portada va al costat de la sinopsi i no dins del lector: és el que et fa
+   agafar el còmic, no la primera pàgina de la història. */
+.capsa-portada{display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap;margin:.6rem 0 1rem}
+.capsa-portada img{width:190px;border:1px solid var(--border);border-radius:10px;background:#000}
+.capsa-portada .q{flex:1 1 320px;min-width:280px}
 .lector{margin:.9rem 0}
 .full{position:relative;background:#000;border:1px solid var(--border);border-radius:12px;overflow:hidden;
   display:flex;align-items:center;justify-content:center;min-height:50vh}

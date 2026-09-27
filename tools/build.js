@@ -287,6 +287,11 @@ tr.te td{background:rgba(0,230,118,.06)}
    Una pàgina de còmic es llegeix en vertical i sencera: si cal fer scroll per
    veure'n el peu, els globus es llegeixen en dos temps i la pàgina es perd. Per
    això la imatge s'ajusta a l'alçada de la finestra i no a l'amplada. */
+/* La portada va al costat de la sinopsi i no dins del lector: és el que et fa
+   agafar el còmic, no la primera pàgina de la història. */
+.capsa-portada{display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap;margin:.6rem 0 1rem}
+.capsa-portada img{width:190px;border:1px solid var(--border);border-radius:10px;background:#000}
+.capsa-portada .q{flex:1 1 320px;min-width:280px}
 .lector{margin:.9rem 0}
 .full{position:relative;background:#000;border:1px solid var(--border);border-radius:12px;overflow:hidden;
   display:flex;align-items:center;justify-content:center;min-height:50vh}
@@ -697,7 +702,11 @@ existeix per poder-la acabar, no per ensenyar-la.</p>`}
 <div class="wrap">
 ${M.comics.map(c => `<section class="box">
 <h2>${esc(c.titol)}</h2>
-<p class="lead">${esc(c.sinopsi)}</p>
+${c.portada ? `<div class="capsa-portada">
+<img src="${esc(c.portada)}" alt="${esc(c.portada_alt || 'Portada de ' + c.titol)}" width="190">
+<div class="q"><p class="lead">${esc(c.sinopsi)}</p>
+<p class="mut">${c.pagines.length ? `${c.pagines.length} pàgines de mostra` : 'Mostra encara per obrir'}</p></div>
+</div>` : `<p class="lead">${esc(c.sinopsi)}</p>`}
 ${llibre(c)}
 ${c.compra ? `<p class="nota">El número sencer, en paper. <a href="${esc(c.compra)}" rel="noopener">On es compra ↗</a></p>`
   : '<p class="mut">On es compra: pendent de dir-ho aquí.</p>'}

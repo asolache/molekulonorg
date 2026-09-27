@@ -138,6 +138,11 @@ tr.te td{background:rgba(0,230,118,.06)}
    Una pàgina de còmic es llegeix en vertical i sencera: si cal fer scroll per
    veure'n el peu, els globus es llegeixen en dos temps i la pàgina es perd. Per
    això la imatge s'ajusta a l'alçada de la finestra i no a l'amplada. */
+/* La portada va al costat de la sinopsi i no dins del lector: és el que et fa
+   agafar el còmic, no la primera pàgina de la història. */
+.capsa-portada{display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap;margin:.6rem 0 1rem}
+.capsa-portada img{width:190px;border:1px solid var(--border);border-radius:10px;background:#000}
+.capsa-portada .q{flex:1 1 320px;min-width:280px}
 .lector{margin:.9rem 0}
 .full{position:relative;background:#000;border:1px solid var(--border);border-radius:12px;overflow:hidden;
   display:flex;align-items:center;justify-content:center;min-height:50vh}
@@ -189,18 +194,25 @@ còmic sencer.</p>
 <div class="wrap">
 <section class="box">
 <h2>Comando Molekulon · el primer còmic</h2>
-<p class="lead">El Gran Molekulon mira la Terra i decideix que el que cal canviar no és el món: és la banda sonora. Envia Mazinguer i Horacio Motomachi a reclutar els cent cinquanta mil superherois que ja hi han nascut.</p>
+<div class="capsa-portada">
+<img src="mostra/comic-1/00-portada.webp" alt="Portada del primer còmic: el títol «Comando Molekulon» dibuixat a llapis al voltant d'una esfera lluminosa, amb el segell «Precio redondo · también en cassette»." width="190">
+<div class="q"><p class="lead">El Gran Molekulon mira la Terra i decideix que el que cal canviar no és el món: és la banda sonora. Envia Mazinguer i Horacio Motomachi a reclutar els cent cinquanta mil superherois que ja hi han nascut.</p>
+<p class="mut">7 pàgines de mostra</p></div>
+</div>
 <div class="lector" data-lector="comic-1" data-temes="{&quot;horacio-clip&quot;:{&quot;id&quot;:&quot;horacio-clip&quot;,&quot;titol&quot;:&quot;Horacio Motomachi&quot;,&quot;yt&quot;:&quot;3Kf36tpHk98&quot;}}"
- data-pendents="[1,2,3,4]">
+ data-pendents="[1,2,3,4,5,6,7]">
 <div class="full">
 <img src="mostra/comic-1/01.webp" alt="Pàgina 1: una escuadrilla de naus travessa l'hiperespai estrellat, sota el rètol «En algún lugar en el… hiperespacio»." data-tema="horacio-clip">
 <img src="mostra/comic-1/02.webp" alt="Pàgina 2: l'escuadrilla passa inadvertida i els membres del Comando, presentats en medallons, es pregunten cap on van i quina és la seva missió." hidden data-tema="horacio-clip">
 <img src="mostra/comic-1/03.webp" alt="Pàgina 3: el Gran Molekulon, dibuixat com un cúmul de molècules i discos sobre fons negre, es pregunta per què li dol tant la Terra." hidden loading="lazy" data-tema="horacio-clip">
 <img src="mostra/comic-1/04.webp" alt="Pàgina 4: el Gran Molekulon decideix canviar la banda sonora, i Mazinguer desperta Horacio Motomachi per dir-li que ha arribat l'hora." hidden loading="lazy" data-tema="horacio-clip">
+<img src="mostra/comic-1/05.webp" alt="Pàgina 5: el Gran Molekulon dona autoritat als seus dos deixebles i els encarrega un comando de 150.000 superherois; ells dubten que en puguin reunir tants." hidden loading="lazy" data-tema="horacio-clip">
+<img src="mostra/comic-1/06.webp" alt="Pàgina 6: una allau d'espermatozoides somrients travessant la foscor cap a l'òvul, sota el rètol de la llegenda del Gran Molekulon." hidden loading="lazy" data-tema="horacio-clip">
+<img src="mostra/comic-1/07.webp" alt="Pàgina 7: la cursa acaba i només un arriba; a les vinyetes de baix, Mazinguer li proposa a Horacio la idea d'una cançó nova." hidden loading="lazy" data-tema="horacio-clip">
 </div>
 <div class="controls">
 <button type="button" data-va="-1" disabled>← Anterior</button>
-<span class="comptador">1 / 4</span>
+<span class="comptador">1 / 7</span>
 <button type="button" data-va="1">Següent →</button>
 </div>
 <div class="so">
