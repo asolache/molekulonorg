@@ -134,6 +134,29 @@ tr.te td{background:rgba(0,230,118,.06)}
 .nota{font-size:.84rem;color:var(--light);border-left:2px solid var(--border);padding-left:.65rem;margin:.8rem 0}
 .nota b{color:var(--text)}
 
+/* ══ EL LECTOR DE LA MOSTRA ══════════════════════════════════════════════
+   Una pàgina de còmic es llegeix en vertical i sencera: si cal fer scroll per
+   veure'n el peu, els globus es llegeixen en dos temps i la pàgina es perd. Per
+   això la imatge s'ajusta a l'alçada de la finestra i no a l'amplada. */
+.lector{margin:.9rem 0}
+.full{position:relative;background:#000;border:1px solid var(--border);border-radius:12px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;min-height:50vh}
+.full img{display:block;max-height:78vh;width:auto;max-width:100%}
+.full img[hidden]{display:none}
+.controls{display:flex;align-items:center;justify-content:center;gap:.7rem;margin:.7rem 0 .2rem}
+.controls button{font:inherit;font-size:.9rem;font-weight:700;padding:.45rem .9rem;border-radius:9px;cursor:pointer;
+  border:1px solid var(--border);background:var(--card);color:var(--text)}
+.controls button:disabled{opacity:.35;cursor:default}
+.controls .comptador{font-family:var(--mono);font-size:.82rem;color:var(--muted);min-width:5.5rem;text-align:center}
+.so{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;justify-content:center;
+  font-size:.84rem;color:var(--light);margin:.5rem 0 0}
+.so b{color:var(--text)}
+.so button{font:inherit;font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:20px;cursor:pointer;
+  border:1px solid var(--purple);background:rgba(224,64,251,.14);color:var(--purple)}
+.so .cap{height:0;overflow:hidden}
+.so iframe{width:0;height:0;border:0}
+.buit{border-color:var(--orange)}
+
 footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}

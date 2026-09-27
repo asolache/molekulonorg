@@ -29,6 +29,13 @@ const { join } = require('node:path');
 const ARREL = join(__dirname, '..');
 const CHECK = process.argv.includes('--check');
 const D = JSON.parse(readFileSync(join(ARREL, 'data', 'comando.json'), 'utf8'));
+/* La mostra dels còmics. És l'única dada que s'edita en aquest repositori: quines
+   pàgines es publiquen i quin tema sona a cada una és una decisió editorial
+   d'aquesta web, no un estat del SOS. Les cançons, però, segueixen sent les de
+   dalt — `tema` hi és un `id` de `comando.json`. */
+const M = JSON.parse(readFileSync(join(ARREL, 'data', 'mostra.json'), 'utf8'));
+const PECA = Object.fromEntries(D.videos.map(v => [v.id, v]));
+const PAGS_MOSTRA = M.comics.reduce((a, c) => a + c.pagines.length, 0);
 
 /* El domini propi i la casa d'on venim. El SOS segueix sent l'aplicació i el
    lloc de les eines: des d'aquí s'hi enllaça, no se'n copia res. */
@@ -52,7 +59,15 @@ const PAGINES = [
     desc: 'El guió de la intro, pla a pla: què està filmat, què s\'ha de filmar i d\'on surt cada imatge. Un esborrany per corregir, no un guió tancat.' },
   { f: 'musica.html', nav: 'La banda', t: 'La banda',
     tit: 'La banda · Comando Molekulon',
-    desc: 'Els capítols, els videoclips, els temes i els directes del Comando. I el que encara no té adreça, dit com el que és.' }
+    desc: 'Els capítols, els videoclips, els temes i els directes del Comando. I el que encara no té adreça, dit com el que és.' },
+  /* El lector de la mostra. `menu` es calcula i no es decideix: mentre no hi
+     hagi ni una pàgina publicada, la pàgina existeix però no s'enllaça des del
+     menú ni surt al sitemap. Una porta al no-res és pitjor que cap porta, i una
+     pàgina buida indexada és pitjor que totes dues. El dia que hi entri la
+     primera pàgina, entra sola al menú. */
+  { f: 'comic.html', nav: 'El còmic', t: 'El còmic', menu: PAGS_MOSTRA > 0,
+    tit: 'El còmic · Comando Molekulon',
+    desc: 'La mostra dels dos còmics, pàgina a pàgina i cada una amb la cançó que li toca. Així és com es van publicar: còmic i disc, per llegir-los alhora.' }
 ];
 
 /* Les pàgines que encara viuen al SOS. S'enllacen amb el seu domini sencer i
@@ -268,6 +283,29 @@ tr.te td{background:rgba(0,230,118,.06)}
 .nota{font-size:.84rem;color:var(--light);border-left:2px solid var(--border);padding-left:.65rem;margin:.8rem 0}
 .nota b{color:var(--text)}
 
+/* ══ EL LECTOR DE LA MOSTRA ══════════════════════════════════════════════
+   Una pàgina de còmic es llegeix en vertical i sencera: si cal fer scroll per
+   veure'n el peu, els globus es llegeixen en dos temps i la pàgina es perd. Per
+   això la imatge s'ajusta a l'alçada de la finestra i no a l'amplada. */
+.lector{margin:.9rem 0}
+.full{position:relative;background:#000;border:1px solid var(--border);border-radius:12px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;min-height:50vh}
+.full img{display:block;max-height:78vh;width:auto;max-width:100%}
+.full img[hidden]{display:none}
+.controls{display:flex;align-items:center;justify-content:center;gap:.7rem;margin:.7rem 0 .2rem}
+.controls button{font:inherit;font-size:.9rem;font-weight:700;padding:.45rem .9rem;border-radius:9px;cursor:pointer;
+  border:1px solid var(--border);background:var(--card);color:var(--text)}
+.controls button:disabled{opacity:.35;cursor:default}
+.controls .comptador{font-family:var(--mono);font-size:.82rem;color:var(--muted);min-width:5.5rem;text-align:center}
+.so{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;justify-content:center;
+  font-size:.84rem;color:var(--light);margin:.5rem 0 0}
+.so b{color:var(--text)}
+.so button{font:inherit;font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:20px;cursor:pointer;
+  border:1px solid var(--purple);background:rgba(224,64,251,.14);color:var(--purple)}
+.so .cap{height:0;overflow:hidden}
+.so iframe{width:0;height:0;border:0}
+.buit{border-color:var(--orange)}
+
 footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}
@@ -277,7 +315,7 @@ footer a{color:var(--light)}
 /* ══ L'ESQUELET ══════════════════════════════════════════════════════════════ */
 const nav = actual => `<nav class="barra" aria-label="Principal">
 <a class="marca" href="/">Comando <span>Molekulon</span></a>
-${PAGINES.map(p => `<a class="l" href="${p.f === 'index.html' ? '/' : '/' + p.f.replace(/\.html$/, '')}"${p.f === actual ? ' aria-current="page"' : ''}>${esc(p.nav)}</a>`).join('\n')}
+${PAGINES.filter(p => p.menu !== false).map(p => `<a class="l" href="${p.f === 'index.html' ? '/' : '/' + p.f.replace(/\.html$/, '')}"${p.f === actual ? ' aria-current="page"' : ''}>${esc(p.nav)}</a>`).join('\n')}
 <a class="l dret" href="${SOS}/sos" rel="noopener">Obre el SOS ↗</a>
 </nav>`;
 
@@ -596,15 +634,142 @@ ${['llista', 'videoclip', 'tema', 'directe'].map(bloc).join('\n')}
 </div>`;
 };
 
+/* ══ EL CÒMIC ════════════════════════════════════════════════════════════════
+   Els dos còmics es van publicar **amb el seu disc**, per llegir cada pàgina
+   amb la cançó que li toca. Una galeria d'imatges no seria la mateixa cosa: el
+   que es reprodueix aquí no és el còmic, és **com es llegeix**.
+
+   Per això el lector té tres peces i cap més: la pàgina sencera, els dos
+   botons, i una barra que diu què sona i deixa posar-ho. El so no arrenca sol
+   —una pàgina que et crida quan l'obres es tanca— i no es reinicia quan dues
+   pàgines seguides comparteixen tema, que és el cas normal.
+
+   Mentre no hi hagi imatges, la pàgina no s'inventa cap maqueta: diu què hi
+   haurà i què falta perquè hi sigui. */
+const llibre = c => {
+  const n = c.pagines.length;
+  if (!n) return `<p class="nota buit"><b>D'aquest encara no hi ha cap pàgina publicada.</b>
+Quan hi siguin es llegiran aquí, una a una i cada una amb la seva cançó — que és
+com es va publicar en paper.</p>`;
+  const temes = c.pagines.map(p => PECA[p.tema]).filter(Boolean);
+  /* El lector es porta els seus temes a sobre, i no hi ha cap crida a res: són
+     tres camps per peça i van a l'atribut. Un `fetch` d'un JSON per a dotze
+     línies de dades seria una petició més i un estat més per fallar. */
+  const mapa = {};
+  for (const t of temes) mapa[t.id] = { id: t.id, titol: t.titol, yt: idYouTube(t.url) };
+  return `<div class="lector" data-lector="${esc(c.id)}" data-temes="${esc(JSON.stringify(mapa))}">
+<div class="full">
+${c.pagines.map((p, i) => `<img src="${esc(p.img)}" alt="${esc(p.alt || `${c.titol}, pàgina ${p.n}`)}"${i ? ' hidden' : ''}${i > 1 ? ' loading="lazy"' : ''} data-tema="${esc(p.tema || '')}">`).join('\n')}
+</div>
+<div class="controls">
+<button type="button" data-va="-1" disabled>← Anterior</button>
+<span class="comptador">1 / ${n}</span>
+<button type="button" data-va="1">Següent →</button>
+</div>
+<div class="so">
+<span>Sona: <b class="tema">${esc(temes[0] ? temes[0].titol : 'encara sense tema assignat')}</b></span>
+<button type="button" data-posa>▶ Posa-la</button>
+<span class="cap" aria-hidden="true"></span>
+</div>
+</div>`;
+};
+
+const comic = () => `
+<header class="hero">
+<div class="hero-inner">
+<span class="tag">Mostra</span>
+<h1>Un còmic que <em>es llegeix amb música</em></h1>
+<p class="sub">Els dos números es van publicar <strong>amb el seu disc</strong>: cada pàgina
+té la seva cançó i es llegeixen alhora. Això d'aquí és <strong>una mostra</strong>, no el
+còmic sencer.</p>
+${PAGS_MOSTRA ? '' : `<p class="avis"><strong>Encara no hi ha cap pàgina aquí.</strong> El
+lector ja està muntat i el que falta són les imatges i dir quin tema sona a cada
+pàgina. Mentre no hi siguin, aquesta pàgina no surt ni al menú ni als cercadors:
+existeix per poder-la acabar, no per ensenyar-la.</p>`}
+</div>
+</header>
+
+<div class="wrap">
+${M.comics.map(c => `<section class="box">
+<h2>${esc(c.titol)}</h2>
+<p class="lead">${esc(c.sinopsi)}</p>
+${llibre(c)}
+${c.compra ? `<p class="nota">El número sencer, en paper. <a href="${esc(c.compra)}" rel="noopener">On es compra ↗</a></p>`
+  : '<p class="mut">On es compra: pendent de dir-ho aquí.</p>'}
+</section>`).join('\n')}
+
+${M.trailer ? `<section class="box">
+<h2>El tràiler</h2>
+<div class="taula"><a href="${esc(M.trailer)}" rel="noopener">Mira'l ↗</a></div>
+</section>` : ''}
+
+<section class="box">
+<h3>Per què còmic i disc alhora</h3>
+<p class="lead">Cada personatge té la seva superarma, el seu vers i el seu tema. El
+dibuix i la música no il·lustren la història: <b>en són la matèria</b>, i separar-los
+deixa les dues meitats dient menys del que diuen juntes. A la
+<a href="/musica">pàgina de la banda</a> hi ha les peces publicades, i a
+<a href="/peli">la pel·lícula</a>, el guió que en surt.</p>
+</section>
+</div>
+${PAGS_MOSTRA ? SCRIPT : ''}`;
+
+/* El guió del lector. Cinc funcions i cap dependència: el que fa és canviar
+   quina imatge es veu i, quan el tema canvia de debò, carregar el reproductor.
+   Va al final del cos i no al cap, així que quan corre ja hi és tot. */
+const SCRIPT = `<script>
+(function(){
+for (const l of document.querySelectorAll('[data-lector]')) {
+  const fulls = [...l.querySelectorAll('.full img')];
+  const comptador = l.querySelector('.comptador');
+  const tema = l.querySelector('.tema');
+  const cap = l.querySelector('.cap');
+  const posa = l.querySelector('[data-posa]');
+  const TEMES = JSON.parse(l.dataset.temes || '{}');
+  let i = 0, sonant = null;
+
+  const pinta = () => {
+    fulls.forEach((f, k) => f.hidden = k !== i);
+    comptador.textContent = (i + 1) + ' / ' + fulls.length;
+    l.querySelector('[data-va="-1"]').disabled = i === 0;
+    l.querySelector('[data-va="1"]').disabled = i === fulls.length - 1;
+    const t = TEMES[fulls[i].dataset.tema];
+    tema.textContent = t ? t.titol : 'encara sense tema assignat';
+    /* Si la pàgina nova porta el mateix tema, no es toca res: rebobinar una
+       cançó a cada pàgina és la manera més ràpida que la tanquin. */
+    if (sonant && t && t.id !== sonant) sona(t);
+    else if (sonant && !t) { cap.innerHTML = ''; sonant = null; }
+  };
+  const sona = t => {
+    if (!t || !t.yt) { cap.innerHTML = ''; sonant = null; return; }
+    cap.innerHTML = '<iframe title="' + t.titol.replace(/"/g, '&quot;') + '" allow="autoplay" ' +
+      'src="https://www.youtube-nocookie.com/embed/' + t.yt + '?autoplay=1&rel=0&playsinline=1"></iframe>';
+    sonant = t.id;
+  };
+
+  l.addEventListener('click', e => {
+    const b = e.target.closest('[data-va]');
+    if (b) { i = Math.min(fulls.length - 1, Math.max(0, i + Number(b.dataset.va))); pinta(); }
+    if (e.target.closest('[data-posa]')) sona(TEMES[fulls[i].dataset.tema]);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' && i < fulls.length - 1) { i++; pinta(); }
+    if (e.key === 'ArrowLeft' && i > 0) { i--; pinta(); }
+  });
+  pinta();
+}
+})();
+</scr` + `ipt>`;
+
 /* ══ EL SITEMAP ══════════════════════════════════════════════════════════════ */
 const sitemap = () => `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${PAGINES.map(p => `<url><loc>${url(p.f)}</loc></url>`).join('\n')}
+${PAGINES.filter(p => p.menu !== false).map(p => `<url><loc>${url(p.f)}</loc></url>`).join('\n')}
 </urlset>
 `;
 
 /* ══ ESCRIURE ════════════════════════════════════════════════════════════════ */
-const COSSOS = { 'index.html': portada, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica };
+const COSSOS = { 'index.html': portada, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic };
 const sortida = () => {
   const l = PAGINES.map(p => [p.f, pagina(p, COSSOS[p.f]().trim())]);
   l.push(['sitemap.xml', sitemap()]);

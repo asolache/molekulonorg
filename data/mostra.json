@@ -1,0 +1,22 @@
+{
+  "_": "La mostra dels dos còmics: quines pàgines es publiquen i quin tema sona a cada una. AIXÒ SÍ que s'edita a mà, al contrari de comando.json — és una decisió editorial d'aquesta web i no una dada del SOS. El camp `tema` és l'`id` d'una peça de data/comando.json: així la cançó de cada pàgina segueix sent la que està declarada a dalt, i una peça que canviï d'adreça no deixa cap pàgina muda.",
+  "trailer": null,
+  "comics": [
+    {
+      "id": "comic-1",
+      "titol": "Comando Molekulon · el primer còmic",
+      "sinopsi": "El Gran Molekulon mira la Terra i decideix que el que cal canviar no és el món: és la banda sonora. Envia Mazinguer i Horacio Motomachi a reclutar els cent cinquanta mil superherois que ja hi han nascut.",
+      "compra": null,
+      "portada": null,
+      "pagines": []
+    },
+    {
+      "id": "comic-2",
+      "titol": "Comando Molekulon · el segon còmic",
+      "sinopsi": "La nau perd altura. No s'han quedat sense ganes: s'han quedat sense combustible. I enmig del caos apareix ell, oferint un paper higiènic molt més suau.",
+      "compra": null,
+      "portada": null,
+      "pagines": []
+    }
+  ]
+}

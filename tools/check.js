@@ -153,5 +153,28 @@ if (faltants.length) {
     : ok(`els vídeos de les pàgines són peces declarades (${bons.size} adreces a les dades)`);
 }
 
+/* ── 9 · La mostra del còmic diu la veritat ───────────────────────────────
+   Tres maneres que això es podria podrir sense petar: una pàgina declarada amb
+   una imatge que no s'ha pujat (marc buit al lector), un tema que ja no és a
+   les dades de dalt (pàgina muda i cap avís), i la pàgina entrant al menú amb
+   zero pàgines a dins. */
+{
+  const M = JSON.parse(readFileSync(join(ARREL, 'data', 'mostra.json'), 'utf8'));
+  const ids = new Set(D.videos.map(v => v.id));
+  const senseImatge = [], senseTema = [];
+  let n = 0;
+  for (const c of M.comics) for (const p of c.pagines) {
+    n++;
+    if (!p.img || !existsSync(join(ARREL, p.img))) senseImatge.push(`${c.id} · ${p.n}`);
+    if (p.tema && !ids.has(p.tema)) senseTema.push(`${c.id} · ${p.n} → ${p.tema}`);
+  }
+  const alMenu = PAGINES.find(p => p.f === 'comic.html').menu !== false;
+  if (senseImatge.length) bad(`${pl(senseImatge.length, 'pàgina declarada', 'pàgines declarades')} sense imatge al disc: ${senseImatge.join(', ')}`);
+  else if (senseTema.length) bad(`temes que no són a les dades: ${senseTema.join(', ')}`);
+  else if (alMenu !== n > 0) bad(alMenu ? 'la mostra és al menú i no té cap pàgina' : 'la mostra té pàgines i no és al menú');
+  else ok(n ? `la mostra té ${pl(n, 'pàgina', 'pàgines')}, totes amb imatge i amb tema declarat`
+    : 'la mostra encara és buida, i per això no és al menú ni al sitemap');
+}
+
 console.log(fails ? `\n❌ ${pl(fails, 'problema', 'problemes')}.` : '\n✅ La web compleix el que promet.');
 process.exit(fails ? 1 : 0);
