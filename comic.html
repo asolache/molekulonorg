@@ -158,8 +158,11 @@ tr.te td{background:rgba(0,230,118,.06)}
 .so b{color:var(--text)}
 .so button{font:inherit;font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:20px;cursor:pointer;
   border:1px solid var(--purple);background:rgba(224,64,251,.14);color:var(--purple)}
-.so .cap{height:0;overflow:hidden}
+.so .cap{height:0;overflow:hidden;width:0}
+.so .cap.veu{height:auto;width:100%;flex-basis:100%;margin-top:.5rem}
 .so iframe{width:0;height:0;border:0}
+.so .cap.veu iframe{width:100%;height:120px;border-radius:10px}
+.so .fora{font-size:.8rem}
 .buit{border-color:var(--orange)}
 
 footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
@@ -199,16 +202,16 @@ còmic sencer.</p>
 <div class="q"><p class="lead">El Gran Molekulon mira la Terra i decideix que el que cal canviar no és el món: és la banda sonora. Envia Mazinguer i Horacio Motomachi a reclutar els cent cinquanta mil superherois que ja hi han nascut.</p>
 <p class="mut">7 pàgines de mostra</p></div>
 </div>
-<div class="lector" data-lector="comic-1" data-temes="{&quot;horacio-clip&quot;:{&quot;id&quot;:&quot;horacio-clip&quot;,&quot;titol&quot;:&quot;Horacio Motomachi&quot;,&quot;yt&quot;:&quot;3Kf36tpHk98&quot;}}"
- data-pendents="[1,2,3,4,5,6,7]">
+<div class="lector" data-lector="comic-1" data-temes="{&quot;horacio-tema&quot;:{&quot;id&quot;:&quot;horacio-tema&quot;,&quot;titol&quot;:&quot;El tema d'Horacio Motomachi&quot;,&quot;yt&quot;:null,&quot;sc&quot;:null,&quot;url&quot;:&quot;https://on.soundcloud.com/qc8BDojtp4X1P9jePM&quot;},&quot;mazinguer-tema&quot;:{&quot;id&quot;:&quot;mazinguer-tema&quot;,&quot;titol&quot;:&quot;El tema de Mazinguer&quot;,&quot;yt&quot;:null,&quot;sc&quot;:null,&quot;url&quot;:&quot;https://on.soundcloud.com/fUxgcrlxAkJT6DV9yx&quot;}}"
+ data-pendents="[1,2,3,4,5,6]">
 <div class="full">
-<img src="mostra/comic-1/01.webp" alt="Pàgina 1: una escuadrilla de naus travessa l'hiperespai estrellat, sota el rètol «En algún lugar en el… hiperespacio»." data-tema="horacio-clip">
-<img src="mostra/comic-1/02.webp" alt="Pàgina 2: l'escuadrilla passa inadvertida i els membres del Comando, presentats en medallons, es pregunten cap on van i quina és la seva missió." hidden data-tema="horacio-clip">
-<img src="mostra/comic-1/03.webp" alt="Pàgina 3: el Gran Molekulon, dibuixat com un cúmul de molècules i discos sobre fons negre, es pregunta per què li dol tant la Terra." hidden loading="lazy" data-tema="horacio-clip">
-<img src="mostra/comic-1/04.webp" alt="Pàgina 4: el Gran Molekulon decideix canviar la banda sonora, i Mazinguer desperta Horacio Motomachi per dir-li que ha arribat l'hora." hidden loading="lazy" data-tema="horacio-clip">
-<img src="mostra/comic-1/05.webp" alt="Pàgina 5: el Gran Molekulon dona autoritat als seus dos deixebles i els encarrega un comando de 150.000 superherois; ells dubten que en puguin reunir tants." hidden loading="lazy" data-tema="horacio-clip">
-<img src="mostra/comic-1/06.webp" alt="Pàgina 6: una allau d'espermatozoides somrients travessant la foscor cap a l'òvul, sota el rètol de la llegenda del Gran Molekulon." hidden loading="lazy" data-tema="horacio-clip">
-<img src="mostra/comic-1/07.webp" alt="Pàgina 7: la cursa acaba i només un arriba; a les vinyetes de baix, Mazinguer li proposa a Horacio la idea d'una cançó nova." hidden loading="lazy" data-tema="horacio-clip">
+<img src="mostra/comic-1/01.webp" alt="Pàgina 1: una escuadrilla de naus travessa l'hiperespai estrellat, sota el rètol «En algún lugar en el… hiperespacio»." data-tema="horacio-tema">
+<img src="mostra/comic-1/02.webp" alt="Pàgina 2: l'escuadrilla passa inadvertida i els membres del Comando, presentats en medallons, es pregunten cap on van i quina és la seva missió." hidden data-tema="horacio-tema">
+<img src="mostra/comic-1/03.webp" alt="Pàgina 3: el Gran Molekulon, dibuixat com un cúmul de molècules i discos sobre fons negre, es pregunta per què li dol tant la Terra." hidden loading="lazy" data-tema="horacio-tema">
+<img src="mostra/comic-1/04.webp" alt="Pàgina 4: el Gran Molekulon decideix canviar la banda sonora, i Mazinguer desperta Horacio Motomachi per dir-li que ha arribat l'hora." hidden loading="lazy" data-tema="horacio-tema">
+<img src="mostra/comic-1/05.webp" alt="Pàgina 5: el Gran Molekulon dona autoritat als seus dos deixebles i els encarrega un comando de 150.000 superherois; ells dubten que en puguin reunir tants." hidden loading="lazy" data-tema="horacio-tema">
+<img src="mostra/comic-1/06.webp" alt="Pàgina 6: una allau d'espermatozoides somrients travessant la foscor cap a l'òvul, sota el rètol de la llegenda del Gran Molekulon." hidden loading="lazy" data-tema="horacio-tema">
+<img src="mostra/comic-1/07.webp" alt="Pàgina 7: la cursa acaba i només un arriba; a les vinyetes de baix, Mazinguer li proposa a Horacio la idea d'una cançó nova." hidden loading="lazy" data-tema="mazinguer-tema">
 </div>
 <div class="controls">
 <button type="button" data-va="-1" disabled>← Anterior</button>
@@ -216,9 +219,10 @@ còmic sencer.</p>
 <button type="button" data-va="1">Següent →</button>
 </div>
 <div class="so">
-<span>Sona: <b class="tema">Horacio Motomachi (proposta, a confirmar)</b></span>
+<span>Sona: <b class="tema">El tema d'Horacio Motomachi (proposta, a confirmar)</b></span>
 <button type="button" data-posa>▶ Posa-la</button>
-<span class="cap" aria-hidden="true"></span>
+<a class="fora" href="https://on.soundcloud.com/qc8BDojtp4X1P9jePM" rel="noopener" hidden>Escolta-la a SoundCloud ↗</a>
+<span class="cap"></span>
 </div>
 </div>
 <p class="mut">On es compra: pendent de dir-ho aquí.</p>
@@ -266,12 +270,24 @@ for (const l of document.querySelectorAll('[data-lector]')) {
     /* Si la pàgina nova porta el mateix tema, no es toca res: rebobinar una
        cançó a cada pàgina és la manera més ràpida que la tanquin. */
     if (sonant && t && t.id !== sonant) sona(t);
-    else if (sonant && !t) { cap.innerHTML = ''; sonant = null; }
+    else if (sonant && !t) { cap.innerHTML = ''; cap.className = 'cap'; sonant = null; }
+    /* Una peça que no es pot incrustar no amaga el botó i prou: ensenya la
+       porta que sí que hi ha. */
+    const potSonar = !!(t && (t.yt || t.sc));
+    posa.hidden = !potSonar;
+    const fora = l.querySelector('.fora');
+    if (fora) {
+      fora.hidden = potSonar || !(t && t.url);
+      if (t && t.url) fora.href = t.url;
+    }
   };
   const sona = t => {
-    if (!t || !t.yt) { cap.innerHTML = ''; sonant = null; return; }
-    cap.innerHTML = '<iframe title="' + t.titol.replace(/"/g, '&quot;') + '" allow="autoplay" ' +
-      'src="https://www.youtube-nocookie.com/embed/' + t.yt + '?autoplay=1&rel=0&playsinline=1"></iframe>';
+    if (!t || (!t.yt && !t.sc)) { cap.innerHTML = ''; cap.className = 'cap'; sonant = null; return; }
+    const src = t.yt
+      ? 'https://www.youtube-nocookie.com/embed/' + t.yt + '?autoplay=1&rel=0&playsinline=1'
+      : t.sc;
+    cap.className = t.yt ? 'cap' : 'cap veu';
+    cap.innerHTML = '<iframe title="' + t.titol.replace(/"/g, '&quot;') + '" allow="autoplay" src="' + src + '"></iframe>';
     sonant = t.id;
   };
 

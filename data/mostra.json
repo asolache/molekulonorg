@@ -12,50 +12,50 @@
         {
           "n": 1,
           "img": "mostra/comic-1/01.webp",
-          "tema": "horacio-clip",
+          "tema": "horacio-tema",
           "tema_pendent": true,
           "alt": "Pàgina 1: una escuadrilla de naus travessa l'hiperespai estrellat, sota el rètol «En algún lugar en el… hiperespacio»."
         },
         {
           "n": 2,
           "img": "mostra/comic-1/02.webp",
-          "tema": "horacio-clip",
+          "tema": "horacio-tema",
           "tema_pendent": true,
           "alt": "Pàgina 2: l'escuadrilla passa inadvertida i els membres del Comando, presentats en medallons, es pregunten cap on van i quina és la seva missió."
         },
         {
           "n": 3,
           "img": "mostra/comic-1/03.webp",
-          "tema": "horacio-clip",
+          "tema": "horacio-tema",
           "tema_pendent": true,
           "alt": "Pàgina 3: el Gran Molekulon, dibuixat com un cúmul de molècules i discos sobre fons negre, es pregunta per què li dol tant la Terra."
         },
         {
           "n": 4,
           "img": "mostra/comic-1/04.webp",
-          "tema": "horacio-clip",
+          "tema": "horacio-tema",
           "tema_pendent": true,
           "alt": "Pàgina 4: el Gran Molekulon decideix canviar la banda sonora, i Mazinguer desperta Horacio Motomachi per dir-li que ha arribat l'hora."
         },
         {
           "n": 5,
           "img": "mostra/comic-1/05.webp",
-          "tema": "horacio-clip",
+          "tema": "horacio-tema",
           "tema_pendent": true,
           "alt": "Pàgina 5: el Gran Molekulon dona autoritat als seus dos deixebles i els encarrega un comando de 150.000 superherois; ells dubten que en puguin reunir tants."
         },
         {
           "n": 6,
           "img": "mostra/comic-1/06.webp",
-          "tema": "horacio-clip",
+          "tema": "horacio-tema",
           "tema_pendent": true,
           "alt": "Pàgina 6: una allau d'espermatozoides somrients travessant la foscor cap a l'òvul, sota el rètol de la llegenda del Gran Molekulon."
         },
         {
           "n": 7,
           "img": "mostra/comic-1/07.webp",
-          "tema": "horacio-clip",
-          "tema_pendent": true,
+          "tema": "mazinguer-tema",
+          "tema_pendent": false,
           "alt": "Pàgina 7: la cursa acaba i només un arriba; a les vinyetes de baix, Mazinguer li proposa a Horacio la idea d'una cançó nova."
         }
       ],

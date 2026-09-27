@@ -139,6 +139,17 @@ const PROPOSIT = {
    · **Silenciat, sense controls i sense clic.** Un vídeo que sona sol a la
      primera pantalla fa tancar la pestanya. El vídeo sencer, amb so, té el seu
      enllaç a sota i a la pàgina de la banda. */
+/* SoundCloud es pot incrustar, però el seu reproductor només sap resoldre
+   l'adreça **canònica** (`soundcloud.com/qui/què`). Els enllaços curts que dona
+   el botó de compartir (`on.soundcloud.com/…`) obren bé al navegador i el widget
+   no els resol: incrustar-los ensenyaria una caixa d'error amb el nostre marc al
+   voltant. Mentre l'adreça sigui curta, la peça s'enllaça en comptes
+   d'incrustar-se — i el dia que arribi la llarga, sona sense sortir de la web
+   sense tocar cap altra cosa. */
+const widgetSC = u => /^https?:\/\/(www\.)?soundcloud\.com\//.test(String(u || ''))
+  ? 'https://w.soundcloud.com/player/?url=' + encodeURIComponent(u) +
+    '&color=%23e040fb&auto_play=true&hide_related=true&show_comments=false&show_teaser=false'
+  : null;
 const idYouTube = u => (String(u).match(/(?:youtu\.be\/|embed\/|[?&]v=)([A-Za-z0-9_-]{11})/) || [])[1] || null;
 const FONS = (() => {
   const v = D.videos.find(x => x.id === 'horacio-clip' && x.url);
@@ -307,8 +318,11 @@ tr.te td{background:rgba(0,230,118,.06)}
 .so b{color:var(--text)}
 .so button{font:inherit;font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:20px;cursor:pointer;
   border:1px solid var(--purple);background:rgba(224,64,251,.14);color:var(--purple)}
-.so .cap{height:0;overflow:hidden}
+.so .cap{height:0;overflow:hidden;width:0}
+.so .cap.veu{height:auto;width:100%;flex-basis:100%;margin-top:.5rem}
 .so iframe{width:0;height:0;border:0}
+.so .cap.veu iframe{width:100%;height:120px;border-radius:10px}
+.so .fora{font-size:.8rem}
 .buit{border-color:var(--orange)}
 
 footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
@@ -661,7 +675,10 @@ com es va publicar en paper.</p>`;
      tres camps per peça i van a l'atribut. Un `fetch` d'un JSON per a dotze
      línies de dades seria una petició més i un estat més per fallar. */
   const mapa = {};
-  for (const t of temes) mapa[t.id] = { id: t.id, titol: t.titol, yt: idYouTube(t.url) };
+  for (const t of temes) {
+    const fora = t.soundcloud || (/^https?:/.test(t.url) ? t.url : null);
+    mapa[t.id] = { id: t.id, titol: t.titol, yt: idYouTube(t.url), sc: widgetSC(t.soundcloud || t.url), url: fora };
+  }
   /* Un tema que l'autor encara no ha confirmat es marca. Fer passar una
      proposta meva per una decisió seva és la manera més fàcil que es quedi
      així per sempre, perquè ningú sap que s'havia de mirar. */
@@ -679,7 +696,14 @@ ${c.pagines.map((p, i) => `<img src="${esc(p.img)}" alt="${esc(p.alt || `${c.tit
 <div class="so">
 <span>Sona: <b class="tema">${esc(temes[0] ? temes[0].titol + (c.pagines[0].tema_pendent ? ' (proposta, a confirmar)' : '') : 'encara sense tema assignat')}</b></span>
 <button type="button" data-posa>▶ Posa-la</button>
-<span class="cap" aria-hidden="true"></span>
+${(() => {
+  /* L'enllaç neix amb una adreça de debò, no amb un `#` que el guió omplirà:
+     una porta escrita buida és una porta buida si el guió no arrenca, i la
+     guarda d'aquest repositori no en deixa passar cap. */
+  const primer = temes.find(t => t.soundcloud || /^https?:/.test(t.url));
+  return primer ? `<a class="fora" href="${esc(primer.soundcloud || primer.url)}" rel="noopener" hidden>Escolta-la a SoundCloud ↗</a>` : '';
+})()}
+<span class="cap"></span>
 </div>
 </div>`;
 };
@@ -754,12 +778,24 @@ for (const l of document.querySelectorAll('[data-lector]')) {
     /* Si la pàgina nova porta el mateix tema, no es toca res: rebobinar una
        cançó a cada pàgina és la manera més ràpida que la tanquin. */
     if (sonant && t && t.id !== sonant) sona(t);
-    else if (sonant && !t) { cap.innerHTML = ''; sonant = null; }
+    else if (sonant && !t) { cap.innerHTML = ''; cap.className = 'cap'; sonant = null; }
+    /* Una peça que no es pot incrustar no amaga el botó i prou: ensenya la
+       porta que sí que hi ha. */
+    const potSonar = !!(t && (t.yt || t.sc));
+    posa.hidden = !potSonar;
+    const fora = l.querySelector('.fora');
+    if (fora) {
+      fora.hidden = potSonar || !(t && t.url);
+      if (t && t.url) fora.href = t.url;
+    }
   };
   const sona = t => {
-    if (!t || !t.yt) { cap.innerHTML = ''; sonant = null; return; }
-    cap.innerHTML = '<iframe title="' + t.titol.replace(/"/g, '&quot;') + '" allow="autoplay" ' +
-      'src="https://www.youtube-nocookie.com/embed/' + t.yt + '?autoplay=1&rel=0&playsinline=1"></iframe>';
+    if (!t || (!t.yt && !t.sc)) { cap.innerHTML = ''; cap.className = 'cap'; sonant = null; return; }
+    const src = t.yt
+      ? 'https://www.youtube-nocookie.com/embed/' + t.yt + '?autoplay=1&rel=0&playsinline=1'
+      : t.sc;
+    cap.className = t.yt ? 'cap' : 'cap veu';
+    cap.innerHTML = '<iframe title="' + t.titol.replace(/"/g, '&quot;') + '" allow="autoplay" src="' + src + '"></iframe>';
     sonant = t.id;
   };
 
