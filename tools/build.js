@@ -36,6 +36,7 @@ const D = JSON.parse(readFileSync(join(ARREL, 'data', 'comando.json'), 'utf8'));
 const M = JSON.parse(readFileSync(join(ARREL, 'data', 'mostra.json'), 'utf8'));
 const PECA = Object.fromEntries(D.videos.map(v => [v.id, v]));
 const PAGS_MOSTRA = M.comics.reduce((a, c) => a + c.pagines.length, 0);
+const MOSTRA1 = M.comics[0].pagines.length;
 
 /* El domini propi i la casa d'on venim. El SOS segueix sent l'aplicació i el
    lloc de les eines: des d'aquí s'hi enllaça, no se'n copia res. */
@@ -415,6 +416,7 @@ ${fonsHtml()}
 <div class="acts">
 <a class="pri" href="${SOS}/sos#/alta">Fes el teu personatge</a>
 <a href="/personatges">Els ${NUM.herois} personatges</a>
+${MOSTRA1 ? `<a href="/comic">Llegeix el còmic</a>` : ''}
 <a href="/peli">El guió de la intro</a>
 </div>
 ${FONS ? `<p class="credit">De fons, el videoclip de <b>${esc(FONS.qui)}</b> —el tema que obre la intro—,
@@ -500,10 +502,10 @@ ${AL_SOS.map(x => `<div class="fitxa">
 <h2>El que aquesta web encara no té</h2>
 <p class="lead">Dit aquí perquè es vegi, i no a una nota interna.</p>
 <ul class="lead">
-<li><b>Imatges.</b> Ni una vinyeta, ni una portada de còmic, ni un retrat. El material existeix en paper i encara no és aquí.</li>
-<li><b>On es compren els còmics.</b> Se n'han publicat dos i aquesta web encara no diu on.</li>
+<li><b>La mostra del segon còmic.</b> Del primer n'hi ha ${MOSTRA1} pàgines a <a href="/comic">el còmic</a>; del segon, cap encara —i tots dos es poden comprar.</li>
 <li><b>Qui ho signa.</b> Avís legal, contacte i llicència del que hi ha publicat.</li>
 <li><b>${NUM.pendents} peces de mitjans</b> nomenades i sense adreça. Surten a <a href="/musica">la banda</a> dient-ho.</li>
+<li><b>Retrats dels personatges.</b> Les fitxes són de text: el dibuix existeix en paper i encara no és aquí.</li>
 </ul>
 </section>
 
@@ -732,7 +734,8 @@ ${c.portada ? `<div class="capsa-portada">
 <p class="mut">${c.pagines.length ? `${c.pagines.length} pàgines de mostra` : 'Mostra encara per obrir'}</p></div>
 </div>` : `<p class="lead">${esc(c.sinopsi)}</p>`}
 ${llibre(c)}
-${c.compra ? `<p class="nota">El número sencer, en paper. <a href="${esc(c.compra)}" rel="noopener">On es compra ↗</a></p>`
+${(c.compra && c.compra.length) ? `<p class="nota"><b>El número sencer, en paper.</b> ${c.compra.map(x =>
+  `<a href="${esc(x.url)}" rel="noopener">Compra'l en ${esc(x.llengua.toLowerCase())} ↗</a>`).join(' · ')}</p>`
   : '<p class="mut">On es compra: pendent de dir-ho aquí.</p>'}
 </section>`).join('\n')}
 

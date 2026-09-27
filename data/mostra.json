@@ -6,7 +6,16 @@
       "id": "comic-1",
       "titol": "Comando Molekulon · el primer còmic",
       "sinopsi": "El Gran Molekulon mira la Terra i decideix que el que cal canviar no és el món: és la banda sonora. Envia Mazinguer i Horacio Motomachi a reclutar els cent cinquanta mil superherois que ja hi han nascut.",
-      "compra": null,
+      "compra": [
+        {
+          "llengua": "Castellà",
+          "url": "https://amzn.eu/d/0dJQ2WFW"
+        },
+        {
+          "llengua": "Anglès",
+          "url": "https://amzn.eu/d/01mEBq8P"
+        }
+      ],
       "portada": "mostra/comic-1/00-portada.webp",
       "pagines": [
         {
@@ -65,7 +74,12 @@
       "id": "comic-2",
       "titol": "Comando Molekulon · el segon còmic",
       "sinopsi": "La nau perd altura. No s'han quedat sense ganes: s'han quedat sense combustible. I enmig del caos apareix ell, oferint un paper higiènic molt més suau.",
-      "compra": null,
+      "compra": [
+        {
+          "llengua": "Castellà",
+          "url": "https://amzn.eu/d/0hiEpZfg"
+        }
+      ],
       "portada": null,
       "pagines": []
     }
