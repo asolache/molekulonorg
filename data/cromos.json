@@ -5,13 +5,53 @@
     "img": "mostra/comic-2/00-portada.webp"
   },
   "retrats": [
-    { "heroi": "Mazinguer", "img": "cromos/01.webp", "pendent": false, "nota": "Als plats. El canon ja el tenia com a DJ." },
-    { "heroi": "Electroplasman", "img": "cromos/02.webp", "pendent": true, "nota": null },
-    { "heroi": "Barbamuda", "img": "cromos/03.webp", "pendent": false, "nota": "Amb el baix. El canon el té com a segona baixista." },
-    { "heroi": "El Anguila", "img": "cromos/05.webp", "pendent": false, "nota": "A la bateria. El canon el té com qui marca el ritme." },
-    { "heroi": "Horacio Motomachi", "img": "cromos/06.webp", "pendent": true, "nota": null },
-    { "heroi": "La Medusa Andaluza", "img": "cromos/07.webp", "pendent": false, "nota": null },
-    { "heroi": "Guiri-Guay", "img": "cromos/08.webp", "pendent": false, "nota": null },
-    { "heroi": "Afrodito", "img": "cromos/09.webp", "pendent": true, "nota": "L'autor l'anomena «Afrodita»; la llista canònica diu «Afrodito»." }
+    {
+      "heroi": "Mazinguer",
+      "img": "cromos/01.webp",
+      "pendent": false,
+      "nota": "Als plats. El canon ja el tenia com a DJ."
+    },
+    {
+      "heroi": "Electroplasman",
+      "img": "cromos/02.webp",
+      "pendent": true,
+      "nota": null
+    },
+    {
+      "heroi": "Barbamuda",
+      "img": "cromos/03.webp",
+      "pendent": false,
+      "nota": "Amb el baix. El canon el té com a segona baixista."
+    },
+    {
+      "heroi": "Horacio Motomachi",
+      "img": "cromos/05.webp",
+      "pendent": false,
+      "nota": "A la bateria. Identificat per l'autor."
+    },
+    {
+      "heroi": "Purpleman",
+      "img": "cromos/06.webp",
+      "pendent": false,
+      "nota": "La caputxa morada. Identificat per l'autor: jo l'havia llegit com a Horacio."
+    },
+    {
+      "heroi": "La Medusa Andaluza",
+      "img": "cromos/07.webp",
+      "pendent": false,
+      "nota": null
+    },
+    {
+      "heroi": "Guiri-Guay",
+      "img": "cromos/08.webp",
+      "pendent": false,
+      "nota": null
+    },
+    {
+      "heroi": "Afrodito",
+      "img": "cromos/09.webp",
+      "pendent": true,
+      "nota": "L'autor l'anomena «Afrodita»; la llista canònica diu «Afrodito»."
+    }
   ]
 }
