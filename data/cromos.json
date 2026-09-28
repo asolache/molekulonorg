@@ -25,6 +25,12 @@
     },
     {
       "heroi": "Horacio Motomachi",
+      "img": "cromos/04.webp",
+      "pendent": false,
+      "nota": "El del vestit rosa amb el micro. Identificat per l'autor."
+    },
+    {
+      "heroi": "El Anguila",
       "img": "cromos/05.webp",
       "pendent": false,
       "nota": "A la bateria. Identificat per l'autor."
