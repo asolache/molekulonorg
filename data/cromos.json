@@ -1,5 +1,5 @@
 {
-  "_": "Els retrats dels cromos, retallats de la portada del segon còmic. `heroi` ha de ser un nom de la llista canònica de data/comando.json — si algun dia allà se'n canvia un, la guarda ho diu. `pendent` vol dir que la identificació d'aquella figura a la vinyeta és lectura meva i no la té confirmada l'autor.",
+  "_": "Els retrats dels cromos, retallats de la portada del segon còmic, o del videoclip del personatge quan en té; `font` a la fitxa ho diu quan no és la portada. `heroi` ha de ser un nom de la llista canònica de data/comando.json — si algun dia allà se'n canvia un, la guarda ho diu. `pendent` vol dir que la identificació d'aquella figura a la vinyeta és lectura meva i no la té confirmada l'autor.",
   "font": {
     "titol": "Portada del segon còmic · la banda sencera",
     "img": "mostra/comic-2/00-portada.webp"
@@ -54,10 +54,24 @@
       "nota": null
     },
     {
-      "heroi": "Afrodito",
+      "heroi": "Afrodita",
       "img": "cromos/09.webp",
       "pendent": true,
-      "nota": "L'autor l'anomena «Afrodita»; la llista canònica diu «Afrodito»."
+      "nota": "El del teclat. L'autor ha tancat que es diu Afrodita, com la deessa del panteó: són dues llistes diferents."
+    },
+    {
+      "heroi": "Reciclator",
+      "img": "cromos/reciclator.webp",
+      "pendent": false,
+      "font": "Del seu videoclip",
+      "nota": "Al taller, muntant una superarma amb el que altres han llençat."
+    },
+    {
+      "heroi": "Supergerminador",
+      "img": "cromos/supergerminador.webp",
+      "pendent": false,
+      "font": "Del seu videoclip",
+      "nota": "Ensenyant a germinar, que és el que fa."
     }
   ]
 }

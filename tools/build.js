@@ -550,7 +550,8 @@ const cromo = (h, i) => {
 <div class="marc">
 <span class="num">${String(i + 1).padStart(2, '0')} / ${D.herois.length}</span>
 ${r ? `<img src="${esc(r.img)}" alt="${esc(h.name)}, retallat de la portada del segon còmic" loading="lazy">
-${r.pendent ? '<span class="avis-retrat">Retrat a confirmar per l\'autor</span>' : ''}`
+${r.pendent ? '<span class="avis-retrat">Retrat a confirmar per l\'autor</span>'
+  : (r.font ? `<span class="avis-retrat">${esc(r.font)}</span>` : '')}`
   : '<div class="buit">Encara sense retrat</div>'}
 </div>
 <div class="cos">
