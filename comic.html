@@ -192,6 +192,62 @@ tr.te td{background:rgba(0,230,118,.06)}
 .so .fora{font-size:.8rem}
 .buit{border-color:var(--orange)}
 
+/* ══ LA LANDING DE LA HISTÒRIA ═══════════════════════════════════════════
+   Les altres pàgines informen; aquesta ha de fer que t'hi fiquis. Per tant mana
+   la imatge i el text hi va a sobre, i cada acte ocupa la pantalla sencera: el
+   que es veu alhora és el que es llegeix alhora.
+
+   No hi ha cap guió de desplaçament ni cap animació lligada al scroll. Un
+   efecte que es mou mentre llegeixes fa que tornis a començar la frase, i això
+   és exactament el contrari del que una història necessita. */
+.acte{position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden;isolation:isolate;
+  padding:3.5rem 1.2rem;border-bottom:1px solid var(--border)}
+.acte .fons-img{position:absolute;inset:0;z-index:-2}
+.acte .fons-img img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:saturate(.85)}
+.acte .vel-acte{position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(11,11,18,.92),rgba(11,11,18,.78) 45%,rgba(11,11,18,.97))}
+.acte .dins{max-width:900px;margin:0 auto;width:100%}
+.acte .numero{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--purple);font-weight:700;margin-bottom:.7rem}
+.acte h2{font-size:clamp(1.6rem,4.4vw,2.6rem);margin-bottom:.9rem;line-height:1.08}
+.acte p{font-size:clamp(.98rem,1.9vw,1.12rem);color:var(--light);max-width:720px;margin:.6rem 0}
+.acte p b{color:var(--text)}
+
+.cita{font-size:clamp(1.3rem,3.6vw,2rem);line-height:1.25;font-weight:700;color:var(--text);
+  border-left:3px solid var(--purple);padding-left:1rem;margin:.5rem 0 1rem;max-width:760px}
+.cita span{display:block;font-size:.82rem;font-weight:400;color:var(--light);margin-top:.6rem;letter-spacing:.02em}
+
+/* La tira de pàgines. Es passa amb el dit al mòbil i amb la roda a l'escriptori:
+   és una tira de còmic, i una graella la convertiria en un catàleg. */
+.tira{display:flex;gap:.7rem;overflow-x:auto;padding:.3rem .1rem 1rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.tira figure{margin:0;flex:0 0 clamp(180px,42vw,260px);scroll-snap-align:center}
+.tira img{width:100%;border:1px solid var(--border);border-radius:10px;background:#000;display:block}
+.tira figcaption{font-size:.76rem;color:var(--muted);margin-top:.4rem;line-height:1.35}
+
+/* El guió, en forma de taulell: número gros i la veu en off. Aquí no hi va la
+   taula de /peli —allà hi és sencera—, hi va el que es veu. */
+.plans{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.6rem;margin:1rem 0}
+.pla{background:rgba(20,20,32,.78);border:1px solid var(--border);border-radius:12px;padding:.75rem .8rem}
+.pla .n{font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--purple);line-height:1}
+.pla h4{font-size:.9rem;margin:.3rem 0 .3rem}
+.pla p{font-size:.8rem;margin:0;color:var(--light)}
+.pla .est{margin-top:.5rem;display:inline-block}
+
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.6rem;margin:1rem 0}
+.vid{display:block;text-decoration:none;background:rgba(20,20,32,.78);border:1px solid var(--border);
+  border-radius:12px;padding:.7rem .75rem;color:var(--text)}
+.vid:hover{border-color:var(--purple)}
+.vid b{display:block;font-size:.88rem}
+.vid span{font-size:.75rem;color:var(--muted)}
+
+/* Les tres preguntes. Són el final de la pàgina i el principi de tot: el que
+   demanem no és una donació, és un vídeo de 30 segons. */
+.pregunta{display:flex;gap:.9rem;align-items:flex-start;background:rgba(20,20,32,.7);
+  border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:12px;padding:.9rem 1rem;margin:.6rem 0}
+.pregunta .q{font-family:var(--mono);font-size:1.3rem;font-weight:700;color:var(--purple);line-height:1}
+.pregunta h4{font-size:1rem;margin-bottom:.25rem}
+.pregunta p{font-size:.86rem;margin:0}
+
 footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}
@@ -203,6 +259,7 @@ footer a{color:var(--light)}
 <nav class="barra" aria-label="Principal">
 <a class="marca" href="/">Comando <span>Molekulon</span></a>
 <a class="l" href="/">Inici</a>
+<a class="l" href="/historia">La història</a>
 <a class="l" href="/personatges">Els personatges</a>
 <a class="l" href="/peli">La pel·lícula</a>
 <a class="l" href="/musica">La banda</a>

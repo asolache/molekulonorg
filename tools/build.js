@@ -57,6 +57,9 @@ const PAGINES = [
   { f: 'index.html', nav: 'Inici', t: 'Comando Molekulon',
     tit: 'Comando Molekulon · la primera pel·lícula que farem 150.000 persones',
     desc: 'Un còmic, una banda i una pel·lícula que encara no existeix. Es farà amb 150.000 superherois reals: gent que aporta hores, objectes i coneixement al seu barri i que ho registra.' },
+  { f: 'historia.html', nav: 'La història', t: 'La història',
+    tit: 'La història · Comando Molekulon',
+    desc: 'De la frase que ho va encendre tot fins al tercer acte, que s\'està rodant ara. El còmic, la banda i la pel·lícula, en ordre i en imatges.' },
   { f: 'personatges.html', nav: 'Els personatges', t: 'Els personatges',
     tit: 'Els personatges · Comando Molekulon',
     desc: 'Els catorze herois canònics del Comando: el seu poder al còmic, la seva superarma i què vol dir cadascun dins d\'un equip de debò.' },
@@ -358,6 +361,62 @@ tr.te td{background:rgba(0,230,118,.06)}
 .so .fora{font-size:.8rem}
 .buit{border-color:var(--orange)}
 
+/* ══ LA LANDING DE LA HISTÒRIA ═══════════════════════════════════════════
+   Les altres pàgines informen; aquesta ha de fer que t'hi fiquis. Per tant mana
+   la imatge i el text hi va a sobre, i cada acte ocupa la pantalla sencera: el
+   que es veu alhora és el que es llegeix alhora.
+
+   No hi ha cap guió de desplaçament ni cap animació lligada al scroll. Un
+   efecte que es mou mentre llegeixes fa que tornis a començar la frase, i això
+   és exactament el contrari del que una història necessita. */
+.acte{position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden;isolation:isolate;
+  padding:3.5rem 1.2rem;border-bottom:1px solid var(--border)}
+.acte .fons-img{position:absolute;inset:0;z-index:-2}
+.acte .fons-img img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:saturate(.85)}
+.acte .vel-acte{position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(11,11,18,.92),rgba(11,11,18,.78) 45%,rgba(11,11,18,.97))}
+.acte .dins{max-width:900px;margin:0 auto;width:100%}
+.acte .numero{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--purple);font-weight:700;margin-bottom:.7rem}
+.acte h2{font-size:clamp(1.6rem,4.4vw,2.6rem);margin-bottom:.9rem;line-height:1.08}
+.acte p{font-size:clamp(.98rem,1.9vw,1.12rem);color:var(--light);max-width:720px;margin:.6rem 0}
+.acte p b{color:var(--text)}
+
+.cita{font-size:clamp(1.3rem,3.6vw,2rem);line-height:1.25;font-weight:700;color:var(--text);
+  border-left:3px solid var(--purple);padding-left:1rem;margin:.5rem 0 1rem;max-width:760px}
+.cita span{display:block;font-size:.82rem;font-weight:400;color:var(--light);margin-top:.6rem;letter-spacing:.02em}
+
+/* La tira de pàgines. Es passa amb el dit al mòbil i amb la roda a l'escriptori:
+   és una tira de còmic, i una graella la convertiria en un catàleg. */
+.tira{display:flex;gap:.7rem;overflow-x:auto;padding:.3rem .1rem 1rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.tira figure{margin:0;flex:0 0 clamp(180px,42vw,260px);scroll-snap-align:center}
+.tira img{width:100%;border:1px solid var(--border);border-radius:10px;background:#000;display:block}
+.tira figcaption{font-size:.76rem;color:var(--muted);margin-top:.4rem;line-height:1.35}
+
+/* El guió, en forma de taulell: número gros i la veu en off. Aquí no hi va la
+   taula de /peli —allà hi és sencera—, hi va el que es veu. */
+.plans{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.6rem;margin:1rem 0}
+.pla{background:rgba(20,20,32,.78);border:1px solid var(--border);border-radius:12px;padding:.75rem .8rem}
+.pla .n{font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--purple);line-height:1}
+.pla h4{font-size:.9rem;margin:.3rem 0 .3rem}
+.pla p{font-size:.8rem;margin:0;color:var(--light)}
+.pla .est{margin-top:.5rem;display:inline-block}
+
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.6rem;margin:1rem 0}
+.vid{display:block;text-decoration:none;background:rgba(20,20,32,.78);border:1px solid var(--border);
+  border-radius:12px;padding:.7rem .75rem;color:var(--text)}
+.vid:hover{border-color:var(--purple)}
+.vid b{display:block;font-size:.88rem}
+.vid span{font-size:.75rem;color:var(--muted)}
+
+/* Les tres preguntes. Són el final de la pàgina i el principi de tot: el que
+   demanem no és una donació, és un vídeo de 30 segons. */
+.pregunta{display:flex;gap:.9rem;align-items:flex-start;background:rgba(20,20,32,.7);
+  border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:12px;padding:.9rem 1rem;margin:.6rem 0}
+.pregunta .q{font-family:var(--mono);font-size:1.3rem;font-weight:700;color:var(--purple);line-height:1}
+.pregunta h4{font-size:1rem;margin-bottom:.25rem}
+.pregunta p{font-size:.86rem;margin:0}
+
 footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}
@@ -446,7 +505,8 @@ ${fonsHtml()}
 <p class="sub">${cap(D.tesi.sub)}</p>
 <p class="crida">${PROPOSIT.crida}</p>
 <div class="acts">
-<a class="pri" href="${SOS}/sos#/alta">Fes el teu personatge</a>
+<a class="pri" href="/historia">Entra a la història</a>
+<a href="${SOS}/sos#/alta">Fes el teu personatge</a>
 <a href="/personatges">Els ${NUM.herois} personatges</a>
 ${MOSTRA1 ? `<a href="/comic">Llegeix el còmic</a>` : ''}
 <a href="/peli">El guió de la intro</a>
@@ -869,6 +929,155 @@ for (const l of document.querySelectorAll('[data-lector]')) {
 })();
 </scr` + `ipt>`;
 
+/* ══ LA HISTÒRIA · la landing ════════════════════════════════════════════════
+   L'encàrrec: que algú que arriba sense saber res **es fiqui a la pel·lícula**.
+   Per tant aquesta pàgina no explica el projecte —això ja ho fa la portada—,
+   explica **la seqüència**: d'on surt, què passa, on s'ha quedat i què se li
+   demana a qui ho llegeix.
+
+   Comença per la frase, perquè és per on va començar de debò: una broma d'en
+   Groucho Marx que, mirada de prop, és un fet. I acaba amb una càmera de mòbil,
+   perquè l'únic que separa un espectador d'un personatge és gravar-se trenta
+   segons contestant tres preguntes.
+
+   Les imatges són les que ja hi ha: les pàgines publicades del primer còmic i
+   la portada del segon. Si un dia se'n publiquen més, aquesta pàgina les agafa
+   soles. */
+const CAPS = {
+  1: 'L\'escuadrilla travessa l\'hiperespai. Ningú la veu.',
+  2: 'Els del Comando, d\'un en un, preguntant-se on van.',
+  3: 'El Gran Molekulon mira la Terra, i li fa mal.',
+  4: 'La decisió: el que cal canviar no és el món, és la banda sonora.',
+  5: 'L\'encàrrec, amb xifra: cent cinquanta mil.',
+  6: 'I el perquè: ja els va guanyar tots, abans de néixer.',
+  7: 'Només un arriba. I d\'allà en surt una cançó.'
+};
+
+const historia = () => {
+  const pags = M.comics[0].pagines;
+  const cursa = pags.find(x => x.n === 6);
+  const acteII = D.intro.plans.filter(p => p.n >= 7 && p.n <= 12);
+  const peces = D.videos.filter(v => v.url && v.mena !== 'tema');
+  const retalla = (t, n) => t.length > n ? t.slice(0, n).replace(/[\s,;:]+\S*$/, '') + '…' : t;
+  return `
+<section class="acte">
+${cursa ? `<div class="fons-img"><img src="${esc(cursa.img)}" alt="" aria-hidden="true"></div>
+<div class="vel-acte"></div>` : ''}
+<div class="dins">
+<p class="numero">D'on surt tot això</p>
+<p class="cita">«Si estás deprimido, recuerda que eres el espermatozoide que ganó.»
+<span>La frase és d'en Groucho Marx. El projecte sencer surt d'aquí.</span></p>
+<p>Mirada de prop, <b>no és una broma: és un fet</b>. Vas travessar tenebres i obstacles
+per fer el miracle de ser aquí, i vas guanyar una cursa de dos-cents milions.
+<b>Néixer ja va ser la teva primera gesta</b>, i no et va fer falta cap superpoder
+perquè ja el tenies.</p>
+<p>D'aquesta frase en va sortir una cançó, de la cançó un còmic, del còmic una banda,
+i de la banda una pel·lícula que encara no existeix. Això és la seqüència, en ordre.</p>
+<div class="acts"><a class="pri" href="#acte-1">Comença la història ↓</a>
+<a href="${SOS}/sos#/alta" rel="noopener">Fes el teu personatge ↗</a></div>
+</div>
+</section>
+
+<section class="acte" id="acte-1">
+<div class="dins">
+<p class="numero">Acte I · el primer còmic</p>
+<h2>L'encàrrec: no els heu de fabricar, els heu de <em>trobar</em></h2>
+<p>El Gran Molekulon mira la Terra i decideix que el que cal canviar no és el món:
+<b>és la banda sonora</b>. Envia dos deixebles a reclutar ${mil(NUM.objectiu)} superherois,
+i ells dubten que en puguin reunir tants. La resposta és la que ho capgira tot:
+<b>ja hi són</b>, escampats, fent coses més petites del que saben fer.</p>
+<div class="tira">
+${pags.map(x => `<figure>
+<img src="${esc(x.img)}" alt="${esc(x.alt)}" loading="lazy">
+<figcaption>${esc(CAPS[x.n] || `Pàgina ${x.n}`)}</figcaption>
+</figure>`).join('\n')}
+</div>
+<p><a href="/comic">Llegeix-les amb la seva cançó →</a></p>
+</div>
+</section>
+
+<section class="acte">
+<div class="fons-img"><img src="${esc(M.comics[1].portada)}" alt="" aria-hidden="true"></div>
+<div class="vel-acte"></div>
+<div class="dins">
+<p class="numero">Acte II · el segon còmic</p>
+<h2>La caiguda: no s'han quedat sense ganes, <em>sense combustible</em></h2>
+<p>El segon número és on el projecte diu contra què va. No contra un enemic de fora:
+contra <b>una utopia que col·lapsa pel seu propi pes</b> perquè ningú va posar regles
+d'intercanvi, contra <b>un vilà que no ataca sinó que ofereix</b> —et crea la necessitat
+i després te la cobra—, i contra els dos que ja tens a casa: la por que paralitza
+abans de començar i el rumor que corroeix la confiança.</p>
+<div class="plans">
+${acteII.map(x => `<div class="pla">
+<div class="n">${x.n}</div>
+<h4>${esc(x.titol)}</h4>
+<p>${esc(retalla(x.veu, 125))}</p>
+${x.de ? '<span class="est si">ja filmat</span>' : '<span class="est no">per filmar</span>'}
+</div>`).join('\n')}
+</div>
+<p><a href="/peli">El guió sencer, pla a pla →</a></p>
+</div>
+</section>
+
+<section class="acte">
+<div class="dins">
+<p class="numero">I això no és només dibuix</p>
+<h2>La banda existeix, i ha tocat</h2>
+<p>${NUM.publicades} peces publicades entre capítols, videoclips i directes. No són
+material promocional: <b>són la part de la pel·lícula que ja està rodada</b>, i tres plans
+del guió surten d'aquí. Mira'n un abans de seguir —és el camí més curt per entendre
+de què va això.</p>
+<div class="vids">
+${peces.map(v => `<a class="vid" href="${esc(v.url)}" rel="noopener">
+<b>${esc(v.titol)}</b>
+<span>${v.qui.length ? esc(v.qui.join(' · ')) : esc(MENA[v.mena])} ↗</span>
+</a>`).join('\n')}
+</div>
+<p><a href="/musica">Totes les peces, també les que encara no tenen adreça →</a></p>
+</div>
+</section>
+
+<section class="acte">
+<div class="dins">
+<p class="numero">Acte III · s'està rodant ara</p>
+<h2>El final no està publicat. <em>Tu hi surts.</em></h2>
+<p>El tercer acte no es pot escriure en una taula, perquè depèn de quanta gent hi hagi.
+<b>Cada persona que hi entra i aporta de debò és un node més</b>, i el repartiment es tanca
+quan siguem ${mil(NUM.objectiu)}. Avui el comptador va per zero, i és de debò: surt del
+registre públic i no d'un número inventat.</p>
+<p>Entrar-hi no és donar diners ni omplir un formulari llarg. És <b>gravar-te trenta
+segons</b> contestant les tres preguntes de sempre —les mateixes que es fan a l'aula i
+als tallers—, i el vídeo el fas amb el mòbil que tens a la mà.</p>
+
+<div class="pregunta"><span class="q">1</span><div>
+<h4>Qui ets?</h4>
+<p>El teu nom, o el nom que vulguis portar al Comando, i d'on ets. Res més.</p>
+</div></div>
+<div class="pregunta"><span class="q">2</span><div>
+<h4>Quins superpoders tens?</h4>
+<p>El que saps fer i podries ensenyar o donar en hores. Fins a cinc. No cal que soni
+important: cosir, escoltar, arreglar bicicletes i fer que la gent es parli també hi compten.</p>
+</div></div>
+<div class="pregunta"><span class="q">3</span><div>
+<h4>I quines superarmes?</h4>
+<p>El que tens i no fas servir cada dia, i que algú altre podria fer servir. Una escala,
+una càmera, un local, una furgoneta, un taladre.</p>
+</div></div>
+
+<p>Amb això ja ets un personatge: <b>no un avatar inventat</b>, sinó el que ja fas,
+amb nom i amb superarma. Si no et surt explicar-ho, hi ha un kit que t'ho escriu a partir
+del que has contestat.</p>
+<div class="acts">
+<a class="pri" href="${SOS}/sos#/alta" rel="noopener">Fes el teu personatge ↗</a>
+<a href="${SOS}/sos#/kit" rel="noopener">Obre el kit narratiu ↗</a>
+<a href="/personatges">Mira els ${NUM.herois} cromos</a>
+</div>
+<p class="mut">On enviar el vídeo encara no ho diu aquesta pàgina: falta decidir-ho.
+Mentrestant, la fitxa es fa a l'aplicació i no puja enlloc sense que ho confirmis.</p>
+</div>
+</section>`;
+};
+
 /* ══ EL SITEMAP ══════════════════════════════════════════════════════════════ */
 const sitemap = () => `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -877,7 +1086,7 @@ ${PAGINES.filter(p => p.menu !== false).map(p => `<url><loc>${url(p.f)}</loc></u
 `;
 
 /* ══ ESCRIURE ════════════════════════════════════════════════════════════════ */
-const COSSOS = { 'index.html': portada, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic };
+const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic };
 const sortida = () => {
   const l = PAGINES.map(p => [p.f, pagina(p, COSSOS[p.f]().trim())]);
   l.push(['sitemap.xml', sitemap()]);
