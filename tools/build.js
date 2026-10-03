@@ -953,6 +953,21 @@ const CAPS = {
   7: 'Només un arriba. I d\'allà en surt una cançó.'
 };
 
+/* Com es publica el vídeo. Això és una **proposta operativa**, no una dada del
+   model: el canal, el format del títol i les etiquetes els decideix l'autor, i
+   per això es declaren aquí on es canvien en una línia i no escampats pel text.
+
+   L'etiqueta no és decoració ni màrqueting: **és el mecanisme**. Si el vídeo la
+   porta, el Comando el troba cercant-la; si no la porta, no hi ha cap safata on
+   hagi arribat. I això és literalment el que diu la història —no els reclutem,
+   els trobem—, aplicat a una caixa de cerca. */
+const PUBLICAR = {
+  durada: '30 a 60 segons',
+  titol: 'Comando Molekulon · el teu nom · la teva població',
+  etiquetes: ['comandomolekulon', 'molekulon', 'superpoders', 'la teva població'],
+  canal: 'https://youtube.com/@comando-molekulon'
+};
+
 const historia = () => {
   const pags = M.comics[0].pagines;
   const cursa = pags.find(x => x.n === 6);
@@ -1045,9 +1060,9 @@ ${peces.map(v => `<a class="vid" href="${esc(v.url)}" rel="noopener">
 <b>Cada persona que hi entra i aporta de debò és un node més</b>, i el repartiment es tanca
 quan siguem ${mil(NUM.objectiu)}. Avui el comptador va per zero, i és de debò: surt del
 registre públic i no d'un número inventat.</p>
-<p>Entrar-hi no és donar diners ni omplir un formulari llarg. És <b>gravar-te trenta
-segons</b> contestant les tres preguntes de sempre —les mateixes que es fan a l'aula i
-als tallers—, i el vídeo el fas amb el mòbil que tens a la mà.</p>
+<p>Entrar-hi no és donar diners ni omplir un formulari llarg. És <b>gravar-te un minut</b>
+contestant les quatre preguntes de sempre —les mateixes que es fan a l'aula i als
+tallers—, i el vídeo el fas amb el mòbil que tens a la mà.</p>
 
 <div class="pregunta"><span class="q">1</span><div>
 <h4>Qui ets?</h4>
@@ -1064,16 +1079,44 @@ important: cosir, escoltar, arreglar bicicletes i fer que la gent es parli tamb�
 una càmera, un local, una furgoneta, un taladre.</p>
 </div></div>
 
+<div class="pregunta"><span class="q">4</span><div>
+<h4>I ara ensenya'l: fes-ne una demo</h4>
+<p>La part que ho canvia tot. <b>No ho expliquis, fes-ho</b>: deu segons germinant,
+soldant, afinant, amassant, explicant una cosa difícil fàcil. Un superpoder dit és una
+promesa; <b>un superpoder ensenyat ja és una prova</b>, i és el que fa que algú del teu
+barri et vingui a buscar.</p>
+</div></div>
+
 <p>Amb això ja ets un personatge: <b>no un avatar inventat</b>, sinó el que ja fas,
 amb nom i amb superarma. Si no et surt explicar-ho, hi ha un kit que t'ho escriu a partir
 del que has contestat.</p>
+
+<h3>I on es penja</h3>
+<p>El vídeo el puges <b>tu</b> a YouTube, des del teu compte, i queda teu. No hi ha cap
+formulari que se'l quedi ni cap safata nostra on acabi. El que el fa trobable és
+<b>l'etiqueta</b>, i això és exactament el que diu la història: <b>no et reclutem, et
+trobem</b>.</p>
+<div class="pregunta"><span class="q">▶</span><div>
+<h4>Les quatre coses que ha de portar</h4>
+<p><b>Durada:</b> ${esc(PUBLICAR.durada)}. · <b>Títol:</b> <span class="mono">${esc(PUBLICAR.titol)}</span>.
+· <b>Etiquetes:</b> ${PUBLICAR.etiquetes.map(t => `<span class="mono">#${esc(t.replace(/ /g, ''))}</span>`).join(' ')}.
+· <b>Visibilitat: públic</b> —si és ocult, l'etiqueta no serveix de res i ningú el troba.</p>
+</div></div>
+<p>A la descripció, les quatre respostes escrites i l'adreça d'aquesta pàgina. Quan hi
+siguis, el teu capítol és al mateix lloc que els dels altres:
+<a href="${PUBLICAR.canal}" rel="noopener">el canal del Comando ↗</a>.</p>
+<p class="mut"><b>El que això vol dir, dit clar:</b> un vídeo públic a YouTube és públic
+—amb la teva cara, la teva veu i el nom que hi posis—, i aquesta decisió la prens tu. La
+fitxa del SOS és una altra cosa i es queda al teu aparell. <b>I a l'aula, no.</b> Els
+vídeos de criatures no es publiquen: a l'escola l'exercici es fa sense penjar res, i això
+ho explica la guia de la Fàbrica de Superherois.</p>
 <div class="acts">
 <a class="pri" href="${SOS}/sos#/alta" rel="noopener">Fes el teu personatge ↗</a>
 <a href="${SOS}/sos#/kit" rel="noopener">Obre el kit narratiu ↗</a>
 <a href="/personatges">Mira els ${NUM.herois} cromos</a>
 </div>
-<p class="mut">On enviar el vídeo encara no ho diu aquesta pàgina: falta decidir-ho.
-Mentrestant, la fitxa es fa a l'aplicació i no puja enlloc sense que ho confirmis.</p>
+<p class="mut">El format del títol i les etiquetes són una proposta de la casa: si no
+t'encaixen, el que compta és que l'etiqueta hi sigui perquè algú et pugui trobar.</p>
 </div>
 </section>`;
 };
