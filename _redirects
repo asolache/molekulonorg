@@ -4,6 +4,9 @@
 /personatges   /personatges.html   200
 /peli          /peli.html          200
 /musica        /musica.html        200
+/directori     /directori.html     200
+/alta          /alta.html          200
+/alta-rebuda   /alta-rebuda.html   200
 
 # El que encara viu al SOS. Aquestes adreces s'enllacen des d'aquí i des de fora,
 # i han de portar a la pàgina de debò i no a un 404 amb el nostre logotip.

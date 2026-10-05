@@ -248,6 +248,44 @@ tr.te td{background:rgba(0,230,118,.06)}
 .pregunta h4{font-size:1rem;margin-bottom:.25rem}
 .pregunta p{font-size:.86rem;margin:0}
 
+/* ══ EL DIRECTORI I L'ALTA ═══════════════════════════════════════════════
+   El cromo de la gent és el mateix marc que el dels canònics, amb dues
+   diferències que es veuen: no té retrat sinó un vídeo —que és la seva prova— i
+   pot portar la marca del SOS. Els canònics, aquí, van en petit: la fitxa
+   sencera ja és a /personatges. */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.5rem;margin:.8rem 0}
+.mini a{display:block;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.mini .marc{aspect-ratio:3/4;background:#05050a}
+.mini img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.mini .buit{display:flex;align-items:center;justify-content:center;height:100%;font-size:.66rem;color:var(--muted);text-align:center;padding:.4rem}
+.mini b{display:block;font-size:.76rem;padding:.4rem .5rem}
+.cromo .video{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.4rem;height:100%;
+  text-decoration:none;color:var(--text);font-weight:700;font-size:.9rem;
+  background:radial-gradient(circle at 50% 40%,rgba(224,64,251,.22),transparent 65%),#05050a}
+.cromo .video span{font-size:2.4rem;line-height:1}
+/* El vídeo no té cara a dins: un marc de retrat alt seria una caixa buida. */
+.cromo.gent .marc{aspect-ratio:16/10}
+.cromo .nick{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.cromo .sos{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--green);background:rgba(0,230,118,.12);padding:.12rem .45rem;border-radius:20px}
+.regles{margin:.4rem 0 0;padding-left:1.2rem;font-size:.88rem;color:var(--light)}
+.regles li{margin:.35rem 0}
+.regles b{color:var(--text)}
+form.alta{display:grid;gap:.9rem;margin-top:.6rem}
+form.alta label{display:grid;gap:.3rem;font-size:.88rem;font-weight:600}
+form.alta label span{font-weight:400;font-size:.78rem;color:var(--muted)}
+form.alta input[type=text],form.alta input[type=url],form.alta input[type=email],form.alta textarea{
+  font:inherit;font-size:.92rem;padding:.6rem .7rem;border-radius:9px;border:1px solid var(--border);
+  background:var(--card);color:var(--text);width:100%}
+form.alta textarea{min-height:5.5rem;resize:vertical}
+form.alta input:focus,form.alta textarea:focus{outline:2px solid var(--purple);outline-offset:1px}
+form.alta .accepto{display:flex;gap:.55rem;align-items:flex-start;font-weight:400;color:var(--light)}
+form.alta .accepto input{margin-top:.25rem}
+form.alta button{justify-self:start;font:inherit;font-weight:700;font-size:.95rem;padding:.65rem 1.2rem;border-radius:10px;
+  border:1px solid var(--purple);background:var(--purple);color:#0b0b12;cursor:pointer}
+.amagat{position:absolute;left:-9999px}
+.porta-sos{border-left:3px solid var(--green)}
+
 footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}
@@ -263,6 +301,7 @@ footer a{color:var(--light)}
 <a class="l" href="/personatges">Els personatges</a>
 <a class="l" href="/peli">La pel·lícula</a>
 <a class="l" href="/musica">La banda</a>
+<a class="l" href="/directori">El directori</a>
 <a class="l" href="/comic" aria-current="page">El còmic</a>
 <a class="l dret" href="https://teamtowershuma.com/sos" rel="noopener">Obre el SOS ↗</a>
 </nav>

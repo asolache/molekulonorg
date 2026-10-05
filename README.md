@@ -50,6 +50,9 @@ node tools/build.js --check && node tools/check.js
 | `personatges.html` | Els catorze herois: poder, superarma i què vol dir cadascun en un equip |
 | `peli.html` | El guió de la intro, pla a pla, amb què està filmat i què no |
 | `musica.html` | Els capítols, els videoclips, els temes i els directes |
+| `directori.html` | El mur de cromos: els canònics i la gent aprovada |
+| `alta.html` | Fes el teu cromo: quatre preguntes, el vídeo i el formulari. El SOS, a part i opcional |
+| `data/directori.json` | Els cromos aprovats i qui signa el directori. **S'edita a mà**: aprovar és afegir-hi una entrada |
 | `tools/build.js` | El generador. **Aquí és on s'edita el que diu la web** |
 | `tools/sync.js` | Baixa les dades de dalt i avisa si la còpia s'ha quedat vella |
 | `tools/check.js` | Set regles sobre el que cap generador veurà mai |
@@ -70,6 +73,17 @@ a un README és una llista que no existeix.
 - **Avís legal, contacte i llicència** del que hi ha publicat.
 - **Quatre peces de mitjans** nomenades i sense adreça: Pigmentón, Fraktalman,
   Tekno Kartoffeln i el taller filmat. Surten a `/musica` dient-ho.
+
+## L'alta al Comando
+
+Primer el cromo, el SOS després i només si vols (`knowledge/alta-i-directori.md`).
+L'alta envia a **Netlify Forms** (formulari `alta-cromo`) i arriba per correu;
+aprovar és afegir el cromo a `data/directori.json` i córrer `node tools/build.js`.
+Perquè Netlify reculli l'enviament, el lloc ha de tenir activada la detecció de
+formularis (*Forms → Enable form detection*).
+
+El formulari **no surt** mentre `responsable` no tingui nom, NIF i correu, i la
+guarda falla si es publica cap cromo sense responsable.
 
 ## Desplegament
 

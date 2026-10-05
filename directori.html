@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El directori · Comando Molekulon</title>
+<meta name="description" content="El mur de cromos del Comando: els catorze canònics i la gent de debò que hi ha entrat amb el seu nom, els seus superpoders i un vídeo que ho ensenya.">
+<link rel="canonical" href="https://molekulon.org/directori">
+<meta property="og:title" content="El directori · Comando Molekulon">
+<meta property="og:description" content="El mur de cromos del Comando: els catorze canònics i la gent de debò que hi ha entrat amb el seu nom, els seus superpoders i un vídeo que ho ensenya.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://molekulon.org/directori">
+<meta property="og:locale" content="ca_ES">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"El directori","description":"El mur de cromos del Comando: els catorze canònics i la gent de debò que hi ha entrat amb el seu nom, els seus superpoders i un vídeo que ho ensenya.","url":"https://molekulon.org/directori","inLanguage":"ca","isPartOf":{"@type":"WebSite","name":"Comando Molekulon","url":"https://molekulon.org/"},"publisher":{"@type":"Organization","name":"TeamTowers Humà","url":"https://teamtowershuma.com"}}</script>
+<style>
+:root{--bg:#0b0b12;--panel:#141420;--card:#1a1a28;--text:#f5f5f7;--muted:#82828d;--light:#c7c7d1;
+  --purple:#e040fb;--blue:#00b0ff;--green:#00e676;--orange:#ff9100;--gold:#ffd700;
+  --border:rgba(255,255,255,.09);--mono:'SF Mono',Monaco,Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);line-height:1.55;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+img{max-width:100%}
+a{color:var(--blue)}
+h1,h2,h3,h4{line-height:1.2;margin:0}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:.6rem;top:.6rem;background:var(--purple);color:#0b0b12;padding:.5rem .9rem;border-radius:8px;z-index:9}
+
+nav.barra{display:flex;gap:.2rem;flex-wrap:wrap;align-items:center;
+  padding:.6rem 1.2rem;border-bottom:1px solid var(--border);background:var(--panel);position:sticky;top:0;z-index:5}
+nav.barra .marca{font-weight:800;letter-spacing:-.02em;margin-right:.8rem;text-decoration:none;color:var(--text)}
+nav.barra .marca span{color:var(--purple)}
+nav.barra a.l{text-decoration:none;color:var(--light);font-size:.86rem;padding:.35rem .7rem;border-radius:8px}
+nav.barra a.l:hover{background:var(--card);color:var(--text)}
+nav.barra a.l[aria-current]{background:var(--card);color:var(--text);font-weight:700}
+nav.barra .dret{margin-left:auto;font-size:.82rem}
+
+.hero{padding:3.2rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden;isolation:isolate;
+  background:radial-gradient(ellipse at top,rgba(224,64,251,.16),transparent 60%),
+             radial-gradient(ellipse at bottom right,rgba(0,176,255,.13),transparent 55%),var(--bg)}
+.hero-inner{max-width:880px;margin:0 auto}
+
+/* El vídeo de fons. La caixa cobreix la capçalera sencera i el vel el fa
+   llegible: un text blanc damunt d'un videoclip de colors saturats no es llegeix
+   a ple sol, i aquesta és la primera frase que llegeix tothom. */
+.fons{position:absolute;inset:0;z-index:-2;overflow:hidden;pointer-events:none;background:#000}
+.fons iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:100vw;height:56.25vw;min-height:100%;min-width:177.78vh;border:0}
+.vel{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(11,11,18,.88) 0%,rgba(11,11,18,.74) 40%,rgba(11,11,18,.97) 100%)}
+.hero.fosc{padding-top:4rem}
+.credit{margin:1.1rem 0 0;font-size:.78rem;color:var(--muted)}
+.credit a{color:var(--light)}
+
+/* Dos casos on el vídeo no es carrega, i cap dels dos és una avaria:
+   qui ha demanat menys moviment al sistema operatiu, i qui ho obre amb dades
+   mòbils. Els dos es queden amb el degradat, que ja era la portada d'abans. */
+@media (prefers-reduced-motion:reduce){.fons{display:none}}
+@media (max-width:700px){.fons,.vel{display:none}}
+.tag{display:inline-block;background:rgba(224,64,251,.14);color:var(--purple);padding:.3rem .8rem;border-radius:20px;
+  font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
+.hero h1{font-size:clamp(1.9rem,5.2vw,3.1rem);margin:0 0 .9rem;font-weight:800;line-height:1.06}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#e040fb,#00b0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{font-size:clamp(1rem,2.1vw,1.15rem);color:var(--light);max-width:740px;margin:0 auto}
+.hero .sub strong{color:var(--text)}
+.crida{font-size:clamp(1rem,2.3vw,1.22rem);font-weight:600;color:var(--text);margin:1.2rem auto 0;max-width:640px}
+.crida b{background:linear-gradient(90deg,#e040fb,#00b0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.acts{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:1.4rem}
+.acts a{text-decoration:none;font-size:.88rem;font-weight:600;padding:.6rem 1.1rem;border-radius:10px;
+  border:1px solid var(--border);background:var(--card);color:var(--text)}
+.acts a.pri{background:var(--purple);border-color:var(--purple);color:#0b0b12}
+
+.wrap{max-width:1060px;margin:0 auto;padding:0 1.2rem 4rem}
+.avis{max-width:880px;margin:1.4rem auto 0;padding:.7rem 1rem;border:1px solid var(--border);
+  border-left:3px solid var(--orange);border-radius:8px;background:var(--panel);
+  font-size:.82rem;color:var(--light);text-align:left}
+.avis strong{color:var(--text)}
+
+section.box{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.2rem;margin:1rem 0}
+section.box h2{font-size:1.15rem;margin-bottom:.5rem}
+section.box h3{font-size:1.02rem;margin-bottom:.5rem}
+.lead{color:var(--light);font-size:.9rem;margin:.2rem 0 .9rem}
+.lead strong,.lead b{color:var(--text)}
+.mut{color:var(--muted);font-size:.78rem}
+.mono{font-family:var(--mono)}
+
+/* El propòsit. Es distingeix de la resta de caixes a posta: és l'única que no
+   informa de res —diu per a què és tot plegat— i si es veiés igual que les
+   altres es llegiria com una més i se saltaria. */
+section.box.proposit{border-left:3px solid var(--purple);
+  background:linear-gradient(120deg,rgba(224,64,251,.08),rgba(0,176,255,.05) 60%,transparent),var(--panel)}
+section.box.proposit h2{font-size:clamp(1.2rem,2.6vw,1.5rem)}
+.gran{font-size:clamp(.98rem,2vw,1.1rem);color:var(--light);margin:.5rem 0 1rem;max-width:760px}
+.gran b{color:var(--text)}
+.passa{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.85rem .9rem}
+.passa .ic{font-size:1.4rem;line-height:1}
+.passa h3{font-size:.98rem;margin:.35rem 0 .3rem}
+.passa p{margin:0;font-size:.85rem;color:var(--light)}
+.passa p b{color:var(--text)}
+
+.xifres{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;margin:1.2rem 0}
+.xifra{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem}
+.xifra b{display:block;font-size:1.5rem;font-family:var(--mono);color:var(--purple);line-height:1.1}
+.xifra span{font-size:.78rem;color:var(--muted)}
+
+.graella{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.7rem;margin:.9rem 0}
+.fitxa{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.85rem .9rem}
+.fitxa .ic{font-size:1.3rem;line-height:1}
+.fitxa h3{font-size:.98rem;margin:.35rem 0 .3rem}
+.fitxa p{margin:.2rem 0;font-size:.84rem;color:var(--light)}
+.fitxa a{font-size:.82rem;font-weight:600;text-decoration:none}
+.fitxa .k{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* ══ EL CROMO ════════════════════════════════════════════════════════════
+   La fitxa de text deia qui és cadascú i no feia que en volguessis un. Un cromo
+   sí: té cara, té número i es col·lecciona. La cara surt de la portada del segon
+   còmic, que és l'única imatge on hi surten tots tocant alhora.
+
+   El marc té proporció fixa encara que el retrat no hi sigui: una col·lecció on
+   les caselles ballen d'alçada no sembla una col·lecció, sembla una llista. */
+.cromos{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.8rem;margin:1rem 0}
+.cromo{background:linear-gradient(160deg,rgba(224,64,251,.12),rgba(0,176,255,.06) 55%,transparent),var(--card);
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.cromo .marc{position:relative;aspect-ratio:3/4;background:#05050a;overflow:hidden}
+.cromo .marc img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.cromo .buit{display:flex;align-items:center;justify-content:center;height:100%;
+  color:var(--muted);font-size:.76rem;text-align:center;padding:1rem;
+  background:repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 10px,transparent 10px 20px)}
+.cromo .num{position:absolute;top:.5rem;left:.5rem;font-family:var(--mono);font-size:.72rem;font-weight:700;
+  background:rgba(11,11,18,.82);color:var(--gold);padding:.15rem .45rem;border-radius:6px}
+.cromo .avis-retrat{position:absolute;bottom:0;left:0;right:0;font-size:.66rem;color:var(--light);
+  background:rgba(11,11,18,.78);padding:.25rem .45rem}
+.cromo .cos{padding:.8rem .85rem;display:flex;flex-direction:column;gap:.35rem}
+.cromo h3{font-size:1rem}
+.cromo .rol{color:var(--purple);font-size:.78rem;font-weight:600}
+.cromo dl{margin:0;font-size:.8rem}
+.cromo dt{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+.cromo dd{margin:.1rem 0 0;color:var(--light)}
+.cromo .lletra{font-style:italic;color:var(--light);font-size:.78rem;border-left:2px solid var(--border);padding-left:.5rem;margin-top:.5rem}
+
+.heroi{background:var(--card);border:1px solid var(--border);border-top:2px solid var(--purple);
+  border-radius:12px;padding:.9rem}
+.heroi h3{font-size:1rem}
+.heroi .rol{color:var(--purple);font-size:.8rem;font-weight:600;margin:.15rem 0 .5rem}
+.heroi dl{margin:0;font-size:.83rem}
+.heroi dt{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.45rem}
+.heroi dd{margin:.1rem 0 0;color:var(--light)}
+.heroi .lletra{font-style:italic;color:var(--light);font-size:.82rem;border-left:2px solid var(--border);padding-left:.55rem;margin-top:.6rem}
+
+.taula{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.83rem}
+th,td{padding:.5rem .55rem;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+td.n,th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+tr.te td{background:rgba(0,230,118,.06)}
+
+.est{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.13rem .45rem;border-radius:20px;white-space:nowrap}
+.est.si{background:rgba(0,230,118,.16);color:var(--green)}
+.est.no{background:rgba(255,145,0,.16);color:var(--orange)}
+
+.nota{font-size:.84rem;color:var(--light);border-left:2px solid var(--border);padding-left:.65rem;margin:.8rem 0}
+.nota b{color:var(--text)}
+
+/* ══ EL LECTOR DE LA MOSTRA ══════════════════════════════════════════════
+   Una pàgina de còmic es llegeix en vertical i sencera: si cal fer scroll per
+   veure'n el peu, els globus es llegeixen en dos temps i la pàgina es perd. Per
+   això la imatge s'ajusta a l'alçada de la finestra i no a l'amplada. */
+/* La portada va al costat de la sinopsi i no dins del lector: és el que et fa
+   agafar el còmic, no la primera pàgina de la història. */
+.capsa-portada{display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap;margin:.6rem 0 1rem}
+.capsa-portada img{width:190px;border:1px solid var(--border);border-radius:10px;background:#000}
+.capsa-portada .q{flex:1 1 320px;min-width:280px}
+.lector{margin:.9rem 0}
+.full{position:relative;background:#000;border:1px solid var(--border);border-radius:12px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;min-height:50vh}
+.full img{display:block;max-height:78vh;width:auto;max-width:100%}
+.full img[hidden]{display:none}
+.controls{display:flex;align-items:center;justify-content:center;gap:.7rem;margin:.7rem 0 .2rem}
+.controls button{font:inherit;font-size:.9rem;font-weight:700;padding:.45rem .9rem;border-radius:9px;cursor:pointer;
+  border:1px solid var(--border);background:var(--card);color:var(--text)}
+.controls button:disabled{opacity:.35;cursor:default}
+.controls .comptador{font-family:var(--mono);font-size:.82rem;color:var(--muted);min-width:5.5rem;text-align:center}
+.so{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;justify-content:center;
+  font-size:.84rem;color:var(--light);margin:.5rem 0 0}
+.so b{color:var(--text)}
+.so button{font:inherit;font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:20px;cursor:pointer;
+  border:1px solid var(--purple);background:rgba(224,64,251,.14);color:var(--purple)}
+.so .cap{height:0;overflow:hidden;width:0}
+.so .cap.veu{height:auto;width:100%;flex-basis:100%;margin-top:.5rem}
+.so iframe{width:0;height:0;border:0}
+.so .cap.veu iframe{width:100%;height:120px;border-radius:10px}
+.so .fora{font-size:.8rem}
+.buit{border-color:var(--orange)}
+
+/* ══ LA LANDING DE LA HISTÒRIA ═══════════════════════════════════════════
+   Les altres pàgines informen; aquesta ha de fer que t'hi fiquis. Per tant mana
+   la imatge i el text hi va a sobre, i cada acte ocupa la pantalla sencera: el
+   que es veu alhora és el que es llegeix alhora.
+
+   No hi ha cap guió de desplaçament ni cap animació lligada al scroll. Un
+   efecte que es mou mentre llegeixes fa que tornis a començar la frase, i això
+   és exactament el contrari del que una història necessita. */
+.acte{position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden;isolation:isolate;
+  padding:3.5rem 1.2rem;border-bottom:1px solid var(--border)}
+.acte .fons-img{position:absolute;inset:0;z-index:-2}
+.acte .fons-img img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:saturate(.85)}
+.acte .vel-acte{position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(11,11,18,.92),rgba(11,11,18,.78) 45%,rgba(11,11,18,.97))}
+.acte .dins{max-width:900px;margin:0 auto;width:100%}
+.acte .numero{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--purple);font-weight:700;margin-bottom:.7rem}
+.acte h2{font-size:clamp(1.6rem,4.4vw,2.6rem);margin-bottom:.9rem;line-height:1.08}
+.acte p{font-size:clamp(.98rem,1.9vw,1.12rem);color:var(--light);max-width:720px;margin:.6rem 0}
+.acte p b{color:var(--text)}
+
+.cita{font-size:clamp(1.3rem,3.6vw,2rem);line-height:1.25;font-weight:700;color:var(--text);
+  border-left:3px solid var(--purple);padding-left:1rem;margin:.5rem 0 1rem;max-width:760px}
+.cita span{display:block;font-size:.82rem;font-weight:400;color:var(--light);margin-top:.6rem;letter-spacing:.02em}
+
+/* La tira de pàgines. Es passa amb el dit al mòbil i amb la roda a l'escriptori:
+   és una tira de còmic, i una graella la convertiria en un catàleg. */
+.tira{display:flex;gap:.7rem;overflow-x:auto;padding:.3rem .1rem 1rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.tira figure{margin:0;flex:0 0 clamp(180px,42vw,260px);scroll-snap-align:center}
+.tira img{width:100%;border:1px solid var(--border);border-radius:10px;background:#000;display:block}
+.tira figcaption{font-size:.76rem;color:var(--muted);margin-top:.4rem;line-height:1.35}
+
+/* El guió, en forma de taulell: número gros i la veu en off. Aquí no hi va la
+   taula de /peli —allà hi és sencera—, hi va el que es veu. */
+.plans{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.6rem;margin:1rem 0}
+.pla{background:rgba(20,20,32,.78);border:1px solid var(--border);border-radius:12px;padding:.75rem .8rem}
+.pla .n{font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--purple);line-height:1}
+.pla h4{font-size:.9rem;margin:.3rem 0 .3rem}
+.pla p{font-size:.8rem;margin:0;color:var(--light)}
+.pla .est{margin-top:.5rem;display:inline-block}
+
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.6rem;margin:1rem 0}
+.vid{display:block;text-decoration:none;background:rgba(20,20,32,.78);border:1px solid var(--border);
+  border-radius:12px;padding:.7rem .75rem;color:var(--text)}
+.vid:hover{border-color:var(--purple)}
+.vid b{display:block;font-size:.88rem}
+.vid span{font-size:.75rem;color:var(--muted)}
+
+/* Les tres preguntes. Són el final de la pàgina i el principi de tot: el que
+   demanem no és una donació, és un vídeo de 30 segons. */
+.pregunta{display:flex;gap:.9rem;align-items:flex-start;background:rgba(20,20,32,.7);
+  border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:12px;padding:.9rem 1rem;margin:.6rem 0}
+.pregunta .q{font-family:var(--mono);font-size:1.3rem;font-weight:700;color:var(--purple);line-height:1}
+.pregunta h4{font-size:1rem;margin-bottom:.25rem}
+.pregunta p{font-size:.86rem;margin:0}
+
+/* ══ EL DIRECTORI I L'ALTA ═══════════════════════════════════════════════
+   El cromo de la gent és el mateix marc que el dels canònics, amb dues
+   diferències que es veuen: no té retrat sinó un vídeo —que és la seva prova— i
+   pot portar la marca del SOS. Els canònics, aquí, van en petit: la fitxa
+   sencera ja és a /personatges. */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.5rem;margin:.8rem 0}
+.mini a{display:block;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.mini .marc{aspect-ratio:3/4;background:#05050a}
+.mini img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.mini .buit{display:flex;align-items:center;justify-content:center;height:100%;font-size:.66rem;color:var(--muted);text-align:center;padding:.4rem}
+.mini b{display:block;font-size:.76rem;padding:.4rem .5rem}
+.cromo .video{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.4rem;height:100%;
+  text-decoration:none;color:var(--text);font-weight:700;font-size:.9rem;
+  background:radial-gradient(circle at 50% 40%,rgba(224,64,251,.22),transparent 65%),#05050a}
+.cromo .video span{font-size:2.4rem;line-height:1}
+/* El vídeo no té cara a dins: un marc de retrat alt seria una caixa buida. */
+.cromo.gent .marc{aspect-ratio:16/10}
+.cromo .nick{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.cromo .sos{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--green);background:rgba(0,230,118,.12);padding:.12rem .45rem;border-radius:20px}
+.regles{margin:.4rem 0 0;padding-left:1.2rem;font-size:.88rem;color:var(--light)}
+.regles li{margin:.35rem 0}
+.regles b{color:var(--text)}
+form.alta{display:grid;gap:.9rem;margin-top:.6rem}
+form.alta label{display:grid;gap:.3rem;font-size:.88rem;font-weight:600}
+form.alta label span{font-weight:400;font-size:.78rem;color:var(--muted)}
+form.alta input[type=text],form.alta input[type=url],form.alta input[type=email],form.alta textarea{
+  font:inherit;font-size:.92rem;padding:.6rem .7rem;border-radius:9px;border:1px solid var(--border);
+  background:var(--card);color:var(--text);width:100%}
+form.alta textarea{min-height:5.5rem;resize:vertical}
+form.alta input:focus,form.alta textarea:focus{outline:2px solid var(--purple);outline-offset:1px}
+form.alta .accepto{display:flex;gap:.55rem;align-items:flex-start;font-weight:400;color:var(--light)}
+form.alta .accepto input{margin-top:.25rem}
+form.alta button{justify-self:start;font:inherit;font-weight:700;font-size:.95rem;padding:.65rem 1.2rem;border-radius:10px;
+  border:1px solid var(--purple);background:var(--purple);color:#0b0b12;cursor:pointer}
+.amagat{position:absolute;left:-9999px}
+.porta-sos{border-left:3px solid var(--green)}
+
+footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
+footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
+footer a{color:var(--light)}
+@media (max-width:560px){nav.barra{padding:.5rem .7rem}nav.barra .dret{display:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#principal">Ves al contingut</a>
+<nav class="barra" aria-label="Principal">
+<a class="marca" href="/">Comando <span>Molekulon</span></a>
+<a class="l" href="/">Inici</a>
+<a class="l" href="/historia">La història</a>
+<a class="l" href="/personatges">Els personatges</a>
+<a class="l" href="/peli">La pel·lícula</a>
+<a class="l" href="/musica">La banda</a>
+<a class="l" href="/directori" aria-current="page">El directori</a>
+<a class="l" href="/comic">El còmic</a>
+<a class="l dret" href="https://teamtowershuma.com/sos" rel="noopener">Obre el SOS ↗</a>
+</nav>
+<main id="principal">
+<header class="hero">
+<div class="hero-inner">
+<span class="tag">El repartiment</span>
+<h1>El <em>directori</em> del Comando</h1>
+<p class="sub">Qui hi surt, amb el seu nom, el que sap fer i <strong>un vídeo que ho ensenya</strong>.
+Els 14 primers són els del còmic; la resta és gent de debò que ha fet el seu cromo.</p>
+<div class="acts"><a class="pri" href="/alta">Fes el teu cromo</a>
+<a href="/personatges">Els 14 canònics, sencers</a></div>
+</div>
+</header>
+
+<div class="wrap">
+<section class="box">
+<h2>Els 14 del còmic</h2>
+<p class="lead">La fitxa sencera de cadascun, amb poder, superarma i què vol dir dins d'un
+equip, és a <a href="/personatges">els personatges</a>.</p>
+<div class="mini">
+<a href="/personatges"><div class="marc"><img src="cromos/01.webp" alt="" loading="lazy"></div><b>Mazinguer</b></a>
+<a href="/personatges"><div class="marc"><img src="cromos/04.webp" alt="" loading="lazy"></div><b>Horacio Motomachi</b></a>
+<a href="/personatges"><div class="marc"><img src="cromos/08.webp" alt="" loading="lazy"></div><b>Guiri-Guay</b></a>
+<a href="/personatges"><div class="marc"><img src="cromos/06.webp" alt="" loading="lazy"></div><b>Purpleman</b></a>
+<a href="/personatges"><div class="marc"><img src="cromos/09.webp" alt="" loading="lazy"></div><b>Afrodita</b></a>
+<a href="/personatges"><div class="marc"><div class="buit">Encara sense retrat</div></div><b>El Aviador</b></a>
+<a href="/personatges"><div class="marc"><div class="buit">Encara sense retrat</div></div><b>Pigmentón</b></a>
+<a href="/personatges"><div class="marc"><img src="cromos/07.webp" alt="" loading="lazy"></div><b>La Medusa Andaluza</b></a>
+<a href="/personatges"><div class="marc"><img src="cromos/02.webp" alt="" loading="lazy"></div><b>Electroplasman</b></a>
+<a href="/personatges"><div class="marc"><img src="cromos/05.webp" alt="" loading="lazy"></div><b>El Anguila</b></a>
+<a href="/personatges"><div class="marc"><img src="cromos/03.webp" alt="" loading="lazy"></div><b>Barbamuda</b></a>
+<a href="/personatges"><div class="marc"><img src="cromos/reciclator.webp" alt="" loading="lazy"></div><b>Reciclator</b></a>
+<a href="/personatges"><div class="marc"><img src="cromos/supergerminador.webp" alt="" loading="lazy"></div><b>Supergerminador</b></a>
+<a href="/personatges"><div class="marc"><div class="buit">Encara sense retrat</div></div><b>Fraktalman</b></a>
+</div>
+</section>
+
+<section class="box">
+<h2>Els cromos de la gent</h2>
+<p class="nota buit"><b>Encara no n'hi ha cap d'aprovat.</b> El directori acaba de
+néixer i es diu com és: buit. El primer cromo de la gent pot ser el teu, i l'alta s'obre quan el directori tingui qui el signi —a <a href="/alta">fes el teu cromo</a> hi ha les preguntes per anar-les pensant.</p>
+</section>
+
+<section class="box">
+<h3>Això no és el SOS, i està bé</h3>
+<p class="lead">El cromo és <b>la teva fitxa al repartiment</b>: pública, aquí, i l'aprova l'autor.
+El perfil del SOS és <b>la teva identitat comptable</b>: es queda al teu aparell i la valida la
+criptografia. El primer és per sortir-hi; el segon, per comptar-hi. Es pot tenir l'un sense
+l'altre, i el nick és el mateix a tots dos llocs.</p>
+</section>
+</div>
+</main>
+<footer>
+<div class="f">
+<span>Comando Molekulon · un projecte de <a href="https://teamtowershuma.com" rel="noopener">TeamTowers Humà</a></span>
+<span>L'eina que hi ha a sota és el <a href="https://teamtowershuma.com/sos" rel="noopener">SOS</a>, i és lliure</span>
+<span class="mut">Aquesta web es genera de les dades, no s'escriu a mà.</span>
+</div>
+</footer>
+</body>
+</html>

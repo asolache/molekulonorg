@@ -40,6 +40,11 @@ const PECA = Object.fromEntries(D.videos.map(v => [v.id, v]));
    SOS. Qui mana sobre els noms segueix sent la llista canònica. */
 const C = JSON.parse(readFileSync(join(ARREL, 'data', 'cromos.json'), 'utf8'));
 const RETRAT = Object.fromEntries(C.retrats.map(r => [r.heroi, r]));
+/* El directori: els cromos de la gent que s'hi apunta, un cop aprovats. S'edita
+   a mà com la mostra, perquè aprovar és una decisió de l'autor i no una dada del
+   SOS. L'alta s'obre només quan hi ha qui la signa: `responsable` complet o res. */
+const DIR = JSON.parse(readFileSync(join(ARREL, 'data', 'directori.json'), 'utf8'));
+const SIGNA = ['nom', 'nif', 'correu'].every(k => DIR.responsable && DIR.responsable[k]) ? DIR.responsable : null;
 const PAGS_MOSTRA = M.comics.reduce((a, c) => a + c.pagines.length, 0);
 const MOSTRA1 = M.comics[0].pagines.length;
 
@@ -69,6 +74,20 @@ const PAGINES = [
   { f: 'musica.html', nav: 'La banda', t: 'La banda',
     tit: 'La banda · Comando Molekulon',
     desc: 'Els capítols, els videoclips, els temes i els directes del Comando. I el que encara no té adreça, dit com el que és.' },
+  /* El directori i l'alta. **Primer el cromo, el SOS després i només si vols**:
+     sortir al repartiment és un formulari i un vídeo, i la clau criptogràfica
+     queda per a qui, a més, vulgui comptar les seves hores. L'alta no va al
+     menú —s'hi arriba des de cada «Fes el teu personatge»— però sí al sitemap.
+     La pàgina de rebuda no va enlloc: només existeix per a qui acaba d'enviar. */
+  { f: 'directori.html', nav: 'El directori', t: 'El directori',
+    tit: 'El directori · Comando Molekulon',
+    desc: 'El mur de cromos del Comando: els catorze canònics i la gent de debò que hi ha entrat amb el seu nom, els seus superpoders i un vídeo que ho ensenya.' },
+  { f: 'alta.html', nav: 'Fes el teu cromo', t: 'Fes el teu cromo', menu: false, mapa: true,
+    tit: 'Fes el teu cromo · Comando Molekulon',
+    desc: 'Quatre preguntes i l\'enllaç al teu vídeo. Sense claus ni contrasenyes: el cromo és la teva fitxa al repartiment, i el SOS ve després i només si vols.' },
+  { f: 'alta-rebuda.html', nav: 'Alta rebuda', t: 'Alta rebuda', menu: false, mapa: false, noindex: true,
+    tit: 'Alta rebuda · Comando Molekulon',
+    desc: 'El teu cromo ha arribat i queda pendent d\'aprovació. Aquí hi diu quant triga i què passa després.' },
   /* El lector de la mostra. `menu` es calcula i no es decideix: mentre no hi
      hagi ni una pàgina publicada, la pàgina existeix però no s'enllaça des del
      menú ni surt al sitemap. Una porta al no-res és pitjor que cap porta, i una
@@ -417,6 +436,44 @@ tr.te td{background:rgba(0,230,118,.06)}
 .pregunta h4{font-size:1rem;margin-bottom:.25rem}
 .pregunta p{font-size:.86rem;margin:0}
 
+/* ══ EL DIRECTORI I L'ALTA ═══════════════════════════════════════════════
+   El cromo de la gent és el mateix marc que el dels canònics, amb dues
+   diferències que es veuen: no té retrat sinó un vídeo —que és la seva prova— i
+   pot portar la marca del SOS. Els canònics, aquí, van en petit: la fitxa
+   sencera ja és a /personatges. */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.5rem;margin:.8rem 0}
+.mini a{display:block;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.mini .marc{aspect-ratio:3/4;background:#05050a}
+.mini img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.mini .buit{display:flex;align-items:center;justify-content:center;height:100%;font-size:.66rem;color:var(--muted);text-align:center;padding:.4rem}
+.mini b{display:block;font-size:.76rem;padding:.4rem .5rem}
+.cromo .video{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.4rem;height:100%;
+  text-decoration:none;color:var(--text);font-weight:700;font-size:.9rem;
+  background:radial-gradient(circle at 50% 40%,rgba(224,64,251,.22),transparent 65%),#05050a}
+.cromo .video span{font-size:2.4rem;line-height:1}
+/* El vídeo no té cara a dins: un marc de retrat alt seria una caixa buida. */
+.cromo.gent .marc{aspect-ratio:16/10}
+.cromo .nick{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.cromo .sos{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--green);background:rgba(0,230,118,.12);padding:.12rem .45rem;border-radius:20px}
+.regles{margin:.4rem 0 0;padding-left:1.2rem;font-size:.88rem;color:var(--light)}
+.regles li{margin:.35rem 0}
+.regles b{color:var(--text)}
+form.alta{display:grid;gap:.9rem;margin-top:.6rem}
+form.alta label{display:grid;gap:.3rem;font-size:.88rem;font-weight:600}
+form.alta label span{font-weight:400;font-size:.78rem;color:var(--muted)}
+form.alta input[type=text],form.alta input[type=url],form.alta input[type=email],form.alta textarea{
+  font:inherit;font-size:.92rem;padding:.6rem .7rem;border-radius:9px;border:1px solid var(--border);
+  background:var(--card);color:var(--text);width:100%}
+form.alta textarea{min-height:5.5rem;resize:vertical}
+form.alta input:focus,form.alta textarea:focus{outline:2px solid var(--purple);outline-offset:1px}
+form.alta .accepto{display:flex;gap:.55rem;align-items:flex-start;font-weight:400;color:var(--light)}
+form.alta .accepto input{margin-top:.25rem}
+form.alta button{justify-self:start;font:inherit;font-weight:700;font-size:.95rem;padding:.65rem 1.2rem;border-radius:10px;
+  border:1px solid var(--purple);background:var(--purple);color:#0b0b12;cursor:pointer}
+.amagat{position:absolute;left:-9999px}
+.porta-sos{border-left:3px solid var(--green)}
+
 footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}
@@ -456,7 +513,7 @@ const pagina = (p, cos) => `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(p.tit)}</title>
 <meta name="description" content="${esc(p.desc)}">
-<link rel="canonical" href="${url(p.f)}">
+${p.noindex ? '<meta name="robots" content="noindex">\n' : ''}<link rel="canonical" href="${url(p.f)}">
 <meta property="og:title" content="${esc(p.tit)}">
 <meta property="og:description" content="${esc(p.desc)}">
 <meta property="og:type" content="website">
@@ -506,7 +563,7 @@ ${fonsHtml()}
 <p class="crida">${PROPOSIT.crida}</p>
 <div class="acts">
 <a class="pri" href="/historia">Entra a la història</a>
-<a href="${SOS}/sos#/alta">Fes el teu personatge</a>
+<a href="/alta">Fes el teu personatge</a>
 <a href="/personatges">Els ${NUM.herois} personatges</a>
 ${MOSTRA1 ? `<a href="/comic">Llegeix el còmic</a>` : ''}
 <a href="/peli">El guió de la intro</a>
@@ -560,8 +617,10 @@ ${D.eixos.map(e => `<div class="fitxa">
 
 <section class="box">
 <h2>Com hi entra una persona</h2>
-<p class="lead">Quatre passos, i cap d'ells demana un compte ni una contrasenya.
-La clau te la fa el navegador i no surt del teu aparell.</p>
+<p class="lead"><strong>Per sortir al repartiment n'hi ha prou amb el cromo</strong>: quatre
+preguntes i un vídeo, a <a href="/alta">fes el teu cromo</a>. El que ve a sota és el SOS,
+per a qui <b>a més</b> vol comptar les seves hores al barri. Cap d'aquests passos demana
+un compte ni una contrasenya: la clau te la fa el navegador i no surt del teu aparell.</p>
 <div class="graella">
 ${D.passos.map(s => `<div class="fitxa">
 <p class="k">Pas ${s.n}</p>
@@ -656,9 +715,10 @@ ${D.herois.map(cromo).join('\n')}
 
 <section class="box">
 <h3>I el teu</h3>
-<p class="lead">Nom, població, fins a cinc superpoders i les teves superarmes —el que
-saps fer i el que pots deixar. Es fa al navegador, no puja enlloc i si te'n vas t'ho endús tot.</p>
-<p><a href="${SOS}/sos#/alta" rel="noopener">Fes el teu personatge ↗</a></p>
+<p class="lead">Nom, població, fins a cinc superpoders, les teves superarmes i un vídeo
+que ho ensenyi. <b>Sense claus ni contrasenyes</b>: el cromo és la teva fitxa al repartiment
+i surt al <a href="/directori">directori</a> quan s'aprova.</p>
+<p><a href="/alta">Fes el teu personatge →</a></p>
 </section>
 </div>`;
 
@@ -989,7 +1049,7 @@ perquè ja el tenies.</p>
 <p>D'aquesta frase en va sortir una cançó, de la cançó un còmic, del còmic una banda,
 i de la banda una pel·lícula que encara no existeix. Això és la seqüència, en ordre.</p>
 <div class="acts"><a class="pri" href="#acte-1">Comença la història ↓</a>
-<a href="${SOS}/sos#/alta" rel="noopener">Fes el teu personatge ↗</a></div>
+<a href="/alta">Fes el teu personatge →</a></div>
 </div>
 </section>
 
@@ -1091,7 +1151,7 @@ barri et vingui a buscar.</p>
 amb nom i amb superarma. Si no et surt explicar-ho, hi ha un kit que t'ho escriu a partir
 del que has contestat.</p>
 
-<h3>I on es penja</h3>
+<h3 id="com-es-penja">I on es penja</h3>
 <p>El vídeo el puges <b>tu</b> a YouTube, des del teu compte, i queda teu. No hi ha cap
 formulari que se'l quedi ni cap safata nostra on acabi. El que el fa trobable és
 <b>l'etiqueta</b>, i això és exactament el que diu la història: <b>no et reclutem, et
@@ -1111,7 +1171,7 @@ fitxa del SOS és una altra cosa i es queda al teu aparell. <b>I a l'aula, no.</
 vídeos de criatures no es publiquen: a l'escola l'exercici es fa sense penjar res, i això
 ho explica la guia de la Fàbrica de Superherois.</p>
 <div class="acts">
-<a class="pri" href="${SOS}/sos#/alta" rel="noopener">Fes el teu personatge ↗</a>
+<a class="pri" href="/alta">Fes el teu personatge →</a>
 <a href="${SOS}/sos#/kit" rel="noopener">Obre el kit narratiu ↗</a>
 <a href="/personatges">Mira els ${NUM.herois} cromos</a>
 </div>
@@ -1121,15 +1181,214 @@ t'encaixen, el que compta és que l'etiqueta hi sigui perquè algú et pugui tro
 </section>`;
 };
 
+/* ══ EL DIRECTORI ════════════════════════════════════════════════════════════
+   El mur de cromos. No és el cens del SOS —aquell és signat, sense moderador i
+   viu a l'aparell de cadascú—: aquest és narratiu, públic i l'aprova l'autor.
+   Són dues llistes amb feines diferents, i el pont entre elles és un camp.
+
+   Comença pels canònics en petit perquè avui ja serveixi: un directori buit que
+   ho diu és honest, però un directori que ensenya qui ja hi és fa entendre de
+   seguida on aniràs a parar. */
+const cromoGent = (c, i) => `<article class="cromo gent">
+<div class="marc">
+<span class="num">${String(i + 1).padStart(3, '0')}</span>
+<a class="video" href="${esc(c.video)}" rel="noopener"><span>▶</span>Mira la demo ↗</a>
+</div>
+<div class="cos">
+<h3>${esc(c.nom)}</h3>
+<p class="nick">@${esc(c.nick)} · ${esc(c.poblacio)}</p>
+<dl>
+<dt>Superpoders</dt><dd>${c.superpoders.map(esc).join(' · ')}</dd>
+${c.superarmes && c.superarmes.length ? `<dt>Superarmes</dt><dd>${c.superarmes.map(esc).join(' · ')}</dd>` : ''}
+</dl>
+${c.did ? `<p><span class="sos" title="${esc(c.did)}">Comprovable al SOS</span></p>` : ''}
+</div>
+</article>`;
+
+const directori = () => {
+  const gent = DIR.cromos;
+  const ambSos = gent.filter(c => c.did).length;
+  return `
+<header class="hero">
+<div class="hero-inner">
+<span class="tag">El repartiment</span>
+<h1>El <em>directori</em> del Comando</h1>
+<p class="sub">Qui hi surt, amb el seu nom, el que sap fer i <strong>un vídeo que ho ensenya</strong>.
+Els ${NUM.herois} primers són els del còmic; la resta és gent de debò que ha fet el seu cromo.</p>
+<div class="acts"><a class="pri" href="/alta">Fes el teu cromo</a>
+<a href="/personatges">Els ${NUM.herois} canònics, sencers</a></div>
+</div>
+</header>
+
+<div class="wrap">
+<section class="box">
+<h2>Els ${NUM.herois} del còmic</h2>
+<p class="lead">La fitxa sencera de cadascun, amb poder, superarma i què vol dir dins d'un
+equip, és a <a href="/personatges">els personatges</a>.</p>
+<div class="mini">
+${D.herois.map(h => {
+  const r = RETRAT[h.name];
+  return `<a href="/personatges"><div class="marc">${r ? `<img src="${esc(r.img)}" alt="" loading="lazy">` : '<div class="buit">Encara sense retrat</div>'}</div><b>${esc(h.name)}</b></a>`;
+}).join('\n')}
+</div>
+</section>
+
+<section class="box">
+<h2>${gent.length ? `${gent.length} ${gent.length === 1 ? 'cromo' : 'cromos'} de la gent` : 'Els cromos de la gent'}</h2>
+${gent.length ? `<p class="lead">Per ordre d'arribada. Cadascun l'ha enviat la persona que hi surt i l'ha
+aprovat l'autor del Comando.${ambSos ? ` <b>${ambSos}</b> ${ambSos === 1 ? 'porta' : 'porten'} la marca del SOS: s'hi han fet el perfil i els seus apunts es poden comprovar.` : ''}
+Cap cromo és menys cromo per no portar-la.</p>
+<div class="cromos">
+${gent.map(cromoGent).join('\n')}
+</div>` : `<p class="nota buit"><b>Encara no n'hi ha cap d'aprovat.</b> El directori acaba de
+néixer i es diu com és: buit. El primer cromo de la gent pot ser el teu, i ${SIGNA
+  ? `l'alta ja és oberta: <a href="/alta">fes el teu cromo</a>.`
+  : `l'alta s'obre quan el directori tingui qui el signi —a <a href="/alta">fes el teu cromo</a> hi ha les preguntes per anar-les pensant.`}</p>`}
+</section>
+
+<section class="box">
+<h3>Això no és el SOS, i està bé</h3>
+<p class="lead">El cromo és <b>la teva fitxa al repartiment</b>: pública, aquí, i l'aprova l'autor.
+El perfil del SOS és <b>la teva identitat comptable</b>: es queda al teu aparell i la valida la
+criptografia. El primer és per sortir-hi; el segon, per comptar-hi. Es pot tenir l'un sense
+l'altre, i el nick és el mateix a tots dos llocs.</p>
+</section>
+</div>`;
+};
+
+/* ══ L'ALTA ══════════════════════════════════════════════════════════════════
+   L'encàrrec portava una crítica dins: el SOS **demana massa** a qui només vol
+   sortir a la pel·lícula. Aquí no hi ha claus, ni `did:`, ni còpies de
+   seguretat: quatre preguntes, un vídeo i tres caselles que diuen la veritat.
+
+   L'enviament el recull Netlify Forms i arriba per correu a l'autor; aprovar és
+   afegir el cromo a `data/directori.json`. Sense servidor i sense cap peça
+   automàtica entre una persona i qui l'aprova, que per a les primeres altes és
+   el que toca (estudi, §4: opció A).
+
+   El formulari **no surt** mentre el directori no tingui un responsable amb
+   nom, NIF i correu. Les preguntes i les regles sí: es poden anar pensant. */
+const ALTA = {
+  regles: [
+    '<b>Es publica</b> el cromo que contesta les quatre preguntes, porta un vídeo que és teu i és d\'una persona de debò.',
+    '<b>No es publica</b> el que no té vídeo o el vídeo no és seu, el que ataca algú, ni res de menors d\'edat.',
+    `<b>Es pot retirar</b> quan vulguis, sense donar explicacions: ho demanes al correu del responsable i en ${esc(DIR.termini)} ja no hi és.`
+  ]
+};
+
+const formulari = () => `<form class="alta" name="alta-cromo" method="POST" action="/alta-rebuda" data-netlify="true" netlify-honeypot="lloc-web">
+<input type="hidden" name="form-name" value="alta-cromo">
+<p class="amagat"><label>No omplis això si ets una persona <input name="lloc-web" tabindex="-1" autocomplete="off"></label></p>
+<label>1 · Nom de guerra <span>El nom que vols portar al Comando. Surt al cromo.</span>
+<input type="text" name="nom" required maxlength="60" autocomplete="nickname"></label>
+<label>Nick <span>Una paraula, en minúscules: el mateix que faràs servir al SOS si algun dia t'hi fas el perfil.</span>
+<input type="text" name="nick" required pattern="@?[a-z0-9_.\\-]{3,24}" maxlength="25" placeholder="@el-teu-nick" autocapitalize="none" spellcheck="false"></label>
+<label>D'on ets <span>Poble, barri o ciutat. Surt al cromo.</span>
+<input type="text" name="poblacio" required maxlength="80"></label>
+<label>2 · Els teus superpoders <span>Fins a cinc, un per línia. El que saps fer i podries ensenyar o donar en hores.</span>
+<textarea name="superpoders" required maxlength="600"></textarea></label>
+<label>3 · Les teves superarmes <span>El que tens i podries deixar. Opcional.</span>
+<textarea name="superarmes" maxlength="600"></textarea></label>
+<label>4 · L'enllaç al teu vídeo <span>La demo, penjada per tu i en públic. <a href="/historia#com-es-penja">Com es penja</a>.</span>
+<input type="url" name="video" required placeholder="https://youtu.be/…"></label>
+<label>El teu correu <span>Per dir-te si s'ha publicat. <b>No surt enlloc</b> i no s'usa per a res més.</span>
+<input type="email" name="correu" required autocomplete="email"></label>
+<label class="accepto"><input type="checkbox" name="major-edat" value="si" required> Tinc 18 anys o més.</label>
+<label class="accepto"><input type="checkbox" name="public" value="si" required> Entenc que el cromo és públic: el nom de guerra, d'on soc i el vídeo els veurà tothom.</label>
+<label class="accepto"><input type="checkbox" name="regles" value="si" required> He llegit les tres regles de publicació.</label>
+<button type="submit">Envia el meu cromo</button>
+</form>`;
+
+const alta = () => `
+<header class="hero">
+<div class="hero-inner">
+<span class="tag">L'alta al Comando</span>
+<h1>Fes el teu <em>cromo</em></h1>
+<p class="sub">Quatre preguntes i l'enllaç al teu vídeo. <strong>Sense claus ni contrasenyes.</strong>
+Quan s'aprovi, surts al <a href="/directori">directori</a> amb els altres.</p>
+<p class="crida">Primer el cromo. <b>El SOS, després i només si vols.</b></p>
+</div>
+</header>
+
+<div class="wrap">
+<section class="box">
+<h2>Les quatre preguntes</h2>
+<p class="lead">Les mateixes que es fan a l'aula i als tallers. Pensa-les abans d'omplir res: el
+vídeo és contestar-les davant del mòbil.</p>
+<div class="pregunta"><span class="q">1</span><div><h4>Qui ets?</h4>
+<p>El nom que vols portar al Comando, i d'on ets. Res més.</p></div></div>
+<div class="pregunta"><span class="q">2</span><div><h4>Quins superpoders tens?</h4>
+<p>El que saps fer i podries ensenyar o donar en hores. Fins a cinc. Cosir, escoltar i arreglar bicicletes també hi compten.</p></div></div>
+<div class="pregunta"><span class="q">3</span><div><h4>I quines superarmes?</h4>
+<p>El que tens i no fas servir cada dia: una escala, una càmera, un local, una furgoneta.</p></div></div>
+<div class="pregunta"><span class="q">4</span><div><h4>Ensenya-ho: fes-ne una demo</h4>
+<p><b>No ho expliquis, fes-ho.</b> El vídeo el penges tu, des del teu compte, i aquí només ens dones l'enllaç.
+<a href="/historia#com-es-penja">Durada, títol i etiquetes</a>.</p></div></div>
+</section>
+
+<section class="box">
+<h2>Abans d'enviar, el que s'ha de dir a la cara</h2>
+<ul class="regles">
+<li><b>Un cromo públic és públic.</b> El nom de guerra, d'on ets i el vídeo els veurà tothom. El correu, no.</li>
+<li><b>Només persones adultes.</b> A l'aula l'exercici es fa sense publicar res; el directori és per a majors de 18 anys.</li>
+<li><b>Tindràs resposta en ${esc(DIR.termini)}</b>, al correu que deixis: publicat, o per què no.</li>
+</ul>
+<h3 style="margin-top:1rem">Les tres regles de publicació</h3>
+<ol class="regles">
+${ALTA.regles.map(r => `<li>${r}</li>`).join('\n')}
+</ol>
+</section>
+
+<section class="box">
+<h2>El teu cromo</h2>
+${SIGNA ? `<p class="lead">Ho rep <b>${esc(SIGNA.nom)}</b> (NIF ${esc(SIGNA.nif)}), que és qui signa el directori.
+Per retirar el teu cromo o preguntar res: <a href="mailto:${esc(SIGNA.correu)}">${esc(SIGNA.correu)}</a>.</p>
+${formulari()}` : `<p class="nota buit"><b>L'alta encara no és oberta.</b> Un directori de persones amb
+els seus noms necessita algú que el signi —nom, NIF i un correu que respongui— i aquesta dada
+encara no és aquí. Quan hi sigui, el formulari surt en aquest lloc. Mentrestant, les preguntes
+de dalt es poden anar pensant i el vídeo es pot anar gravant.</p>`}
+</section>
+
+<section class="box porta-sos">
+<h3>I si a més vols comptar les teves hores al barri</h3>
+<p class="lead">Això es fa al <b>SOS</b>, i és una altra cosa: la teva identitat comptable, que es queda
+al teu aparell i fa que el que aportes valgui com a prova. <b>No cal per sortir al Comando.</b>
+Si un dia te'l fas, el teu cromo pot portar la marca de <i>comprovable al SOS</i>.</p>
+<p><a href="${SOS}/sos#/alta" rel="noopener">Fes-te el perfil del SOS ↗</a></p>
+</section>
+</div>`;
+
+const rebuda = () => `
+<header class="hero">
+<div class="hero-inner">
+<span class="tag">Alta rebuda</span>
+<h1>El teu cromo <em>ha arribat</em></h1>
+<p class="sub">Queda <strong>pendent d'aprovació</strong>. Tindràs resposta en ${esc(DIR.termini)}, al correu
+que has deixat: publicat, o per què no.</p>
+<div class="acts"><a class="pri" href="/directori">Mira el directori</a>
+<a href="/historia">Torna a la història</a></div>
+</div>
+</header>
+
+<div class="wrap">
+<section class="box porta-sos">
+<h3>Mentrestant, i només si vols</h3>
+<p class="lead">Si a més de sortir-hi vols comptar les teves hores al barri, això es fa al SOS.
+Per al cromo no cal.</p>
+<p><a href="${SOS}/sos#/alta" rel="noopener">Fes-te el perfil del SOS ↗</a></p>
+</section>
+</div>`;
+
 /* ══ EL SITEMAP ══════════════════════════════════════════════════════════════ */
 const sitemap = () => `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${PAGINES.filter(p => p.menu !== false).map(p => `<url><loc>${url(p.f)}</loc></url>`).join('\n')}
+${PAGINES.filter(p => p.mapa ?? p.menu !== false).map(p => `<url><loc>${url(p.f)}</loc></url>`).join('\n')}
 </urlset>
 `;
 
 /* ══ ESCRIURE ════════════════════════════════════════════════════════════════ */
-const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic };
+const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic,
+  'directori.html': directori, 'alta.html': alta, 'alta-rebuda.html': rebuda };
 const sortida = () => {
   const l = PAGINES.map(p => [p.f, pagina(p, COSSOS[p.f]().trim())]);
   l.push(['sitemap.xml', sitemap()]);

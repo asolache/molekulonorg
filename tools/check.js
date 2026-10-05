@@ -7,7 +7,7 @@
  * que no hi és o una porta cap a `null`. Cap d'aquestes coses peta: la pàgina
  * es veu bé i el problema el troba un visitant.
  *
- * Aquestes són les set regles. Cadascuna tapa una manera concreta que això es
+ * Aquestes són les onze regles. Cadascuna tapa una manera concreta que això es
  * podria podrir en silenci.
  *
  *   node tools/check.js
@@ -19,6 +19,7 @@ const { PAGINES, DOMINI, SOS, NUM } = require('./build.js');
 
 const ARREL = join(__dirname, '..');
 const D = JSON.parse(readFileSync(join(ARREL, 'data', 'comando.json'), 'utf8'));
+const DIR = JSON.parse(readFileSync(join(ARREL, 'data', 'directori.json'), 'utf8'));
 
 let fails = 0;
 const ok = m => console.log('  ✓ ' + m);
@@ -145,6 +146,8 @@ if (faltants.length) {
   const YT = /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/embed\/|[?&]v=)([A-Za-z0-9_-]{11})/g;
   const bons = new Set();
   for (const v of D.videos) { if (!v.url) continue; for (const m of v.url.matchAll(YT)) bons.add(m[1]); }
+  /* Les demos dels cromos aprovats també són declarades: viuen a directori.json. */
+  for (const c of DIR.cromos) for (const m of String(c.video || '').matchAll(YT)) bons.add(m[1]);
   const forasters = [];
   for (const p of PAGINES) {
     for (const m of pag[p.f].matchAll(YT)) if (!bons.has(m[1])) forasters.push(`${p.f} · ${m[1]}`);
@@ -192,6 +195,46 @@ if (faltants.length) {
   else if (dups.length) bad(`el mateix heroi amb dos retrats: ${dups.join(', ')}`);
   else if (!existsSync(join(ARREL, C.font.img))) bad(`la imatge d'on surten els retrats no hi és: ${C.font.img}`);
   else ok(`${pl(C.retrats.length, 'retrat', 'retrats')} de ${D.herois.length}, tots amb fitxer i amb nom de la llista`);
+}
+
+/* ── 11 · El directori i l'alta ───────────────────────────────────────────
+   Quatre maneres que el directori es podria podrir sense petar. Un cromo sense
+   vídeo o amb sis superpoders és un cromo que no compleix les regles que la
+   mateixa pàgina d'alta publica. Un nick repetit, o que és el d'un canònic, trenca
+   l'espai de noms que es comparteix amb el SOS. Un formulari obert sense ningú
+   que signi el directori és el que l'estudi diu que no es fa. I la pàgina de
+   rebuda als cercadors seria una porta a un «gràcies» que ningú ha dit. */
+{
+  const R = DIR.responsable || {};
+  const signat = ['nom', 'nif', 'correu'].every(k => R[k]);
+  const NICK = /^[a-z0-9_.-]{3,24}$/;
+  const slug = t => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const canonics = new Set(D.herois.map(h => slug(h.name)));
+  const mal = [];
+  const vistos = new Set();
+  for (const [i, c] of DIR.cromos.entries()) {
+    const qui = c.nick || `#${i + 1}`;
+    for (const k of ['nick', 'nom', 'poblacio', 'video']) if (!c[k]) mal.push(`${qui} sense ${k}`);
+    if (c.nick && !NICK.test(c.nick)) mal.push(`${qui}: nick fora de format (minúscules, 3-24, sense @)`);
+    if (c.nick && vistos.has(c.nick)) mal.push(`${qui}: nick repetit`);
+    if (c.nick && canonics.has(c.nick)) mal.push(`${qui}: és el nick d'un canònic`);
+    vistos.add(c.nick);
+    if (!Array.isArray(c.superpoders) || c.superpoders.length < 1 || c.superpoders.length > 5) mal.push(`${qui}: ha de tenir d'un a cinc superpoders`);
+    if (c.video && !/^https:\/\//.test(c.video)) mal.push(`${qui}: el vídeo no és https`);
+    if (c.did && !/^did:[a-z0-9]+:.+/.test(c.did)) mal.push(`${qui}: el did no té forma de did`);
+  }
+  const dir = pag['directori.html'], alta = pag['alta.html'];
+  const pintats = (dir.match(/<article class="cromo gent">/g) || []).length;
+  const form = /<form class="alta"[^>]*data-netlify="true"/.test(alta);
+  const mapa = existsSync(join(ARREL, 'sitemap.xml')) ? readFileSync(join(ARREL, 'sitemap.xml'), 'utf8') : '';
+  if (mal.length) bad(`cromos del directori que no compleixen les regles: ${mal.join('; ')}`);
+  else if (DIR.cromos.length && !signat) bad(`hi ha ${pl(DIR.cromos.length, 'cromo publicat', 'cromos publicats')} i el directori no té responsable (nom, NIF i correu)`);
+  else if (pintats !== DIR.cromos.length) bad(`el directori pinta ${pintats} cromos de la gent i les dades en tenen ${DIR.cromos.length}`);
+  else if (form !== signat) bad(signat ? 'hi ha responsable i /alta no porta el formulari' : '/alta porta el formulari i el directori no té responsable');
+  else if (form && !['name="form-name" value="alta-cromo"', 'name="major-edat" value="si" required', 'name="public" value="si" required', 'name="video" required']
+    .every(x => alta.includes(x))) bad('al formulari d\'alta li falta el nom per a Netlify o alguna de les caselles obligatòries');
+  else if (!/name="robots" content="noindex"/.test(pag['alta-rebuda.html']) || mapa.includes('/alta-rebuda')) bad('la pàgina de rebuda és indexable o surt al sitemap');
+  else ok(`${pl(DIR.cromos.length, 'cromo', 'cromos')} de la gent al directori, ${signat ? 'alta oberta amb responsable' : 'alta tancada fins que hi hagi responsable'}`);
 }
 
 console.log(fails ? `\n❌ ${pl(fails, 'problema', 'problemes')}.` : '\n✅ La web compleix el que promet.');

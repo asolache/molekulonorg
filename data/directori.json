@@ -1,0 +1,11 @@
+{
+  "_": "El directori del Comando: el mur de cromos de la gent que s'hi apunta. AIXÒ SÍ que s'edita a mà, com mostra.json: cada entrada és una alta que ha arribat pel formulari de /alta i que l'autor ha aprovat. Aprovar = afegir-la aquí i fer `node tools/build.js`. Retirar = treure-la, sense demanar explicacions. No és el cens del SOS: aquell és signat i local-first, i aquest és narratiu i moderat. El pont entre els dos és `did`, opcional: buit vol dir que la persona no s'ha fet el perfil del SOS, i cap cromo és menys cromo per això. `nick` és el mateix espai de noms que al SOS: abans d'aprovar-ne un, s'ha de mirar que no sigui dels reservats dels fundadors (build-convits.js de teamtowershuma).",
+  "responsable": {
+    "_": "Qui signa el directori: nom, NIF i un correu que respongui. Mentre això sigui null, /alta ensenya les preguntes i les regles però NO el formulari — un directori de persones amb els seus noms no s'obre sense un responsable amb nom (estudi alta-i-directori, §6).",
+    "nom": null,
+    "nif": null,
+    "correu": null
+  },
+  "termini": "una setmana",
+  "cromos": []
+}
