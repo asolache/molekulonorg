@@ -42,9 +42,10 @@ const C = JSON.parse(readFileSync(join(ARREL, 'data', 'cromos.json'), 'utf8'));
 const RETRAT = Object.fromEntries(C.retrats.map(r => [r.heroi, r]));
 /* El directori: els cromos de la gent que s'hi apunta, un cop aprovats. S'edita
    a mà com la mostra, perquè aprovar és una decisió de l'autor i no una dada del
-   SOS. L'alta s'obre només quan hi ha qui la signa: `responsable` complet o res. */
+   SOS. L'alta s'obre només quan hi ha qui la signa: nom i correu com a mínim.
+   El NIF és opcional i, si hi és, es pinta: és a decisió de qui signa si surt. */
 const DIR = JSON.parse(readFileSync(join(ARREL, 'data', 'directori.json'), 'utf8'));
-const SIGNA = ['nom', 'nif', 'correu'].every(k => DIR.responsable && DIR.responsable[k]) ? DIR.responsable : null;
+const SIGNA = ['nom', 'correu'].every(k => DIR.responsable && DIR.responsable[k]) ? DIR.responsable : null;
 const PAGS_MOSTRA = M.comics.reduce((a, c) => a + c.pagines.length, 0);
 const MOSTRA1 = M.comics[0].pagines.length;
 
@@ -52,6 +53,9 @@ const MOSTRA1 = M.comics[0].pagines.length;
    lloc de les eines: des d'aquí s'hi enllaça, no se'n copia res. */
 const DOMINI = 'https://molekulon.org';
 const SOS = 'https://teamtowershuma.com';
+/* La verificació de Google Search Console. Va a totes les pàgines i no només a la
+   portada: si un dia la portada canvia de generador, la propietat no es perd. */
+const GOOGLE_VERIFICACIO = 'Umq0Aw3jmoYb2t5YAqC4hn4c2vBcJ10lNFSgotJQkY0';
 
 /* ══ LES PÀGINES ═════════════════════════════════════════════════════════════
    Quatre, i no dotze. El pla en preveu dotze i les altres vuit necessiten
@@ -514,6 +518,7 @@ const pagina = (p, cos) => `<!DOCTYPE html>
 <title>${esc(p.tit)}</title>
 <meta name="description" content="${esc(p.desc)}">
 ${p.noindex ? '<meta name="robots" content="noindex">\n' : ''}<link rel="canonical" href="${url(p.f)}">
+<meta name="google-site-verification" content="${GOOGLE_VERIFICACIO}">
 <meta property="og:title" content="${esc(p.tit)}">
 <meta property="og:description" content="${esc(p.desc)}">
 <meta property="og:type" content="website">
@@ -1341,7 +1346,7 @@ ${ALTA.regles.map(r => `<li>${r}</li>`).join('\n')}
 
 <section class="box">
 <h2>El teu cromo</h2>
-${SIGNA ? `<p class="lead">Ho rep <b>${esc(SIGNA.nom)}</b> (NIF ${esc(SIGNA.nif)}), que és qui signa el directori.
+${SIGNA ? `<p class="lead">Ho rep <b>${esc(SIGNA.nom)}</b>${SIGNA.nif ? ` (NIF ${esc(SIGNA.nif)})` : ''}, que és qui signa el directori.
 Per retirar el teu cromo o preguntar res: <a href="mailto:${esc(SIGNA.correu)}">${esc(SIGNA.correu)}</a>.</p>
 ${formulari()}` : `<p class="nota buit"><b>L'alta encara no és oberta.</b> Un directori de persones amb
 els seus noms necessita algú que el signi —nom, NIF i un correu que respongui— i aquesta dada

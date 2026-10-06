@@ -206,7 +206,7 @@ if (faltants.length) {
    rebuda als cercadors seria una porta a un «gràcies» que ningú ha dit. */
 {
   const R = DIR.responsable || {};
-  const signat = ['nom', 'nif', 'correu'].every(k => R[k]);
+  const signat = ['nom', 'correu'].every(k => R[k]);
   const NICK = /^[a-z0-9_.-]{3,24}$/;
   const slug = t => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const canonics = new Set(D.herois.map(h => slug(h.name)));
@@ -228,7 +228,7 @@ if (faltants.length) {
   const form = /<form class="alta"[^>]*data-netlify="true"/.test(alta);
   const mapa = existsSync(join(ARREL, 'sitemap.xml')) ? readFileSync(join(ARREL, 'sitemap.xml'), 'utf8') : '';
   if (mal.length) bad(`cromos del directori que no compleixen les regles: ${mal.join('; ')}`);
-  else if (DIR.cromos.length && !signat) bad(`hi ha ${pl(DIR.cromos.length, 'cromo publicat', 'cromos publicats')} i el directori no té responsable (nom, NIF i correu)`);
+  else if (DIR.cromos.length && !signat) bad(`hi ha ${pl(DIR.cromos.length, 'cromo publicat', 'cromos publicats')} i el directori no té responsable (nom i correu)`);
   else if (pintats !== DIR.cromos.length) bad(`el directori pinta ${pintats} cromos de la gent i les dades en tenen ${DIR.cromos.length}`);
   else if (form !== signat) bad(signat ? 'hi ha responsable i /alta no porta el formulari' : '/alta porta el formulari i el directori no té responsable');
   else if (form && !['name="form-name" value="alta-cromo"', 'name="major-edat" value="si" required', 'name="public" value="si" required', 'name="video" required']
