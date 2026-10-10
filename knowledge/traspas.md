@@ -133,22 +133,45 @@ Les cinc que frenen feina, amb el motiu:
 
 ---
 
-## 6 · El que la sessió d'origen no ha pogut comprovar
+## 6 · El que s'ha comprovat en viu, i el que encara no
 
-Dit perquè ningú ho doni per provat:
+> La sessió d'origen no tenia sortida a internet. El 2026-10-10 una sessió del
+> projecte nou ho va mirar des de fora (lectura de pàgines i API de Netlify, no
+> un navegador amb pantalla). Això és el que va trobar.
 
-- **Que molekulon.org carregui.** Aquell contenidor no tenia sortida a internet
-  fora d'un proxy que bloquejava els hosts externs. Les redireccions
-  (`/historia`, `/comic`), el certificat i el vídeo de fons **no s'han vist mai
-  funcionant**.
-- **El vídeo de fons de la portada**, pel mateix motiu: a les captures hi surt
-  el marc de l'iframe sense carregar.
-- **La crida real a Claude del kit.** El camí sense IA sí que s'ha executat i
-  dona la fitxa correcta; el camí amb IA només es pot provar obrint la pàgina
-  publicada.
-- **Els enllaços d'Amazon i de SoundCloud**, que no s'han pogut obrir des d'allà.
+**Comprovat i bé:**
 
----
+- **La web carrega** a molekulon.org. El desplegament de producció és el del
+  commit `97c5d40`, amb les 13 regles de `_redirects` acceptades per Netlify.
+- **Les adreces sense extensió** (`/historia`, `/comic`, `/peli`…) serveixen la
+  pàgina. `/historia` i `/comic` funcionen sense regla pròpia: ho fa Netlify sol.
+- **www → sense www** porta a la mateixa pàgina.
+- **Les redireccions cap al SOS** (`/joc`, `/blog`, `/escola`…) arriben a la
+  pàgina de debò.
+- **El vídeo de fons**: el reproductor s'hi pinta i el vídeo existeix i deixa
+  incrustar-se (l'oEmbed de YouTube el retorna). Que es vegi corrent no s'ha pogut
+  mirar sense pantalla. Per disseny, a mòbil (<700px) i amb moviment reduït no hi és.
+- **Els onze vídeos** de les dades existeixen i són incrustables. La llista de
+  Molekulon TV també.
+
+**Trobat i arreglat al mateix PR que afegeix aquesta secció:**
+
+- `teamtowershuma.com/banc-temps` i `/biblioteca` donaven **404**: allà no tenen
+  adreça curta. Ara s'enllaça `/SOS/banc-temps.html` i `/SOS/biblioteca.html`,
+  que sí que hi són. **El bo seria declarar-les a l'altra casa** com `/escola`.
+- El canal de YouTube era `@comando-molekulon`, que **no existeix**. El de debò
+  és `@comandomolekulon`.
+- La landing deia «el teu nom» al títol del vídeo i «amb la teva cara» al peu,
+  contra la decisió dels personatges secrets (§2bis de l'estudi d'alta).
+
+**Encara obert:**
+
+- ⚠️ **El kit segueix publicat en privat.** Comprovat: només el veu el seu
+  propietari. Els dos botons de la landing porten a una porta tancada fins que
+  l'autor el comparteixi («qualsevol amb l'enllaç», al menú Compartir).
+- **La crida real a Claude del kit** es prova un cop compartit.
+- **Els enllaços d'Amazon i de SoundCloud** no s'han pogut obrir: els dos llocs
+  no deixen que una eina automàtica els llegeixi. Cal un clic de persona.
 
 ## 7 · Per on es continua
 
