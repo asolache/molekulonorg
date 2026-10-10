@@ -80,7 +80,10 @@ const PAGINES = [
 ];
 
 /* Les pàgines que encara viuen al SOS. S'enllacen amb el seu domini sencer i
-   marcades, perquè qui hi clica ha de saber que canvia de casa. */
+   marcades, perquè qui hi clica ha de saber que canvia de casa.
+   El banc de temps i la biblioteca no tenen adreça curta a l'altra casa
+   (teamtowershuma.com/banc-temps dona 404, comprovat el 2026-10-10): s'enllacen
+   pel fitxer fins que allà se'ls declari la regla com a /escola o /joc. */
 const AL_SOS = [
   { h: '/molekulandia', ic: '🏘', t: 'Molekulandia',
     d: 'El poble sencer: onze edificis on entrar i nou professions. El bar és el banc de temps i la ferreteria, la biblioteca de les coses.' },
@@ -90,9 +93,9 @@ const AL_SOS = [
     d: 'El Comando a l\'aula, de 6 a 13 anys. Dues accions, guia metodològica i què es mira i què no a l\'avaluació.' },
   { h: '/formacio', ic: '🎓', t: 'Formació',
     d: 'Setze mòduls de N0 a N3, amb un itinerari sencer de Comando, reputació i multivers narratiu.' },
-  { h: '/banc-temps', ic: '⏳', t: 'El Banc de Temps',
+  { h: '/SOS/banc-temps.html', ic: '⏳', t: 'El Banc de Temps',
     d: 'Els superpoders, comptats: una hora val una hora, i el saldo que ho diu.' },
-  { h: '/biblioteca', ic: '🔧', t: 'La Biblioteca de les Coses',
+  { h: '/SOS/biblioteca.html', ic: '🔧', t: 'La Biblioteca de les Coses',
     d: 'Les superarmes, compartides: donar o deixar, i què val cada préstec.' },
   { h: '/joc', ic: '🎮', t: 'El joc', d: 'Planta, defensa i activa el territori, a ritme.' },
   { h: '/blog', ic: '📖', t: 'El blog del Comando', d: 'D\'on surt tot això, explicat una entrada per idea.' }
@@ -970,9 +973,9 @@ const KIT = 'https://claude.ai/artifact/13VhvsbsTQhgauoxMDfRY3';
 
 const PUBLICAR = {
   durada: '30 a 60 segons',
-  titol: 'Comando Molekulon · el teu nom · la teva població',
+  titol: 'Comando Molekulon · el teu nom de guerra · la teva població',
   etiquetes: ['comandomolekulon', 'molekulon', 'superpoders', 'la teva població'],
-  canal: 'https://youtube.com/@comando-molekulon'
+  canal: 'https://youtube.com/@comandomolekulon'
 };
 
 const historia = () => {
@@ -1113,8 +1116,12 @@ trobem</b>.</p>
 <p>A la descripció, les quatre respostes escrites i l'adreça d'aquesta pàgina. Quan hi
 siguis, el teu capítol és al mateix lloc que els dels altres:
 <a href="${PUBLICAR.canal}" rel="noopener">el canal del Comando ↗</a>.</p>
-<p class="mut"><b>El que això vol dir, dit clar:</b> un vídeo públic a YouTube és públic
-—amb la teva cara, la teva veu i el nom que hi posis—, i aquesta decisió la prens tu. La
+<p class="mut"><b>El que això vol dir, dit clar:</b> un vídeo públic a YouTube és públic,
+i aquesta decisió la prens tu. Al Comando hi surt <b>el personatge, no la persona</b>: el
+vídeo pot ser amb màscara, de disfressa, de mans o en off, i el títol porta el nom de guerra
+i no el teu. Però <b>pseudònim no vol dir anònim</b>: qui et conegui et reconeixerà per la
+veu o pel taller, i si el puges des del teu canal personal, el canal diu qui ets. Si vols
+el secret de debò, obre un canal a nom del personatge. La
 fitxa del SOS és una altra cosa i es queda al teu aparell. <b>I a l'aula, no.</b> Els
 vídeos de criatures no es publiquen: a l'escola l'exercici es fa sense penjar res, i això
 ho explica la guia de la Fàbrica de Superherois.</p>
