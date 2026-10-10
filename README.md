@@ -46,30 +46,56 @@ node tools/build.js --check && node tools/check.js
 
 | Fitxer | Què és |
 |---|---|
-| `index.html` | La portada: la tesi, els sis eixos, com s'hi entra i què encara viu al SOS |
-| `personatges.html` | Els catorze herois: poder, superarma i què vol dir cadascun en un equip |
+| `index.html` | La portada: la tesi, per a què serveix, els sis eixos i què encara viu al SOS |
+| `historia.html` | **La landing de la història.** De la frase que ho va encendre tot fins a les quatre preguntes |
+| `personatges.html` | Els catorze cromos: cara, poder, superarma i què vol dir cadascun en un equip |
 | `peli.html` | El guió de la intro, pla a pla, amb què està filmat i què no |
 | `musica.html` | Els capítols, els videoclips, els temes i els directes |
+| `comic.html` | El lector de la mostra: pàgina a pàgina, cada una amb la seva cançó |
 | `tools/build.js` | El generador. **Aquí és on s'edita el que diu la web** |
 | `tools/sync.js` | Baixa les dades de dalt i avisa si la còpia s'ha quedat vella |
-| `tools/check.js` | Set regles sobre el que cap generador veurà mai |
-| `data/comando.json` | Les dades. Importades, mai editades |
+| `tools/check.js` | Deu regles sobre el que cap generador veurà mai |
+| `data/comando.json` | Les dades del Comando. Importades, **mai editades aquí** |
+| `data/mostra.json` | Quines pàgines del còmic es publiquen i quin tema sona a cada una. **Sí** que s'edita |
+| `data/cromos.json` | Quin retrat fa de cara de qui. **Sí** que s'edita |
+| `knowledge/alta-i-directori.md` | L'estudi de com entra la gent: cromo primer, SOS després |
 
-Quatre pàgines i no dotze. Les altres vuit del pla —el còmic, l'escola traslladada,
-qui ho signa, premsa— necessiten material que encara no hi és: imatges, dades
-legals i enllaços de compra. Publicar-les buides seria ensenyar una casa amb les
-habitacions pintades i sense terra.
+## El kit narratiu
 
-## El que aquesta web encara no té
+L'alta amb IA **no viu en aquest repositori**: és un artefacte de Claude
+publicat a part, i la landing hi enllaça.
 
-Es diu aquí i es diu també a la portada, perquè una llista de mancances amagada
-a un README és una llista que no existeix.
+- **Adreça**: https://claude.ai/artifact/13VhvsbsTQhgauoxMDfRY3
+- **Per què allà**: la IA la posa qui obre la pàgina, des del seu compte. El
+  projecte no paga res per cada personatge que es crea.
+- **Funciona sense IA.** Qui no tingui compte de Claude munta la fitxa igual.
+- Si algun dia canvia d'adreça, es canvia a la constant `KIT` de `tools/build.js`.
 
-- **Imatges.** Ni una vinyeta, ni una portada de còmic, ni un retrat.
-- **On es compren els còmics.** Se n'han publicat dos.
-- **Avís legal, contacte i llicència** del que hi ha publicat.
-- **Quatre peces de mitjans** nomenades i sense adreça: Pigmentón, Fraktalman,
-  Tekno Kartoffeln i el taller filmat. Surten a `/musica` dient-ho.
+## On som
+
+Al dia d'avui, i escrit aquí perquè qui obri el repositori no ho hagi de deduir:
+
+| | |
+|---|---|
+| **Pàgines** | 6, totes generades i amb les deu guardes en verd |
+| **Còmic 1** | Portada i 7 pàgines publicades, amb el seu tema |
+| **Còmic 2** | Portada publicada i enllaç de compra. **Cap pàgina de mostra encara** |
+| **Cromos** | 11 cares de 14. Falten El Aviador, Pigmentón i Fraktalman |
+| **Compra** | Els dos números, el primer també en anglès |
+
+### El que espera una decisió de l'autor
+
+1. **Les adreces canòniques de SoundCloud** dels dos temes. Les que hi ha són
+   enllaços curts (`on.soundcloud.com`), i el reproductor no els resol: mentre
+   siguin curts, la pàgina enllaça en comptes d'incrustar.
+2. **El repartiment de cançons** de les pàgines 1 a 6 del primer còmic. Ara
+   porten una proposta, i el lector ho diu: «(proposta, a confirmar)».
+3. **Si es publiquen les pàgines 8 i 9** del primer còmic, llegides i no
+   publicades.
+4. **Dos cromos sense confirmar**: Electroplasman i Afrodita són lectura meva de
+   la vinyeta, i la pàgina ho avisa damunt de la imatge.
+5. **Qui signa**: avís legal, contacte i llicència. Sense això no s'obre el
+   directori d'altes (vegeu l'estudi).
 
 ## Desplegament
 
@@ -78,7 +104,7 @@ que se serveix és exactament el que es pot llegir aquí, sense cap passa
 intermèdia que ningú mira.
 
 El domini és a **Porkbun** i els servidors de nom són els de **Netlify DNS**
-(`dns1..dns4.p09.nsone.net`).
+(`dns1..dns4.p09.nsone.net`). **El lloc ja és en línia a molekulon.org.**
 
 ---
 
