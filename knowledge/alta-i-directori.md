@@ -43,6 +43,8 @@ eren diferents.**
 ## 2 · La proposta, en una frase
 
 > **Primer el cromo. El SOS, després i només si vols.**
+>
+> I el cromo és **del superheroi, no de la persona**.
 
 Qui prem «Fes el teu personatge» va a una alta de **molekulon.org**, no del SOS.
 Omple quatre camps, enganxa l'enllaç del seu vídeo, i queda **pendent
@@ -51,6 +53,60 @@ d'aprovació**. Quan l'aprovis, el seu cromo surt al directori públic.
 A la seva fitxa hi ha, a baix de tot i sense pressa, una porta que diu: *«Si a
 més vols comptar les teves hores al barri, això es fa al SOS»*. Qui la prem fa
 la clau; qui no, no se n'assabenta mai i igualment és al repartiment.
+
+---
+
+## 2bis · El directori és de personatges secrets
+
+> **Decisió de l'autor, 2026-10-10: «només personatges superherois secrets».**
+
+És la decisió que endreça tota la resta, i val la pena dir per què no és una
+mesura de privacitat enganxada al final: **és el gènere**. Un superheroi té una
+identitat secreta des que existeix el gènere, i el Comando no n'és excepció —
+qui surt al còmic és Reciclator amb la seva escafandra, no el senyor que hi ha
+a sota.
+
+### Què es publica i què no
+
+| Es publica | No es publica mai |
+|---|---|
+| El **nom de guerra** i el seu cromo | El nom i els cognoms de la persona |
+| Els **superpoders** (el que sap fer) | L'adreça, el telèfon, el correu |
+| Les **superarmes** (el que pot deixar) | L'edat i la data de naixement |
+| La **població o comarca**, si la vol dir | Res que identifiqui una persona concreta |
+| L'**enllaç del seu vídeo** | Cap dada de contacte, ni per a altres usuaris |
+
+El correu de contacte es demana **per poder-te escriure tu**, i no surt enlloc.
+És l'única dada personal del sistema, i existeix per una sola cosa: avisar que
+el cromo s'ha aprovat i poder-lo retirar si qui el va enviar ho demana.
+
+### El que això resol de cop
+
+- **La por de donar la cara.** Qui no vol sortir amb el seu nom, no hi surt. El
+  projecte no perd res: el que li interessa és el superpoder, no el DNI.
+- **El vídeo deixa de ser una barrera.** Es pot gravar **amb màscara, de
+  disfressa, de mans, d'esquena o en off**, i segueix valent: el que ha
+  d'ensenyar és la demo —les mans germinant, soldant, afinant—, no la cara. I
+  això és més del Comando que un primer pla.
+- **Baixa el risc legal** d'un cop. Un directori de pseudònims amb un correu
+  guardat i no publicat és una altra cosa que un directori de persones amb nom i
+  cara. No desapareix la responsabilitat —segueix fent falta qui signa (§6)—,
+  però la superfície és molt més petita.
+- **Encaixa amb el SOS sense tocar res.** Allà la identitat ja és pseudònima: un
+  `did:` no diu qui ets. Les dues cares del projecte diuen el mateix.
+
+### El que obliga
+
+- **El nom de guerra és l'identificador, i per tant ha de ser únic.** Dos
+  Purplemans trenquen el directori. L'alta ha de mirar els nicks ja donats i els
+  reservats dels fundadors abans de dir que sí.
+- **No es pot prometre anonimat, només pseudonimat.** Qui pengi un vídeo amb la
+  seva veu i el seu taller és reconeixible per qui el conegui, i això s'ha de dir
+  a la pàgina en una línia. Prometre més del que es pot complir és el que la
+  casa no fa.
+- **El vídeo és de YouTube i és seu.** Si l'hi puja amb el seu compte personal,
+  el seu compte diu qui és. La pàgina ho ha d'avisar i recomanar un canal a nom
+  del personatge a qui vulgui el secret de debò.
 
 ---
 
@@ -153,18 +209,23 @@ L'IA és una ajuda per a qui no sap escriure's, no un peatge.
 
 Tres coses que si no es diuen ara, es diran malament després.
 
-**Un cromo públic és públic.** Nom, població, cara al vídeo. Qui s'apunta ho ha
-de llegir abans d'enviar, no després. I ha de poder marxar.
+**Un cromo públic és públic, però és el del personatge.** Hi surt el nom de
+guerra, el que saps fer i el teu vídeo; **no hi surt qui ets** (§2bis). El que sí
+que s'ha de dir sense adornar-ho és el límit: **pseudònim no vol dir anònim**.
+Qui et conegui et reconeixerà per la veu, les mans o el taller, i això no ho pot
+evitar cap web. Qui vulgui el secret de debò, que no faci servir el seu canal
+personal de YouTube. I ha de poder marxar quan vulgui.
 
 **Menors, no.** La Fàbrica de Superherois és de 6 a 13 anys, i el dia que una
 mestra vulgui apuntar la classe sencera, el sistema ha de dir que no **sol**. A
 l'aula l'exercici es fa sense publicar res; el directori és per a persones
 adultes, i això va escrit al formulari i a la guia.
 
-**Qui signa.** Un directori de persones amb els seus noms necessita un
-responsable amb nom, NIF i un correu que respongui. És la mateixa dada legal que
-ja falta a molekulon.org, i aquí deixa de ser un detall pendent: **sense això,
-aquesta funció no s'obre.**
+**Qui signa.** Encara que el que es publiqui siguin pseudònims, **els correus
+que es guarden són dades personals** i algú n'és responsable. Cal nom fiscal,
+NIF i un correu que respongui. És la mateixa dada legal que ja falta a
+molekulon.org, i aquí deixa de ser un detall pendent: **sense això, aquesta
+funció no s'obre.** El pseudònim fa la superfície més petita; no la fa zero.
 
 ---
 
