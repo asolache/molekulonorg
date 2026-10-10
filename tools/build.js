@@ -85,7 +85,7 @@ const PAGINES = [
      La pàgina de rebuda no va enlloc: només existeix per a qui acaba d'enviar. */
   { f: 'directori.html', nav: 'El directori', t: 'El directori',
     tit: 'El directori · Comando Molekulon',
-    desc: 'El mur de cromos del Comando: els catorze canònics i la gent de debò que hi ha entrat amb el seu nom, els seus superpoders i un vídeo que ho ensenya.' },
+    desc: 'El mur de cromos del Comando: els catorze canònics i els superherois secrets de la gent que hi ha entrat, amb els seus superpoders i un vídeo que ho ensenya.' },
   { f: 'alta.html', nav: 'Fes el teu cromo', t: 'Fes el teu cromo', menu: false, mapa: true,
     tit: 'Fes el teu cromo · Comando Molekulon',
     desc: 'Quatre preguntes i l\'enllaç al teu vídeo. Sense claus ni contrasenyes: el cromo és la teva fitxa al repartiment, i el SOS ve després i només si vols.' },
@@ -720,7 +720,7 @@ ${D.herois.map(cromo).join('\n')}
 
 <section class="box">
 <h3>I el teu</h3>
-<p class="lead">Nom, població, fins a cinc superpoders, les teves superarmes i un vídeo
+<p class="lead">Nom de guerra, fins a cinc superpoders, les teves superarmes i un vídeo
 que ho ensenyi. <b>Sense claus ni contrasenyes</b>: el cromo és la teva fitxa al repartiment
 i surt al <a href="/directori">directori</a> quan s'aprova.</p>
 <p><a href="/alta">Fes el teu personatge →</a></p>
@@ -1026,6 +1026,13 @@ const CAPS = {
    porta, el Comando el troba cercant-la; si no la porta, no hi ha cap safata on
    hagi arribat. I això és literalment el que diu la història —no els reclutem,
    els trobem—, aplicat a una caixa de cerca. */
+/* El kit narratiu propi del Comando, publicat com a artefacte de Claude. La IA
+   la posa qui l'obre, des del seu compte: el projecte no paga res per cada
+   personatge que es crea, que era la condició. I funciona igual sense IA —
+   munta la fitxa amb el que has escrit—, perquè qui no tingui compte no es pot
+   quedar a fora. */
+const KIT = 'https://claude.ai/artifact/13VhvsbsTQhgauoxMDfRY3';
+
 const PUBLICAR = {
   durada: '30 a 60 segons',
   titol: 'Comando Molekulon · el teu nom · la teva població',
@@ -1153,8 +1160,9 @@ barri et vingui a buscar.</p>
 </div></div>
 
 <p>Amb això ja ets un personatge: <b>no un avatar inventat</b>, sinó el que ja fas,
-amb nom i amb superarma. Si no et surt explicar-ho, hi ha un kit que t'ho escriu a partir
-del que has contestat.</p>
+amb nom i amb superarma. I si no et surt explicar-ho, <b>no t'has de quedar fora per
+això</b>: el kit del Comando et fa les quatre preguntes i te'n torna el nom de guerra, el
+relat i el títol del vídeo ja escrits. <a href="${KIT}" rel="noopener">Obre el kit ↗</a></p>
 
 <h3 id="com-es-penja">I on es penja</h3>
 <p>El vídeo el puges <b>tu</b> a YouTube, des del teu compte, i queda teu. No hi ha cap
@@ -1176,8 +1184,8 @@ fitxa del SOS és una altra cosa i es queda al teu aparell. <b>I a l'aula, no.</
 vídeos de criatures no es publiquen: a l'escola l'exercici es fa sense penjar res, i això
 ho explica la guia de la Fàbrica de Superherois.</p>
 <div class="acts">
-<a class="pri" href="/alta">Fes el teu personatge →</a>
-<a href="${SOS}/sos#/kit" rel="noopener">Obre el kit narratiu ↗</a>
+<a class="pri" href="${KIT}" rel="noopener">Fes-te el personatge ↗</a>
+<a href="/alta">Envia el teu cromo →</a>
 <a href="/personatges">Mira els ${NUM.herois} cromos</a>
 </div>
 <p class="mut">El format del títol i les etiquetes són una proposta de la casa: si no
@@ -1201,7 +1209,7 @@ const cromoGent = (c, i) => `<article class="cromo gent">
 </div>
 <div class="cos">
 <h3>${esc(c.nom)}</h3>
-<p class="nick">@${esc(c.nick)} · ${esc(c.poblacio)}</p>
+<p class="nick">@${esc(c.nick)}${c.poblacio ? ` · ${esc(c.poblacio)}` : ''}</p>
 <dl>
 <dt>Superpoders</dt><dd>${c.superpoders.map(esc).join(' · ')}</dd>
 ${c.superarmes && c.superarmes.length ? `<dt>Superarmes</dt><dd>${c.superarmes.map(esc).join(' · ')}</dd>` : ''}
@@ -1218,8 +1226,8 @@ const directori = () => {
 <div class="hero-inner">
 <span class="tag">El repartiment</span>
 <h1>El <em>directori</em> del Comando</h1>
-<p class="sub">Qui hi surt, amb el seu nom, el que sap fer i <strong>un vídeo que ho ensenya</strong>.
-Els ${NUM.herois} primers són els del còmic; la resta és gent de debò que ha fet el seu cromo.</p>
+<p class="sub">Qui hi surt, amb el seu nom de guerra, el que sap fer i <strong>un vídeo que ho ensenya</strong>.
+Els ${NUM.herois} primers són els del còmic; la resta són <strong>superherois secrets</strong> de gent de debò.</p>
 <div class="acts"><a class="pri" href="/alta">Fes el teu cromo</a>
 <a href="/personatges">Els ${NUM.herois} canònics, sencers</a></div>
 </div>
@@ -1276,7 +1284,7 @@ l'altre, i el nick és el mateix a tots dos llocs.</p>
 const ALTA = {
   regles: [
     '<b>Es publica</b> el cromo que contesta les quatre preguntes, porta un vídeo que és teu i és d\'una persona de debò.',
-    '<b>No es publica</b> el que no té vídeo o el vídeo no és seu, el que ataca algú, ni res de menors d\'edat.',
+    '<b>No es publica</b> el que no té vídeo o el vídeo no és seu, el que ataca algú, un nom de guerra que ja porta un altre, ni res de menors d\'edat.',
     `<b>Es pot retirar</b> quan vulguis, sense donar explicacions: ho demanes al correu del responsable i en ${esc(DIR.termini)} ja no hi és.`
   ]
 };
@@ -1284,22 +1292,22 @@ const ALTA = {
 const formulari = () => `<form class="alta" name="alta-cromo" method="POST" action="/alta-rebuda" data-netlify="true" netlify-honeypot="lloc-web">
 <input type="hidden" name="form-name" value="alta-cromo">
 <p class="amagat"><label>No omplis això si ets una persona <input name="lloc-web" tabindex="-1" autocomplete="off"></label></p>
-<label>1 · Nom de guerra <span>El nom que vols portar al Comando. Surt al cromo.</span>
+<label>1 · Nom de guerra <span>El nom del teu superheroi. Surt al cromo i és únic: si ja el porta algú, te'n proposarem un altre.</span>
 <input type="text" name="nom" required maxlength="60" autocomplete="nickname"></label>
 <label>Nick <span>Una paraula, en minúscules: el mateix que faràs servir al SOS si algun dia t'hi fas el perfil.</span>
 <input type="text" name="nick" required pattern="@?[a-z0-9_.\\-]{3,24}" maxlength="25" placeholder="@el-teu-nick" autocapitalize="none" spellcheck="false"></label>
-<label>D'on ets <span>Poble, barri o ciutat. Surt al cromo.</span>
-<input type="text" name="poblacio" required maxlength="80"></label>
+<label>D'on ets <span>Poble, barri o comarca, si ho vols dir. Surt al cromo. Opcional.</span>
+<input type="text" name="poblacio" maxlength="80"></label>
 <label>2 · Els teus superpoders <span>Fins a cinc, un per línia. El que saps fer i podries ensenyar o donar en hores.</span>
 <textarea name="superpoders" required maxlength="600"></textarea></label>
 <label>3 · Les teves superarmes <span>El que tens i podries deixar. Opcional.</span>
 <textarea name="superarmes" maxlength="600"></textarea></label>
-<label>4 · L'enllaç al teu vídeo <span>La demo, penjada per tu i en públic. <a href="/historia#com-es-penja">Com es penja</a>.</span>
+<label>4 · L'enllaç al teu vídeo <span>La demo, penjada per tu i en públic. Si vols el secret de debò, des d'un canal a nom del personatge. <a href="/historia#com-es-penja">Com es penja</a>.</span>
 <input type="url" name="video" required placeholder="https://youtu.be/…"></label>
-<label>El teu correu <span>Per dir-te si s'ha publicat. <b>No surt enlloc</b> i no s'usa per a res més.</span>
+<label>El teu correu <span>Per dir-te si s'ha publicat i poder-lo retirar si ho demanes. <b>No surt enlloc</b> i no s'usa per a res més.</span>
 <input type="email" name="correu" required autocomplete="email"></label>
 <label class="accepto"><input type="checkbox" name="major-edat" value="si" required> Tinc 18 anys o més.</label>
-<label class="accepto"><input type="checkbox" name="public" value="si" required> Entenc que el cromo és públic: el nom de guerra, d'on soc i el vídeo els veurà tothom.</label>
+<label class="accepto"><input type="checkbox" name="public" value="si" required> Entenc que el cromo és públic —nom de guerra, superpoders, població si la dic i el vídeo— i que pseudònim no vol dir anònim.</label>
 <label class="accepto"><input type="checkbox" name="regles" value="si" required> He llegit les tres regles de publicació.</label>
 <button type="submit">Envia el meu cromo</button>
 </form>`;
@@ -1309,8 +1317,9 @@ const alta = () => `
 <div class="hero-inner">
 <span class="tag">L'alta al Comando</span>
 <h1>Fes el teu <em>cromo</em></h1>
-<p class="sub">Quatre preguntes i l'enllaç al teu vídeo. <strong>Sense claus ni contrasenyes.</strong>
-Quan s'aprovi, surts al <a href="/directori">directori</a> amb els altres.</p>
+<p class="sub">Quatre preguntes i l'enllaç al teu vídeo. <strong>Sense claus ni contrasenyes, i sense
+el teu nom</strong>: el cromo és del superheroi, no de la persona. Quan s'aprovi, surts al
+<a href="/directori">directori</a> amb els altres.</p>
 <p class="crida">Primer el cromo. <b>El SOS, després i només si vols.</b></p>
 </div>
 </header>
@@ -1321,20 +1330,24 @@ Quan s'aprovi, surts al <a href="/directori">directori</a> amb els altres.</p>
 <p class="lead">Les mateixes que es fan a l'aula i als tallers. Pensa-les abans d'omplir res: el
 vídeo és contestar-les davant del mòbil.</p>
 <div class="pregunta"><span class="q">1</span><div><h4>Qui ets?</h4>
-<p>El nom que vols portar al Comando, i d'on ets. Res més.</p></div></div>
+<p>El nom de guerra del teu superheroi, i d'on és si ho vols dir. El teu nom de debò no cal.</p></div></div>
 <div class="pregunta"><span class="q">2</span><div><h4>Quins superpoders tens?</h4>
 <p>El que saps fer i podries ensenyar o donar en hores. Fins a cinc. Cosir, escoltar i arreglar bicicletes també hi compten.</p></div></div>
 <div class="pregunta"><span class="q">3</span><div><h4>I quines superarmes?</h4>
 <p>El que tens i no fas servir cada dia: una escala, una càmera, un local, una furgoneta.</p></div></div>
 <div class="pregunta"><span class="q">4</span><div><h4>Ensenya-ho: fes-ne una demo</h4>
 <p><b>No ho expliquis, fes-ho.</b> El vídeo el penges tu, des del teu compte, i aquí només ens dones l'enllaç.
+Es pot gravar <b>amb màscara, de mans, d'esquena o en off</b>: el que ha d'ensenyar és la demo, no la cara.
 <a href="/historia#com-es-penja">Durada, títol i etiquetes</a>.</p></div></div>
+<p class="nota">Si no et surt escriure-ho, <b>el kit del Comando</b> et fa les quatre preguntes i te'n
+torna el nom de guerra i el relat ja escrits. <a href="${KIT}" rel="noopener">Obre el kit ↗</a></p>
 </section>
 
 <section class="box">
 <h2>Abans d'enviar, el que s'ha de dir a la cara</h2>
 <ul class="regles">
-<li><b>Un cromo públic és públic.</b> El nom de guerra, d'on ets i el vídeo els veurà tothom. El correu, no.</li>
+<li><b>El cromo és del personatge.</b> Hi surt el nom de guerra, el que saps fer, la població si la dius i el vídeo. El teu nom i el correu, mai.</li>
+<li><b>Pseudònim no vol dir anònim.</b> Qui et conegui et pot reconèixer per la veu, les mans o el taller, i això no ho evita cap web. I si penges el vídeo des del teu canal personal, el canal diu qui ets.</li>
 <li><b>Només persones adultes.</b> A l'aula l'exercici es fa sense publicar res; el directori és per a majors de 18 anys.</li>
 <li><b>Tindràs resposta en ${esc(DIR.termini)}</b>, al correu que deixis: publicat, o per què no.</li>
 </ul>

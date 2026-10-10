@@ -198,9 +198,9 @@ if (faltants.length) {
 }
 
 /* ── 11 · El directori i l'alta ───────────────────────────────────────────
-   Quatre maneres que el directori es podria podrir sense petar. Un cromo sense
+   Cinc maneres que el directori es podria podrir sense petar. Un cromo sense
    vídeo o amb sis superpoders és un cromo que no compleix les regles que la
-   mateixa pàgina d'alta publica. Un nick repetit, o que és el d'un canònic, trenca
+   mateixa pàgina d'alta publica. Un nick o un nom de guerra repetit, o que és el d'un canònic, trenca
    l'espai de noms que es comparteix amb el SOS. Un formulari obert sense ningú
    que signi el directori és el que l'estudi diu que no es fa. I la pàgina de
    rebuda als cercadors seria una porta a un «gràcies» que ningú ha dit. */
@@ -211,10 +211,15 @@ if (faltants.length) {
   const slug = t => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const canonics = new Set(D.herois.map(h => slug(h.name)));
   const mal = [];
-  const vistos = new Set();
+  const vistos = new Set(), noms = new Set();
   for (const [i, c] of DIR.cromos.entries()) {
     const qui = c.nick || `#${i + 1}`;
-    for (const k of ['nick', 'nom', 'poblacio', 'video']) if (!c[k]) mal.push(`${qui} sense ${k}`);
+    for (const k of ['nick', 'nom', 'video']) if (!c[k]) mal.push(`${qui} sense ${k}`);
+    /* El directori és de superherois secrets: el nom de guerra és l'identificador. */
+    const guerra = c.nom ? slug(c.nom) : null;
+    if (guerra && noms.has(guerra)) mal.push(`${qui}: nom de guerra repetit (${c.nom})`);
+    if (guerra && canonics.has(guerra)) mal.push(`${qui}: el nom de guerra és el d'un canònic (${c.nom})`);
+    noms.add(guerra);
     if (c.nick && !NICK.test(c.nick)) mal.push(`${qui}: nick fora de format (minúscules, 3-24, sense @)`);
     if (c.nick && vistos.has(c.nick)) mal.push(`${qui}: nick repetit`);
     if (c.nick && canonics.has(c.nick)) mal.push(`${qui}: és el nick d'un canònic`);
