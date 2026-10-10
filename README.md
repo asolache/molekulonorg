@@ -59,6 +59,7 @@ node tools/build.js --check && node tools/check.js
 | `data/mostra.json` | Quines pàgines del còmic es publiquen i quin tema sona a cada una. **Sí** que s'edita |
 | `data/cromos.json` | Quin retrat fa de cara de qui. **Sí** que s'edita |
 | `knowledge/alta-i-directori.md` | L'estudi de com entra la gent: cromo primer, SOS després |
+| `knowledge/traspas.md` | **Comença per aquí.** Tot el que s'ha fet, les regles de la casa i per on es continua |
 
 ## El kit narratiu
 
