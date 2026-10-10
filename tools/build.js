@@ -961,6 +961,13 @@ const CAPS = {
    porta, el Comando el troba cercant-la; si no la porta, no hi ha cap safata on
    hagi arribat. I això és literalment el que diu la història —no els reclutem,
    els trobem—, aplicat a una caixa de cerca. */
+/* El kit narratiu propi del Comando, publicat com a artefacte de Claude. La IA
+   la posa qui l'obre, des del seu compte: el projecte no paga res per cada
+   personatge que es crea, que era la condició. I funciona igual sense IA —
+   munta la fitxa amb el que has escrit—, perquè qui no tingui compte no es pot
+   quedar a fora. */
+const KIT = 'https://claude.ai/artifact/13VhvsbsTQhgauoxMDfRY3';
+
 const PUBLICAR = {
   durada: '30 a 60 segons',
   titol: 'Comando Molekulon · el teu nom · la teva població',
@@ -1088,8 +1095,9 @@ barri et vingui a buscar.</p>
 </div></div>
 
 <p>Amb això ja ets un personatge: <b>no un avatar inventat</b>, sinó el que ja fas,
-amb nom i amb superarma. Si no et surt explicar-ho, hi ha un kit que t'ho escriu a partir
-del que has contestat.</p>
+amb nom i amb superarma. I si no et surt explicar-ho, <b>no t'has de quedar fora per
+això</b>: el kit del Comando et fa les quatre preguntes i te'n torna el nom de guerra, el
+relat i el títol del vídeo ja escrits. <a href="${KIT}" rel="noopener">Obre el kit ↗</a></p>
 
 <h3>I on es penja</h3>
 <p>El vídeo el puges <b>tu</b> a YouTube, des del teu compte, i queda teu. No hi ha cap
@@ -1111,8 +1119,8 @@ fitxa del SOS és una altra cosa i es queda al teu aparell. <b>I a l'aula, no.</
 vídeos de criatures no es publiquen: a l'escola l'exercici es fa sense penjar res, i això
 ho explica la guia de la Fàbrica de Superherois.</p>
 <div class="acts">
-<a class="pri" href="${SOS}/sos#/alta" rel="noopener">Fes el teu personatge ↗</a>
-<a href="${SOS}/sos#/kit" rel="noopener">Obre el kit narratiu ↗</a>
+<a class="pri" href="${KIT}" rel="noopener">Fes-te el personatge ↗</a>
+<a href="${SOS}/sos#/alta" rel="noopener">Apunta'l al SOS ↗</a>
 <a href="/personatges">Mira els ${NUM.herois} cromos</a>
 </div>
 <p class="mut">El format del títol i les etiquetes són una proposta de la casa: si no
