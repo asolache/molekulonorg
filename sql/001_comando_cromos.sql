@@ -190,9 +190,57 @@ grant execute on function public.envia_cromo(text, jsonb, text, boolean) to anon
 grant execute on function public.directori_cromos() to anon, authenticated;
 grant execute on function public.el_meu_cromo(text, text) to anon, authenticated;
 
+-- ── Moderar des de la web ──────────────────────────────────────────────────
+-- La pàgina /modera fa servir aquestes dues funcions. Les dues demanen una clau
+-- de moderador; aquí només se'n guarda el resum. Per donar clau a algú:
+--   insert into public.comando_moderadors (clau_hash, nom)
+--   values (encode(extensions.digest('<la clau>', 'sha256'), 'hex'), '<nom>');
+-- (la de l'autor ja hi és, i la clau no és a cap fitxer del repositori).
+create table if not exists public.comando_moderadors (
+  clau_hash text primary key check (clau_hash ~ '^[0-9a-f]{64}$'),
+  nom text not null,
+  creat timestamptz not null default now()
+);
+alter table public.comando_moderadors enable row level security;
+revoke all on public.comando_moderadors from anon, authenticated;
+
+create or replace function public.modera_llista(p_clau text)
+returns jsonb
+language plpgsql stable security definer set search_path = '' as $$
+begin
+  if p_clau is null or not exists (select 1 from public.comando_moderadors m
+      where m.clau_hash = encode(extensions.digest(p_clau, 'sha256'), 'hex')) then
+    raise exception 'no_moderador';
+  end if;
+  return coalesce((select jsonb_agg(jsonb_build_object('id', c.id, 'nick', c.nick, 'fitxa', c.fitxa, 'estat', c.estat,
+      'creat', c.creat, 'revisat', c.revisat, 'nota', c.nota) order by (c.estat = 'pendent') desc, c.id desc)
+    from (select * from public.comando_cromos order by id desc limit 300) c), '[]'::jsonb);
+end $$;
+
+create or replace function public.modera_cromo(p_clau text, p_id bigint, p_estat text, p_nota text default null)
+returns jsonb
+language plpgsql security definer set search_path = '' as $$
+begin
+  if p_clau is null or not exists (select 1 from public.comando_moderadors m
+      where m.clau_hash = encode(extensions.digest(p_clau, 'sha256'), 'hex')) then
+    raise exception 'no_moderador';
+  end if;
+  if p_estat not in ('pendent', 'aprovat', 'rebutjat', 'retirat') then
+    raise exception 'estat_forma';
+  end if;
+  update public.comando_cromos set estat = p_estat, nota = nullif(left(btrim(coalesce(p_nota, '')), 300), '')
+  where id = p_id;
+  if not found then raise exception 'no_existeix'; end if;
+  return jsonb_build_object('ok', true, 'id', p_id, 'estat', p_estat);
+end $$;
+
+grant execute on function public.modera_llista(text) to anon, authenticated;
+grant execute on function public.modera_cromo(text, bigint, text, text) to anon, authenticated;
+
 -- ── Aplicat ────────────────────────────────────────────────────────────────
 -- 2026-10-11, al projecte Teamtowershuma (grkgrceioxktmbwdhvmm), com a
 -- migracions: `comando_cromos`, `comando_cromos_revisat`,
--- `comando_cromos_funcions`, `comando_cromos_did` i `comando_cromos_did_retirada`. Provat com a `anon`: la taula no es pot llegir,
+-- `comando_cromos_funcions`, `comando_cromos_did`, `comando_cromos_did_retirada` i
+-- `comando_cromos_moderacio`. Provat com a `anon`: la taula no es pot llegir,
 -- un nick d'un altre torna `nick_ocupat`, un canònic torna `nick_reservat`, un
 -- pendent no surt al directori i un retirat en surt a l'instant.

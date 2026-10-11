@@ -131,7 +131,9 @@ Qui continuï això s'hi trobarà i val més saber per què hi són:
 - **Sense comptes ni correus.** El primer enviament d'un nick crea una clau
   d'edició al navegador; amb ella es canvia, es mira l'estat o es retira.
   Aquí només se'n guarda el resum.
-- **Moderar**: Supabase › Table Editor › `comando_cromos`, canviar `estat` de
+- **Moderar**: a **molekulon.org/modera** amb la clau de moderador (aprova,
+  rebutja amb nota o retira en un clic). També es pot fer a
+  Supabase › Table Editor › `comando_cromos`, canviant `estat` de
   `pendent` a `aprovat` (o `rebutjat`, i si cal una `nota` que la persona veu
   amb «Mira com està»). Surt a `/personatges`, darrere dels catorze del còmic,
   a l'instant i sense desplegar. **Una sola llista**, decisió de l'autor.

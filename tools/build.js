@@ -81,7 +81,11 @@ const PAGINES = [
      només s'enllaça des del fons d'una landing no la troba ningú. */
   { f: 'kit.html', nav: 'Fes-te el personatge', t: 'Fes-te el personatge',
     tit: 'Fes-te el personatge · el kit del Comando Molekulon',
-    desc: 'Quatre preguntes i surt el teu cromo del Comando, amb la fitxa i el text del vídeo ja escrits. Sense compte de res, i si vols, l\'envies a la col·lecció.' }
+    desc: 'Quatre preguntes i surt el teu cromo del Comando, amb la fitxa i el text del vídeo ja escrits. Sense compte de res, i si vols, l\'envies a la col·lecció.' },
+  /* La moderació dels cromos: ni menú, ni sitemap, ni cercadors. */
+  { f: 'modera.html', nav: 'Moderar', t: 'Moderar els cromos', menu: false, noindex: true,
+    tit: 'Moderar els cromos · Comando Molekulon',
+    desc: 'La cua de cromos que la gent envia des del kit, per aprovar-los, rebutjar-los o retirar-los. Només per a qui té clau de moderador.' }
 ];
 
 /* Les pàgines que encara viuen al SOS. S'enllacen amb el seu domini sencer i
@@ -463,7 +467,7 @@ const pagina = (p, cos) => `<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(p.tit)}</title>
-<meta name="description" content="${esc(p.desc)}">
+<meta name="description" content="${esc(p.desc)}">${p.noindex ? '\n<meta name="robots" content="noindex,nofollow">' : ''}
 <link rel="canonical" href="${url(p.f)}">
 <meta property="og:title" content="${esc(p.tit)}">
 <meta property="og:description" content="${esc(p.desc)}">
@@ -473,7 +477,7 @@ const pagina = (p, cos) => `<!DOCTYPE html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${jsonld(p)}</script>
 <style>
-${CSS}${p.f === 'kit.html' ? KIT_CSS : ''}${p.f === 'personatges.html' ? GENT_CSS : ''}
+${CSS}${p.f === 'kit.html' ? KIT_CSS : ''}${p.f === 'personatges.html' ? GENT_CSS : ''}${p.f === 'modera.html' ? MODERA_CSS : ''}
 </style>
 </head>
 <body>
@@ -1833,6 +1837,139 @@ const GENT_JS = String.raw`
 })();
 `;
 
+/* ══ LA MODERACIÓ ════════════════════════════════════════════════════════════
+   Aprovar un cromo és un clic, no una visita al panell de Supabase. La pàgina
+   no s'enllaça des d'enlloc, no surt al sitemap i porta `noindex`, però el que
+   la protegeix no és amagar-la: és la clau de moderador. Les funcions
+   `modera_llista` i `modera_cromo` (sql/001_comando_cromos.sql) no fan res
+   sense una clau que quadri amb `comando_moderadors`, i aquella taula no la pot
+   llegir ningú des de fora. Per afegir algú que moderi, s'hi insereix el resum
+   SHA-256 de la seva clau. */
+const MODERA_CSS = `
+.mod .clau{display:flex;gap:.5rem;flex-wrap:wrap}
+.mod input,.mod textarea{font:inherit;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:.5rem .7rem}
+.mod .clau input{flex:1;min-width:14rem;font-family:var(--mono)}
+.mod button{font:inherit;font-weight:700;cursor:pointer;border-radius:10px;padding:.45rem .9rem;border:1px solid var(--border);background:transparent;color:var(--text)}
+.mod button.si{background:var(--green);border-color:var(--green);color:#0b0b12}
+.mod button.no{border-color:var(--orange);color:var(--orange)}
+.mod .filtres{display:flex;gap:.4rem;flex-wrap:wrap;margin:.8rem 0}
+.mod .filtres button[aria-pressed="true"]{background:var(--text);color:#0b0b12}
+.mod .estat{min-height:1.3em;font-size:.86rem;color:var(--orange)}
+.mod-llista{display:grid;gap:.8rem}
+.mod-fila{display:grid;grid-template-columns:150px 1fr;gap:.9rem;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.7rem}
+@media (max-width:560px){.mod-fila{grid-template-columns:1fr}.mod-fila canvas{max-width:200px}}
+.mod-fila canvas{width:100%;border-radius:8px;display:block}
+.mod-fila h3{font-size:1rem}
+.mod-fila p{margin:.25rem 0;font-size:.84rem;color:var(--light)}
+.mod-fila .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.mod-fila .accions{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem;align-items:center}
+.mod-fila .accions input{flex:1;min-width:10rem;font-size:.84rem}
+.est-pendent{color:var(--orange)}.est-aprovat{color:var(--green)}.est-rebutjat,.est-retirat{color:var(--muted)}
+`;
+
+const MODERA_JS = String.raw`
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var CLAU = "molekulon_moderador", files = [], filtre = "pendent";
+  var el = function(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  var clau = function(){ return $("m-clau").value.trim(); };
+  var estat = function(t){ $("m-estat").textContent = t || ""; };
+  try { $("m-clau").value = localStorage.getItem(CLAU) || ""; } catch (e) {}
+
+  function fila(c){
+    var f = c.fitxa || {}, a = el("article", "mod-fila"), cv = document.createElement("canvas");
+    cv.width = 600; cv.height = 840;
+    CROMO.pinta(cv, { nom: String(f.nom || ""), lloc: String(f.lloc || ""), poders: f.poders || [], armes: f.armes || [], nick: c.nick, aspecte: f.aspecte });
+    a.appendChild(cv);
+    var cos = el("div");
+    cos.appendChild(el("h3", "", (f.nom || c.nick) + "  ·  @" + c.nick));
+    var e = el("p", "k est-" + c.estat, c.estat + " · enviat " + new Date(c.creat).toLocaleString("ca-ES") + (f.retirat ? " · l'ha retirat la persona" : ""));
+    cos.appendChild(e);
+    var txt = function(k, v){ if (!v) return; cos.appendChild(el("p", "k", k)); cos.appendChild(el("p", "", v)); };
+    txt("Superpoders", (f.poders || []).join(" · "));
+    txt("Superarmes", (f.armes || []).join(" · "));
+    txt("La demo", f.demo); txt("El relat", f.relat); txt("did", f.did);
+    var v = CROMO.video(f.video);
+    if (v) { var p = el("p"), l = el("a", "", "Mira el vídeo ↗"); l.href = v; l.target = "_blank"; l.rel = "noopener nofollow"; p.appendChild(l); cos.appendChild(p); }
+    else cos.appendChild(el("p", "est-pendent", "Sense vídeo de YouTube"));
+    var ac = el("div", "accions"), nota = el("input");
+    nota.placeholder = "Nota per a la persona (opcional)"; nota.value = c.nota || "";
+    var boto = function(txt, cls, nou){
+      var b = el("button", cls, txt); b.type = "button";
+      b.addEventListener("click", function(){ decideix(c, nou, nota.value); });
+      ac.appendChild(b);
+    };
+    if (c.estat !== "aprovat") boto("Aprova", "si", "aprovat");
+    if (c.estat === "pendent") boto("Rebutja", "no", "rebutjat");
+    if (c.estat === "aprovat") boto("Retira", "no", "retirat");
+    ac.appendChild(nota);
+    cos.appendChild(ac);
+    a.appendChild(cos);
+    return a;
+  }
+
+  function pinta(){
+    var l = $("m-llista"); l.innerHTML = "";
+    var vis = files.filter(function(c){ return filtre === "tots" || c.estat === filtre; });
+    vis.forEach(function(c){ l.appendChild(fila(c)); });
+    var n = files.filter(function(c){ return c.estat === "pendent"; }).length;
+    $("m-n").textContent = n + (n === 1 ? " pendent" : " pendents");
+    if (!vis.length) l.appendChild(el("p", "lead", "Res en aquesta llista."));
+  }
+
+  function carrega(){
+    if (!clau()) { estat("Cal la clau de moderador."); return; }
+    estat("Carregant…");
+    CROMO.rpc("modera_llista", { p_clau: clau() }).then(function(r){
+      try { localStorage.setItem(CLAU, clau()); } catch (e) {}
+      files = Array.isArray(r) ? r : []; estat(""); $("m-tauler").hidden = false; pinta();
+    }, function(e){ estat(e.codi === "no_moderador" ? "Aquesta clau no és de moderador." : "No s'ha pogut carregar (" + e.message + ")."); });
+  }
+
+  function decideix(c, nou, nota){
+    estat("Desant…");
+    CROMO.rpc("modera_cromo", { p_clau: clau(), p_id: c.id, p_estat: nou, p_nota: nota || null }).then(function(){
+      c.estat = nou; c.nota = nota; estat("@" + c.nick + " · " + nou); pinta();
+    }, function(e){ estat("No s'ha pogut desar (" + e.message + ")."); });
+  }
+
+  $("m-entra").addEventListener("click", carrega);
+  $("m-clau").addEventListener("keydown", function(e){ if (e.key === "Enter") carrega(); });
+  document.querySelectorAll("[data-filtre]").forEach(function(b){
+    b.addEventListener("click", function(){
+      filtre = b.dataset.filtre;
+      document.querySelectorAll("[data-filtre]").forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); });
+      pinta();
+    });
+  });
+  if (clau()) carrega();
+})();
+`;
+
+const modera = () => `
+<div class="wrap">
+<section class="box mod">
+<h2>Moderar els cromos</h2>
+<p class="lead">Els cromos que la gent envia des del <a href="${KIT}">kit</a>. Aprovar-ne un el posa a
+<a href="/personatges#cromos">la col·lecció</a> a l'instant; retirar-lo el treu igual de ràpid.</p>
+<div class="clau"><input type="password" id="m-clau" placeholder="Clau de moderador" autocomplete="current-password" aria-label="Clau de moderador">
+<button type="button" class="si" id="m-entra">Entra</button></div>
+<p class="estat" id="m-estat" role="status" aria-live="polite"></p>
+<div id="m-tauler" hidden>
+<div class="filtres" role="group" aria-label="Quins cromos">
+<button type="button" data-filtre="pendent" aria-pressed="true">Pendents · <span id="m-n"></span></button>
+<button type="button" data-filtre="aprovat" aria-pressed="false">Aprovats</button>
+<button type="button" data-filtre="tots" aria-pressed="false">Tots</button>
+</div>
+<div class="mod-llista" id="m-llista"></div>
+</div>
+</section>
+</div>
+<script>${CROMO_JS}
+CROMO.API.url = ${JSON.stringify(SUPA.url)}; CROMO.API.key = ${JSON.stringify(SUPA.key)};
+${MODERA_JS}</script>`;
+
 /* ══ EL SITEMAP ══════════════════════════════════════════════════════════════ */
 const sitemap = () => `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -1841,7 +1978,7 @@ ${PAGINES.filter(p => p.menu !== false || p.mapa).map(p => `<url><loc>${url(p.f)
 `;
 
 /* ══ ESCRIURE ════════════════════════════════════════════════════════════════ */
-const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic, 'kit.html': kit };
+const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic, 'kit.html': kit, 'modera.html': modera };
 const sortida = () => {
   const l = PAGINES.map(p => [p.f, pagina(p, COSSOS[p.f]().trim())]);
   l.push(['sitemap.xml', sitemap()]);
