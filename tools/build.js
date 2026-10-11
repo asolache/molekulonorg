@@ -77,9 +77,9 @@ const PAGINES = [
   { f: 'comic.html', nav: 'El còmic', t: 'El còmic', menu: PAGS_MOSTRA > 0,
     tit: 'El còmic · Comando Molekulon',
     desc: 'La mostra dels dos còmics, pàgina a pàgina i cada una amb la cançó que li toca. Així és com es van publicar: còmic i disc, per llegir-los alhora.' },
-  /* El kit no va al menú —s'hi arriba des de cada «Fes-te el personatge»— però
-     sí al sitemap: és la pàgina que algú buscarà quan vulgui entrar-hi. */
-  { f: 'kit.html', nav: 'El kit', t: 'Fes-te el personatge', menu: false, mapa: true,
+  /* El kit va al menú: és la porta d'entrada al Comando, i una porta que
+     només s'enllaça des del fons d'una landing no la troba ningú. */
+  { f: 'kit.html', nav: 'Fes-te el personatge', t: 'Fes-te el personatge',
     tit: 'Fes-te el personatge · el kit del Comando Molekulon',
     desc: 'Quatre preguntes i surt la teva fitxa del Comando, amb el títol i les etiquetes del vídeo ja escrits. Sense compte de res, i no s\'envia enlloc.' }
 ];
@@ -514,7 +514,7 @@ ${fonsHtml()}
 <p class="crida">${PROPOSIT.crida}</p>
 <div class="acts">
 <a class="pri" href="/historia">Entra a la història</a>
-<a href="${SOS}/sos#/alta">Fes el teu personatge</a>
+<a href="${KIT}">Fes-te el personatge</a>
 <a href="/personatges">Els ${NUM.herois} personatges</a>
 ${MOSTRA1 ? `<a href="/comic">Llegeix el còmic</a>` : ''}
 <a href="/peli">El guió de la intro</a>
@@ -664,9 +664,9 @@ ${D.herois.map(cromo).join('\n')}
 
 <section class="box">
 <h3>I el teu</h3>
-<p class="lead">Nom, població, fins a cinc superpoders i les teves superarmes —el que
-saps fer i el que pots deixar. Es fa al navegador, no puja enlloc i si te'n vas t'ho endús tot.</p>
-<p><a href="${SOS}/sos#/alta" rel="noopener">Fes el teu personatge ↗</a></p>
+<p class="lead">El teu nom de guerra, fins a cinc superpoders i les teves superarmes —el que
+saps fer i el que pots deixar. Quatre preguntes, sense compte de res, i no s'envia enlloc.</p>
+<p><a href="${KIT}">Fes-te el personatge →</a></p>
 </section>
 </div>`;
 
@@ -1002,7 +1002,7 @@ perquè ja el tenies.</p>
 <p>D'aquesta frase en va sortir una cançó, de la cançó un còmic, del còmic una banda,
 i de la banda una pel·lícula que encara no existeix. Això és la seqüència, en ordre.</p>
 <div class="acts"><a class="pri" href="#acte-1">Comença la història ↓</a>
-<a href="${SOS}/sos#/alta" rel="noopener">Fes el teu personatge ↗</a></div>
+<a href="${KIT}">Fes-te el personatge →</a></div>
 </div>
 </section>
 
