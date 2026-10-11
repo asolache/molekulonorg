@@ -377,7 +377,7 @@ guerra i el relat amb el to del Comando. El relat el pots enganxar a sota, abans
 <h2>Envia'l a la col·lecció</h2>
 <p class="lead"><a href="/personatges#cromos">Els personatges</a> és una sola llista: els del còmic i, darrere, els de la gent. <strong>Hi surt el personatge,
 no tu</strong>: el que hi ha al cromo, el relat i el vídeo. No et demanem ni nom, ni correu, ni telèfon.
-L'aprova a mà l'autor del Comando; mentre no ho fa, és pendent i no el veu ningú.</p>
+El primer cromo l'aprova a mà l'autor del Comando, i mentre no ho fa no el veu ningú. <strong>Un cop aprovat, els teus canvis surten sols.</strong></p>
 <div class="q"><label for="e-relat">El relat <span class="ajuda">(opcional)</span></label>
 <p class="ajuda">El que t'ha escrit la IA, o el que t'escriguis tu. Dues o tres frases.</p>
 <textarea id="e-relat" maxlength="300"></textarea></div>
@@ -398,7 +398,7 @@ personatge surti a la col·lecció de molekulon.org si l'autor l'aprova.</label>
 <h3><span>El teu cromo és <span id="e-desat-nick"></span></span><button type="button" class="copia" data-de="e-clau">Copia la clau</button></h3>
 <p class="ajuda"><strong>Aquesta és la teva clau d'edició.</strong> Amb ella pots canviar el cromo, mirar si
 ja és aprovat o retirar-lo, des d'aquí o des d'un altre aparell. Guarda-la: <strong>no la podem recuperar</strong>,
-perquè no tenim el teu correu. Si tornes a enviar, s'envia una versió nova del mateix cromo.</p>
+perquè no tenim el teu correu. Si tornes a enviar, s'envia una versió nova del mateix cromo; si ja estava aprovat, surt a l'instant.</p>
 <pre class="clau" id="e-clau"></pre>
 <div class="botons"><button type="button" class="seg" id="e-mira">Mira com està</button>
 <button type="button" class="seg" id="e-retira">Retira'l de la col·lecció</button></div>
@@ -741,9 +741,12 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     if (retira) fitxa = { nom: v.nom || n, poders: ["—"], retirat: true, v: 1 };
     $("e-envia").disabled = true; $("e-retira").disabled = true;
     estatEnvia(retira ? "Retirant…" : "Enviant…");
-    CROMO.rpc("envia_cromo", { p_nick: n, p_fitxa: fitxa, p_clau: clau, p_retira: !!retira }).then(function(){
+    CROMO.rpc("envia_cromo", { p_nick: n, p_fitxa: fitxa, p_clau: clau, p_retira: !!retira }).then(function(r){
       desa({ nick: n, clau: clau }); pintaDesat(); redibuixa();
+      /* Aprovació mixta: el primer cromo l'aprova l'autor, i els canvis d'un
+         cromo ja aprovat surten sols. La base de dades diu quin dels dos ha estat. */
       estatEnvia(retira ? "Retirat. Ja no surt a la col·lecció." :
+        r && r.estat === "aprovat" ? "Actualitzat. Els canvis ja surten a la col·lecció." :
         "Enviat. Ara és pendent: sortirà a la col·lecció quan l'autor l'aprovi. Guarda't la clau de sota.", true);
     }, function(e){
       estatEnvia(ERR[e.codi] || "No s'ha pogut enviar (" + e.message + "). La fitxa i el cromo segueixen aquí: torna-ho a provar.");

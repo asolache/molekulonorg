@@ -11,7 +11,7 @@
 -- algú l'aprova. Per això aquesta taula no és oberta a ningú, ni a llegir ni a
 -- escriure. Tot passa per tres funcions:
 --
---   envia_cromo(nick, fitxa, clau, retira)  · afegeix una versió, PENDENT
+--   envia_cromo(nick, fitxa, clau, retira)  · afegeix una versió (pendent la primera)
 --   directori_cromos()                       · llegeix només els APROVATS
 --   el_meu_cromo(nick, clau)                 · torna la teva última versió
 --
@@ -23,8 +23,9 @@
 -- mana sobre la fitxa— sense haver d'explicar criptografia a ningú.
 --
 -- ── Només afegir ───────────────────────────────────────────────────────────
--- Actualitzar-se és enviar una versió nova, que torna a passar per aprovació.
--- Mentrestant, el directori segueix ensenyant l'última aprovada. Retirar-se és
+-- Actualitzar-se és enviar una versió nova. Si el cromo ja estava aprovat, surt
+-- sola (aprovació mixta); si no, espera l'autor i el directori segueix
+-- ensenyant l'última aprovada. Retirar-se és
 -- enviar una versió amb `retira`, i aquesta no espera ningú: surt del directori
 -- a l'instant. Es pot marxar sense demanar permís.
 --
@@ -96,6 +97,8 @@ language plpgsql security definer set search_path = '' as $$
 declare
   h text;
   propi text;
+  darrer text;
+  nou text;
   nom text := btrim(coalesce(p_fitxa->>'nom', ''));
 begin
   if p_clau is null or length(p_clau) not between 20 and 200 then
@@ -133,10 +136,16 @@ begin
     raise exception 'massa_seguit';
   end if;
 
-  insert into public.comando_cromos (nick, fitxa, clau_hash, estat)
-  values (p_nick, p_fitxa, h, case when p_retira then 'retirat' else 'pendent' end);
+  -- Aprovació mixta (decisió de l'autor, 2026-10-11): el primer cromo d'un nick
+  -- l'aprova l'autor; si l'última decisió sobre aquell nick és «aprovat», les
+  -- versions noves surten soles. Un cromo retirat o rebutjat torna a passar per
+  -- l'autor.
+  select c.estat into darrer from public.comando_cromos c
+  where c.nick = p_nick and c.estat in ('aprovat', 'rebutjat', 'retirat') order by c.id desc limit 1;
+  nou := case when p_retira then 'retirat' when darrer = 'aprovat' then 'aprovat' else 'pendent' end;
 
-  return jsonb_build_object('ok', true, 'nick', p_nick, 'estat', case when p_retira then 'retirat' else 'pendent' end);
+  insert into public.comando_cromos (nick, fitxa, clau_hash, estat) values (p_nick, p_fitxa, h, nou);
+  return jsonb_build_object('ok', true, 'nick', p_nick, 'estat', nou);
 end $$;
 
 -- ── Llegir el directori ────────────────────────────────────────────────────
@@ -240,7 +249,7 @@ grant execute on function public.modera_cromo(text, bigint, text, text) to anon,
 -- ── Aplicat ────────────────────────────────────────────────────────────────
 -- 2026-10-11, al projecte Teamtowershuma (grkgrceioxktmbwdhvmm), com a
 -- migracions: `comando_cromos`, `comando_cromos_revisat`,
--- `comando_cromos_funcions`, `comando_cromos_did`, `comando_cromos_did_retirada` i
--- `comando_cromos_moderacio`. Provat com a `anon`: la taula no es pot llegir,
+-- `comando_cromos_funcions`, `comando_cromos_did`, `comando_cromos_did_retirada`,
+-- `comando_cromos_moderacio` i `comando_cromos_mixta`. Provat com a `anon`: la taula no es pot llegir,
 -- un nick d'un altre torna `nick_ocupat`, un canònic torna `nick_reservat`, un
 -- pendent no surt al directori i un retirat en surt a l'instant.

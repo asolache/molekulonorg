@@ -131,6 +131,9 @@ Qui continuï això s'hi trobarà i val més saber per què hi són:
 - **Sense comptes ni correus.** El primer enviament d'un nick crea una clau
   d'edició al navegador; amb ella es canvia, es mira l'estat o es retira.
   Aquí només se'n guarda el resum.
+- **Aprovació mixta** (decisió de l'autor): el primer cromo de cada nick
+  l'aprova l'autor; els canvis d'un cromo aprovat surten sols. Un de retirat o
+  rebutjat torna a passar per l'autor.
 - **Moderar**: a **molekulon.org/modera** amb la clau de moderador (aprova,
   rebutja amb nota o retira en un clic). També es pot fer a
   Supabase › Table Editor › `comando_cromos`, canviant `estat` de
