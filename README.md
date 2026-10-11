@@ -52,6 +52,7 @@ node tools/build.js --check && node tools/check.js
 | `peli.html` | El guió de la intro, pla a pla, amb què està filmat i què no |
 | `musica.html` | Els capítols, els videoclips, els temes i els directes |
 | `comic.html` | El lector de la mostra: pàgina a pàgina, cada una amb la seva cançó |
+| `kit.html` | **El kit**: fes-te el personatge, sense compte i sense que s'enviï res |
 | `tools/build.js` | El generador. **Aquí és on s'edita el que diu la web** |
 | `tools/sync.js` | Baixa les dades de dalt i avisa si la còpia s'ha quedat vella |
 | `tools/check.js` | Deu regles sobre el que cap generador veurà mai |
@@ -63,14 +64,10 @@ node tools/build.js --check && node tools/check.js
 
 ## El kit narratiu
 
-L'alta amb IA **no viu en aquest repositori**: és un artefacte de Claude
-publicat a part, i la landing hi enllaça.
-
-- **Adreça**: https://claude.ai/artifact/13VhvsbsTQhgauoxMDfRY3
-- **Per què allà**: la IA la posa qui obre la pàgina, des del seu compte. El
-  projecte no paga res per cada personatge que es crea.
-- **Funciona sense IA.** Qui no tingui compte de Claude munta la fitxa igual.
-- Si algun dia canvia d'adreça, es canvia a la constant `KIT` de `tools/build.js`.
+`/kit`: les quatre preguntes, la fitxa, el text del vídeo amb les etiquetes i un
+text per enganxar a qualsevol xat si es vol que l'escrigui una IA. **No cal
+compte de res**, i el projecte no paga res perquè la IA la posa qui escriu. Es
+genera a `tools/build.js` (funció `kit`) com les altres pàgines.
 
 ## On som
 
@@ -78,7 +75,7 @@ Al dia d'avui, i escrit aquí perquè qui obri el repositori no ho hagi de dedui
 
 | | |
 |---|---|
-| **Pàgines** | 6, totes generades i amb les deu guardes en verd |
+| **Pàgines** | 7, totes generades i amb les deu guardes en verd |
 | **Còmic 1** | Portada i 7 pàgines publicades, amb el seu tema |
 | **Còmic 2** | Portada publicada i enllaç de compra. **Cap pàgina de mostra encara** |
 | **Cromos** | 11 cares de 14. Falten El Aviador, Pigmentón i Fraktalman |
