@@ -112,6 +112,11 @@ begin
      or jsonb_array_length(p_fitxa->'poders') not between 1 and 5 then
     raise exception 'fitxa_incompleta';
   end if;
+  -- El pont amb el SOS (alta-i-directori.md §3): un `did` opcional, amb la
+  -- mateixa forma que a `online_fitxes`.
+  if coalesce(p_fitxa->>'did', '') <> '' and (p_fitxa->>'did') !~ '^did:sos:[a-z0-9-]{4,16}:[A-Za-z0-9_-]{16,64}$' then
+    raise exception 'did_forma';
+  end if;
 
   h := encode(extensions.digest(p_clau, 'sha256'), 'hex');
   select c.clau_hash into propi from public.comando_cromos c where c.nick = p_nick order by c.id limit 1;
@@ -137,10 +142,24 @@ end $$;
 -- ── Llegir el directori ────────────────────────────────────────────────────
 -- Per cada nick, l'última versió moderada (aprovada o retirada); surt si és
 -- aprovada. Una versió nova pendent no amaga la que ja hi era.
+--
+-- `sos` diu si el cromo és **comprovable al SOS**: porta un `did` i l'última
+-- fitxa d'aquell `did` al directori del SOS (`online_fitxes`) diu el mateix
+-- @nick i no està retirada. Postgres no comprova la firma d'aquella fitxa —ho
+-- fa el navegador a /SOS/online—, però la fitxa només la pot firmar qui té la
+-- clau del `did`: si diu aquest nick, és que la persona l'hi ha posat.
 create or replace function public.directori_cromos()
 returns table (nick text, fitxa jsonb, aprovat timestamptz)
 language sql stable security definer set search_path = '' as $$
-  select d.nick, d.fitxa, d.t from (
+  select d.nick,
+         d.fitxa || jsonb_build_object('sos', coalesce(d.fitxa->>'did', '') <> '' and exists (
+           select 1 from (
+             select distinct on (o.did) o.fitxa from public.online_fitxes o
+             where o.did = d.fitxa->>'did' order by o.did, o.creat desc
+           ) s where s.fitxa->>'nick' = d.nick and coalesce(s.fitxa->'retirada', 'false'::jsonb) <> 'true'::jsonb
+         )),
+         d.t
+  from (
     select distinct on (c.nick) c.nick, c.fitxa, c.estat, coalesce(c.revisat, c.creat) as t
     from public.comando_cromos c
     where c.estat in ('aprovat', 'retirat')
@@ -172,8 +191,8 @@ grant execute on function public.directori_cromos() to anon, authenticated;
 grant execute on function public.el_meu_cromo(text, text) to anon, authenticated;
 
 -- ── Aplicat ────────────────────────────────────────────────────────────────
--- 2026-10-11, al projecte Teamtowershuma (grkgrceioxktmbwdhvmm), com a tres
--- migracions: `comando_cromos`, `comando_cromos_revisat` i
--- `comando_cromos_funcions`. Provat com a `anon`: la taula no es pot llegir,
+-- 2026-10-11, al projecte Teamtowershuma (grkgrceioxktmbwdhvmm), com a
+-- migracions: `comando_cromos`, `comando_cromos_revisat`,
+-- `comando_cromos_funcions`, `comando_cromos_did` i `comando_cromos_did_retirada`. Provat com a `anon`: la taula no es pot llegir,
 -- un nick d'un altre torna `nick_ocupat`, un canònic torna `nick_reservat`, un
 -- pendent no surt al directori i un retirat en surt a l'instant.

@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Fes-te el personatge · el kit del Comando Molekulon</title>
-<meta name="description" content="Quatre preguntes i surt el teu cromo del Comando, amb la fitxa i el text del vídeo ja escrits. Sense compte de res, i si vols, l'envies al directori.">
+<meta name="description" content="Quatre preguntes i surt el teu cromo del Comando, amb la fitxa i el text del vídeo ja escrits. Sense compte de res, i si vols, l'envies a la col·lecció.">
 <link rel="canonical" href="https://molekulon.org/kit">
 <meta property="og:title" content="Fes-te el personatge · el kit del Comando Molekulon">
-<meta property="og:description" content="Quatre preguntes i surt el teu cromo del Comando, amb la fitxa i el text del vídeo ja escrits. Sense compte de res, i si vols, l'envies al directori.">
+<meta property="og:description" content="Quatre preguntes i surt el teu cromo del Comando, amb la fitxa i el text del vídeo ja escrits. Sense compte de res, i si vols, l'envies a la col·lecció.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://molekulon.org/kit">
 <meta property="og:locale" content="ca_ES">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Fes-te el personatge","description":"Quatre preguntes i surt el teu cromo del Comando, amb la fitxa i el text del vídeo ja escrits. Sense compte de res, i si vols, l'envies al directori.","url":"https://molekulon.org/kit","inLanguage":"ca","isPartOf":{"@type":"WebSite","name":"Comando Molekulon","url":"https://molekulon.org/"},"publisher":{"@type":"Organization","name":"TeamTowers Humà","url":"https://teamtowershuma.com"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Fes-te el personatge","description":"Quatre preguntes i surt el teu cromo del Comando, amb la fitxa i el text del vídeo ja escrits. Sense compte de res, i si vols, l'envies a la col·lecció.","url":"https://molekulon.org/kit","inLanguage":"ca","isPartOf":{"@type":"WebSite","name":"Comando Molekulon","url":"https://molekulon.org/"},"publisher":{"@type":"Organization","name":"TeamTowers Humà","url":"https://teamtowershuma.com"}}</script>
 <style>
 :root{--bg:#0b0b12;--panel:#141420;--card:#1a1a28;--text:#f5f5f7;--muted:#82828d;--light:#c7c7d1;
   --purple:#e040fb;--blue:#00b0ff;--green:#00e676;--orange:#ff9100;--gold:#ffd700;
@@ -309,7 +309,6 @@ footer a{color:var(--light)}
 <a class="l" href="/musica">La banda</a>
 <a class="l" href="/comic">El còmic</a>
 <a class="l" href="/kit" aria-current="page">Fes-te el personatge</a>
-<a class="l" href="/directori">El directori</a>
 <a class="l dret" href="https://teamtowershuma.com/sos" rel="noopener">Obre el SOS ↗</a>
 </nav>
 <main id="principal">
@@ -318,8 +317,8 @@ footer a{color:var(--light)}
 <span class="tag">El kit del Comando</span>
 <h1>Fes-te <em>el personatge</em></h1>
 <p class="sub">Quatre preguntes, com et veus, i surt el teu <strong>cromo</strong> amb la fitxa i el text del
-vídeo ja escrits. <strong>No cal compte de res.</strong> Si el vols al <a href="/directori">directori</a>,
-l'envies des d'aquí mateix.</p>
+vídeo ja escrits. <strong>No cal compte de res.</strong> Si el vols a <a href="/personatges#cromos">la col·lecció</a>,
+al costat dels del còmic, l'envies des d'aquí mateix.</p>
 </div>
 </header>
 <div class="wrap">
@@ -354,8 +353,6 @@ l'envies des d'aquí mateix.</p>
 </div>
 <p class="exemple"><strong>Exemple</strong>: Reciclator · soldar, desmuntar electrodomèstics, veure què es pot
 arreglar · un taller amb torn i soldador, una furgoneta · munta una llanterna amb una ampolla i un carregador vell.</p>
-<div class="botons"><button type="button" class="fer" id="k-fer">Munta la meva fitxa</button></div>
-<p class="estat" id="k-estat" role="status" aria-live="polite"></p>
 </div>
 <div class="kit-cromo">
 <canvas id="k-cv" width="600" height="840" aria-label="El teu cromo, tal com queda"></canvas>
@@ -366,8 +363,6 @@ arreglar · un taller amb torn i soldador, una furgoneta · munta una llanterna 
 </div>
 
 <div id="k-sortida" hidden>
-<div class="bloc"><h3><span>La teva fitxa</span><button type="button" class="copia" data-de="k-fitxa">Copia</button></h3>
-<pre id="k-fitxa"></pre></div>
 <div class="bloc"><h3><span>Per al vídeo de YouTube</span><button type="button" class="copia" data-de="k-yt">Copia</button></h3>
 <p class="ajuda">Títol, descripció i etiquetes. <strong>L'etiqueta és el que fa que et trobin</strong>, i el vídeo ha de ser públic.</p>
 <pre id="k-yt"></pre></div>
@@ -379,8 +374,8 @@ guerra i el relat amb el to del Comando. El relat el pots enganxar a sota, abans
 </section>
 
 <section class="box kit" id="envia">
-<h2>Envia'l al directori</h2>
-<p class="lead">El <a href="/directori">directori</a> és el mur de cromos del Comando. <strong>Hi surt el personatge,
+<h2>Envia'l a la col·lecció</h2>
+<p class="lead"><a href="/personatges#cromos">Els personatges</a> és una sola llista: els del còmic i, darrere, els de la gent. <strong>Hi surt el personatge,
 no tu</strong>: el que hi ha al cromo, el relat i el vídeo. No et demanem ni nom, ni correu, ni telèfon.
 L'aprova a mà l'autor del Comando; mentre no ho fa, és pendent i no el veu ningú.</p>
 <div class="q"><label for="e-relat">El relat <span class="ajuda">(opcional)</span></label>
@@ -389,9 +384,14 @@ L'aprova a mà l'autor del Comando; mentre no ho fa, és pendent i no el veu nin
 <div class="q"><label for="e-video">El vídeo de la demo <span class="ajuda">(opcional ara, necessari per aprovar-lo)</span></label>
 <p class="ajuda">L'enllaç de YouTube, públic. Si vols el secret de debò, penja'l des d'un canal a nom del personatge.</p>
 <input type="url" id="e-video" placeholder="https://www.youtube.com/watch?v=…" autocomplete="off"></div>
+<div class="q"><label for="e-did">El teu did del SOS <span class="ajuda">(opcional)</span></label>
+<p class="ajuda">Si ja tens perfil al <a href="https://teamtowershuma.com/SOS/online.html" rel="noopener">directori del SOS ↗</a>, enganxa
+aquí el teu <code>did:sos:…</code>. Si allà fas servir el mateix @nick que aquí, el cromo porta la marca
+<strong>comprovat al SOS</strong>. Per sortir a la col·lecció no cal.</p>
+<input type="text" id="e-did" placeholder="did:sos:…" autocomplete="off" spellcheck="false"></div>
 <label class="accepto"><input type="checkbox" id="e-accepto"> Sóc major d'edat, el vídeo és meu, i accepto que el
-personatge surti al directori de molekulon.org si l'autor l'aprova.</label>
-<div class="botons"><button type="button" class="fer" id="e-envia">Envia'l al directori</button></div>
+personatge surti a la col·lecció de molekulon.org si l'autor l'aprova.</label>
+<div class="botons"><button type="button" class="fer" id="e-envia">Envia'l a la col·lecció</button></div>
 <p class="estat" id="e-estat" role="status" aria-live="polite"></p>
 
 <div class="bloc" id="e-desat" hidden>
@@ -401,7 +401,7 @@ ja és aprovat o retirar-lo, des d'aquí o des d'un altre aparell. Guarda-la: <s
 perquè no tenim el teu correu. Si tornes a enviar, s'envia una versió nova del mateix cromo.</p>
 <pre class="clau" id="e-clau"></pre>
 <div class="botons"><button type="button" class="seg" id="e-mira">Mira com està</button>
-<button type="button" class="seg" id="e-retira">Retira'l del directori</button></div>
+<button type="button" class="seg" id="e-retira">Retira'l de la col·lecció</button></div>
 </div>
 
 <details>
@@ -420,9 +420,9 @@ perquè no tenim el teu correu. Si tornes a enviar, s'envia una versió nova del
 <li><strong>Pseudònim no vol dir anònim.</strong> Qui et conegui et reconeixerà per la veu o pel taller. Si vols el secret de debò, penja'l des d'un canal a nom del personatge.</li>
 <li><strong>Menors no.</strong> Això és per a persones adultes. A l'aula es fa amb <a href="https://teamtowershuma.com/escola" rel="noopener">la Fàbrica de Superherois ↗</a>, sense penjar res.</li>
 <li><strong>Es publica</strong> el que respon les quatre preguntes, porta un vídeo que és seu i és d'una persona de debò. <strong>No es publica</strong> el que ataca algú.</li>
-<li><strong>Es pot retirar</strong> quan vulguis, sense donar explicacions: amb la clau, surt del directori a l'instant.</li>
+<li><strong>Es pot retirar</strong> quan vulguis, sense donar explicacions: amb la clau, surt de la col·lecció a l'instant.</li>
 </ul>
-<div class="acts"><a href="/historia#com-es-penja">Com es penja el vídeo</a><a href="/directori">Mira el directori</a><a href="/personatges">Els 14 del còmic</a></div>
+<div class="acts"><a href="/historia#com-es-penja">Com es penja el vídeo</a><a href="/personatges#cromos">Mira la col·lecció</a></div>
 </section>
 </div>
 <script>
@@ -596,8 +596,6 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
   "use strict";
   var T = {
     ca: {
-      fer: "Munta la meva fitxa",
-      errBuit: "Omple almenys els superpoders: és el que fa que la fitxa sigui teva.",
       senseNom: "Sense nom encara",
       cap: ["Nom de guerra","Població","Superpoders","Superarmes","Demo"],
       sap: "Sap ", porta: " Porta ", i: " i ", demo: " A la demo: ",
@@ -608,8 +606,6 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
            "El que sé i el que tinc:"]
     },
     es: {
-      fer: "Monta mi ficha",
-      errBuit: "Rellena al menos los superpoderes: es lo que hace que la ficha sea tuya.",
       senseNom: "Sin nombre aún",
       cap: ["Nombre de guerra","Población","Superpoderes","Superarmas","Demo"],
       sap: "Sabe ", porta: " Lleva ", i: " y ", demo: " En la demo: ",
@@ -629,10 +625,11 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     fitxa_incompleta: "Falten el nom de guerra (de 2 a 40 caràcters) o els superpoders (d'1 a 5).",
     massa_seguit: "Massa enviaments seguits. Torna-ho a provar d'aquí a una estona.",
     res_a_retirar: "No hi ha cap cromo amb aquest nom per retirar.",
-    clau_curta: "La clau d'edició no és vàlida."
+    clau_curta: "La clau d'edició no és vàlida.",
+    did_forma: "El did del SOS no té la forma bona: comença per did:sos: i es copia sencer del teu perfil."
   };
   var DESA = "molekulon_cromo";
-  var lang = "ca", fet = null, asp = CROMO.aspecte(CROMO.BASE);
+  var lang = "ca", asp = CROMO.aspecte(CROMO.BASE);
   var $ = function(id){ return document.getElementById(id); };
   var llista = function(s){ return s.split(/[,\n;]+/).map(function(x){ return x.trim(); }).filter(Boolean); };
   var etiqueta = function(s){ return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]/g, ""); };
@@ -677,8 +674,11 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
 
   function munta(){
     var t = T[lang], v = llegeix();
-    if (!v.poders.length) { $("k-estat").textContent = t.errBuit; return; }
-    $("k-estat").textContent = "";
+    /* Es refà a cada tecla, com el cromo: no hi ha cap botó de «munta» entre
+       el que escrius i el que en surt. Sense superpoders encara no hi ha res
+       a dir al vídeo, i els blocs esperen. */
+    $("k-sortida").hidden = !v.poders.length;
+    if (!v.poders.length) return;
     var nom = v.nom || t.senseNom;
     var fitxa = [
       t.cap[0] + ": " + nom,
@@ -697,12 +697,8 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     var yt = [titol, "", fitxa, "", relat, "", t.soc + "https://molekulon.org", "",
               tags.map(function(x){ return "#" + x; }).join(" ")].join("\n");
     var ia = [t.ia[0], "", t.ia[1], "", t.ia[2], "", t.ia[3], fitxa].join("\n");
-    fet = { fitxa: fitxa + "\n\n" + relat, yt: yt, ia: ia };
-    $("k-fitxa").textContent = fet.fitxa;
-    $("k-yt").textContent = fet.yt;
-    $("k-ia").textContent = fet.ia;
-    $("k-sortida").hidden = false;
-    $("k-sortida").scrollIntoView({ behavior: "smooth", block: "start" });
+    $("k-yt").textContent = yt;
+    $("k-ia").textContent = ia;
   }
 
   function baixa(){
@@ -731,21 +727,24 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     var v = llegeix(), d = desat();
     if (!retira) {
       if (!v.nom || !v.poders.length) { estatEnvia("Per enviar-lo calen el nom de guerra i almenys un superpoder."); return; }
-      if (!$("e-accepto").checked) { estatEnvia("Cal que marquis la casella: el directori és per a persones adultes i per a personatges, no per a persones."); return; }
+      if (!$("e-accepto").checked) { estatEnvia("Cal que marquis la casella: la col·lecció és per a persones adultes i per a personatges, no per a persones."); return; }
       var vu = $("e-video").value.trim();
+      var dd = $("e-did").value.trim();
+      if (dd && !/^did:sos:[a-z0-9-]{4,16}:[A-Za-z0-9_-]{16,64}$/.test(dd)) { estatEnvia(ERR.did_forma); return; }
       if (vu && !CROMO.video(vu)) { estatEnvia("L'enllaç del vídeo ha de ser de YouTube i sencer (https://www.youtube.com/watch?v=… o https://youtu.be/…)."); return; }
     } else if (!d) { estatEnvia("En aquest navegador no hi ha cap cromo teu desat."); return; }
     var n = d ? d.nick : CROMO.nick(v.nom), clau = d ? d.clau : novaClau();
     var fitxa = { nom: v.nom, lloc: v.lloc, poders: v.poders, armes: v.armes, demo: v.demo,
                   relat: $("e-relat").value.trim().slice(0, 300), video: CROMO.video($("e-video").value),
+                  did: $("e-did").value.trim().slice(0, 100),
                   aspecte: asp, llengua: lang, v: 1 };
     if (retira) fitxa = { nom: v.nom || n, poders: ["—"], retirat: true, v: 1 };
     $("e-envia").disabled = true; $("e-retira").disabled = true;
     estatEnvia(retira ? "Retirant…" : "Enviant…");
     CROMO.rpc("envia_cromo", { p_nick: n, p_fitxa: fitxa, p_clau: clau, p_retira: !!retira }).then(function(){
       desa({ nick: n, clau: clau }); pintaDesat(); redibuixa();
-      estatEnvia(retira ? "Retirat. Ja no surt al directori." :
-        "Enviat. Ara és pendent: sortirà al directori quan l'autor l'aprovi. Guarda't la clau de sota.", true);
+      estatEnvia(retira ? "Retirat. Ja no surt a la col·lecció." :
+        "Enviat. Ara és pendent: sortirà a la col·lecció quan l'autor l'aprovi. Guarda't la clau de sota.", true);
     }, function(e){
       estatEnvia(ERR[e.codi] || "No s'ha pogut enviar (" + e.message + "). La fitxa i el cromo segueixen aquí: torna-ho a provar.");
     }).then(function(){ $("e-envia").disabled = false; $("e-retira").disabled = false; });
@@ -753,7 +752,7 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
 
   /* Mirar com està i recuperar-lo en un altre aparell: amb el nick i la clau,
      «el_meu_cromo» torna l'última versió i en quin estat és. */
-  var NOM_ESTAT = { pendent: "pendent d'aprovar", aprovat: "aprovat: surt al directori", rebutjat: "no aprovat", retirat: "retirat" };
+  var NOM_ESTAT = { pendent: "pendent d'aprovar", aprovat: "aprovat: surt a la col·lecció", rebutjat: "no aprovat", retirat: "retirat" };
   function recupera(n, clau){
     n = CROMO.nick(n); clau = String(clau || "").trim();
     if (!n || !clau) { estatEnvia("Calen el nom de guerra i la clau."); return; }
@@ -765,7 +764,7 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
       if (!f.retirat) {
         $("k-nom").value = f.nom || ""; $("k-poders").value = (f.poders || []).join(", ");
         $("k-armes").value = (f.armes || []).join(", "); $("k-demo").value = f.demo || "";
-        $("k-lloc").value = f.lloc || ""; $("e-relat").value = f.relat || ""; $("e-video").value = f.video || "";
+        $("k-lloc").value = f.lloc || ""; $("e-relat").value = f.relat || ""; $("e-video").value = f.video || ""; $("e-did").value = f.did || "";
         asp = CROMO.aspecte(f.aspecte); tries();
       }
       redibuixa();
@@ -773,13 +772,14 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     }, function(e){ estatEnvia("No s'ha pogut consultar (" + e.message + ")."); });
   }
 
-  ["k-nom", "k-poders", "k-armes", "k-lloc", "k-demo"].forEach(function(id){ $(id).addEventListener("input", redibuixa); });
-  $("k-fer").addEventListener("click", munta);
+  ["k-nom", "k-poders", "k-armes", "k-lloc", "k-demo"].forEach(function(id){
+    $(id).addEventListener("input", function(){ redibuixa(); munta(); });
+  });
   $("k-baixa").addEventListener("click", baixa);
   $("k-atzar").addEventListener("click", function(){ asp = CROMO.atzar(); tries(); redibuixa(); });
   $("e-envia").addEventListener("click", function(){ envia(false); });
   $("e-retira").addEventListener("click", function(){
-    if (confirm("Segur? El cromo deixarà de sortir al directori ara mateix.")) envia(true);
+    if (confirm("Segur? El cromo deixarà de sortir a la col·lecció ara mateix.")) envia(true);
   });
   $("e-mira").addEventListener("click", function(){ var d = desat(); if (d) recupera(d.nick, d.clau); });
   $("e-recupera").addEventListener("click", function(){ recupera($("r-nick").value, $("r-clau").value); });
@@ -801,11 +801,10 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     b.addEventListener("click", function(){
       lang = b.dataset.llengua;
       document.querySelectorAll("#kit [data-llengua]").forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); });
-      $("k-fer").textContent = T[lang].fer;
-      if (fet) munta();
+      munta();
     });
   });
-  tries(); pintaDesat(); redibuixa();
+  tries(); pintaDesat(); redibuixa(); munta();
 })();
 </script>
 </main>

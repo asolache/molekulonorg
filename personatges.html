@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Els personatges · Comando Molekulon</title>
-<meta name="description" content="Els catorze herois canònics del Comando: el seu poder al còmic, la seva superarma i què vol dir cadascun dins d'un equip de debò.">
+<meta name="description" content="Els catorze herois del còmic i, darrere, els personatges de la gent que s'hi apunta: el que sap fer cadascú, la seva superarma i què vol dir dins d'un equip.">
 <link rel="canonical" href="https://molekulon.org/personatges">
 <meta property="og:title" content="Els personatges · Comando Molekulon">
-<meta property="og:description" content="Els catorze herois canònics del Comando: el seu poder al còmic, la seva superarma i què vol dir cadascun dins d'un equip de debò.">
+<meta property="og:description" content="Els catorze herois del còmic i, darrere, els personatges de la gent que s'hi apunta: el que sap fer cadascú, la seva superarma i què vol dir dins d'un equip.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://molekulon.org/personatges">
 <meta property="og:locale" content="ca_ES">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Els personatges","description":"Els catorze herois canònics del Comando: el seu poder al còmic, la seva superarma i què vol dir cadascun dins d'un equip de debò.","url":"https://molekulon.org/personatges","inLanguage":"ca","isPartOf":{"@type":"WebSite","name":"Comando Molekulon","url":"https://molekulon.org/"},"publisher":{"@type":"Organization","name":"TeamTowers Humà","url":"https://teamtowershuma.com"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Els personatges","description":"Els catorze herois del còmic i, darrere, els personatges de la gent que s'hi apunta: el que sap fer cadascú, la seva superarma i què vol dir dins d'un equip.","url":"https://molekulon.org/personatges","inLanguage":"ca","isPartOf":{"@type":"WebSite","name":"Comando Molekulon","url":"https://molekulon.org/"},"publisher":{"@type":"Organization","name":"TeamTowers Humà","url":"https://teamtowershuma.com"}}</script>
 <style>
 :root{--bg:#0b0b12;--panel:#141420;--card:#1a1a28;--text:#f5f5f7;--muted:#82828d;--light:#c7c7d1;
   --purple:#e040fb;--blue:#00b0ff;--green:#00e676;--orange:#ff9100;--gold:#ffd700;
@@ -252,6 +252,15 @@ footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}
 @media (max-width:560px){nav.barra{padding:.5rem .7rem}nav.barra .dret{display:none}}
+.cerca{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin:1rem 0 0}
+.cerca input{font:inherit;flex:1;min-width:12rem;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:.55rem .7rem}
+.cerca span{font-size:.84rem;color:var(--muted)}
+.cromo.gent .marc{aspect-ratio:5/7}
+.cromo.gent canvas{width:100%;height:100%;display:block}
+.cromo.gent .rol a{font-weight:600;text-decoration:none}
+.cromo .sos{display:inline-block;font-size:.7rem;font-weight:700;color:var(--green);border:1px solid var(--green);border-radius:999px;padding:.05rem .5rem;margin-left:.3rem}
+.gent-estat{color:var(--light);font-size:.9rem}
+
 </style>
 </head>
 <body>
@@ -265,19 +274,18 @@ footer a{color:var(--light)}
 <a class="l" href="/musica">La banda</a>
 <a class="l" href="/comic">El còmic</a>
 <a class="l" href="/kit">Fes-te el personatge</a>
-<a class="l" href="/directori">El directori</a>
 <a class="l dret" href="https://teamtowershuma.com/sos" rel="noopener">Obre el SOS ↗</a>
 </nav>
 <main id="principal">
 <header class="hero">
 <div class="hero-inner">
 <span class="tag">La col·lecció</span>
-<h1>Els <em>14 cromos</em> del Comando</h1>
+<h1>Els <em>cromos</em> del Comando</h1>
 <p class="sub">Cadascun porta tres coses: <strong>el seu poder al còmic</strong>,
 <strong>la seva superarma</strong> i <strong>què vol dir dins d'un equip de debò</strong>.
 La tercera és la que fa que aquest relat visqui dins d'una eina de gestió i no en un fullet a part.</p>
-<p class="avis"><strong>El repartiment no està tancat.</strong> Aquests 14 són
-els que surten als còmics i als vídeos; els següents surten de qui hi entri. Un personatge
+<p class="avis"><strong>El repartiment no està tancat.</strong> Els 14 primers són
+els que surten als còmics i als vídeos; els que van darrere són de la gent que hi ha entrat amb <a href="/kit">el kit</a>. Un personatge
 del Comando és una persona de debò amb el que sap fer i el que pot deixar.</p>
 </div>
 </header>
@@ -290,7 +298,8 @@ hi surten tots tocant alhora. Els que encara no en tenen ho diuen: <b>un marc bu
 honest que la cara d'un altre</b>.</p>
 </section>
 
-<div class="cromos">
+<div class="cerca"><input type="search" id="q" placeholder="Busca un nom, un superpoder, una superarma o un lloc" aria-label="Busca a la col·lecció"><span id="q-n" role="status"></span></div>
+<div class="cromos" id="cromos">
 <article class="cromo">
 <div class="marc">
 <span class="num">01 / 14</span>
@@ -541,14 +550,259 @@ honest que la cara d'un altre</b>.</p>
 </div>
 </article>
 </div>
+<p class="gent-estat" id="gent-estat" role="status">Darrere dels 14 del còmic hi van els de la gent que s'hi apunta, un cop aprovats. Carregant…</p>
+<noscript><p class="gent-estat">Els cromos de la gent es llegeixen en directe i necessiten JavaScript.</p></noscript>
 
 <section class="box">
 <h3>I el teu</h3>
 <p class="lead">El teu nom de guerra, fins a cinc superpoders i les teves superarmes —el que
-saps fer i el que pots deixar. Quatre preguntes, sense compte de res, i no s'envia enlloc.</p>
+saps fer i el que pots deixar—, i com es veu el personatge. Quatre preguntes, sense compte de
+res. Si l'envies i l'autor l'aprova, surt <strong>en aquesta mateixa llista</strong>, darrere dels del còmic.
+<b>Hi surt el personatge, no la persona.</b></p>
 <p><a href="/kit">Fes-te el personatge →</a></p>
 </section>
 </div>
+<script>
+var CROMO = (function(){
+  "use strict";
+  var O = {
+    col: ["#e040fb","#00b0ff","#00e676","#ff9100","#ffd700","#e53935","#5e35b1","#00acc1","#f5f5f7","#26262f"],
+    pell: ["#f8d5c2","#f0c3a0","#d9a271","#b87d4f","#8d5524","#5c3a21"],
+    cabell: [["curt","Curt"],["llarg","Llarg"],["arrissat","Arrissat"],["trenes","Trenes"],["monyo","Monyo"],["rapat","Rapat"]],
+    colCab: ["#2b2b2b","#5d4037","#a1662f","#e0b34a","#c62828","#7e57c2","#26c6da","#eeeeee"],
+    ulls: ["#3e2723","#5d4037","#2e7d32","#1565c0","#6a1b9a","#00838f"],
+    roba: [["capa","Amb capa"],["caputxa","Amb caputxa"],["armilla","Amb armilla"],["res","Sense res"]],
+    mascara: [["antifac","Antifaç"],["ulleres","Ulleres"],["res","Sense"]],
+    emblema: ["⚡","★","🌀","🔥","🌿","🎵","🛡️","🐝","🌊","🦅","♾️","❤️","🔧","🎨","🍲","🌱"]
+  };
+  var BASE = { col1: "#e040fb", col2: "#00e676", pell: "#f0c3a0", cabell: "curt", colCab: "#5d4037",
+               ulls: "#3e2723", roba: "capa", mascara: "antifac", emblema: "⚡" };
+  var ids = function(l){ return l.map(function(x){ return x[0]; }); };
+  var VALID = { col1: O.col, col2: O.col, pell: O.pell, cabell: ids(O.cabell), colCab: O.colCab,
+                ulls: O.ulls, roba: ids(O.roba), mascara: ids(O.mascara), emblema: O.emblema };
+
+  function aspecte(a){
+    var r = {};
+    Object.keys(BASE).forEach(function(k){
+      var v = a && a[k];
+      r[k] = VALID[k].indexOf(v) >= 0 ? v : BASE[k];
+    });
+    return r;
+  }
+  function atzar(){
+    var t = function(l){ return l[Math.floor(Math.random() * l.length)]; };
+    var c1 = t(O.col);
+    return { col1: c1, col2: t(O.col.filter(function(c){ return c !== c1; })), pell: t(O.pell),
+             cabell: t(O.cabell)[0], colCab: t(O.colCab), ulls: t(O.ulls), roba: t(O.roba)[0],
+             mascara: t(O.mascara)[0], emblema: t(O.emblema) };
+  }
+
+  /* El mateix criteri de nick que el SOS (build-convits.js, normNick): un sol
+     espai de noms per a les dues cases. */
+  function nick(s){
+    return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9-]+/g, "-").replace(/-+/g, "-").replace(/^-+|-+$/g, "").slice(0, 20).replace(/-+$/, "");
+  }
+
+  function cap(x, f, cx, cy){
+    x.fillStyle = f.colCab;
+    var arc = function(dx, dy, r, a0, a1){ x.beginPath(); x.arc(cx + dx, cy + dy, r, a0 || 0, a1 || 7); x.fill(); };
+    if (f.cabell === "rapat") { arc(0, 0, 54, Math.PI * 1.08, Math.PI * 1.92); return; }
+    if (f.cabell === "arrissat") { [[-38,-30],[0,-46],[38,-30],[-52,-4],[52,-4]].forEach(function(d){ arc(d[0], d[1], 24); }); return; }
+    arc(0, -6, 55, Math.PI, 0);
+    if (f.cabell === "llarg") { x.fillRect(cx - 58, cy - 8, 20, 96); x.fillRect(cx + 38, cy - 8, 20, 96); }
+    if (f.cabell === "trenes") { x.fillRect(cx - 62, cy - 4, 18, 74); x.fillRect(cx + 44, cy - 4, 18, 74); arc(-53, 74, 13); arc(53, 74, 13); }
+    if (f.cabell === "monyo") arc(0, -62, 24);
+  }
+
+  /* Un nom llarg no pot sortir del cromo. Primer s'encongeix la lletra i només
+     es retalla si ni així hi cap. */
+  function encabeix(x, txt, cx, y, ample, gran, petit, pes){
+    var m = gran, s = String(txt);
+    do { x.font = pes + " " + m + "px system-ui,sans-serif"; if (x.measureText(s).width <= ample) break; m -= 1; } while (m > petit);
+    if (x.measureText(s).width > ample) {
+      while (s.length > 1 && x.measureText(s + "…").width > ample) s = s.slice(0, -1);
+      s += "…";
+    }
+    x.fillText(s, cx, y);
+  }
+
+  /* f = { nom, lloc, poders[], armes[], nick, aspecte } */
+  function pinta(cv, d){
+    var W = 600, H = 840, x = cv.getContext("2d"), f = aspecte(d.aspecte), cx = 300, cy = 250;
+    var g = x.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, f.col1); g.addColorStop(1, "#0b0b12");
+    x.fillStyle = g; x.fillRect(0, 0, W, H);
+    x.fillStyle = "rgba(0,0,0,.32)"; x.fillRect(0, 0, W, H);
+    x.strokeStyle = f.col2; x.lineWidth = 10; x.strokeRect(7, 7, W - 14, H - 14);
+    x.textAlign = "center"; x.textBaseline = "alphabetic";
+    x.fillStyle = "rgba(255,255,255,.75)"; x.font = "700 17px system-ui,sans-serif";
+    x.fillText("C O M A N D O   M O L E K U L O N", cx, 52);
+
+    if (f.roba === "capa") {
+      x.fillStyle = f.col2; x.beginPath();
+      x.moveTo(cx - 46, cy + 18); x.lineTo(cx - 104, cy + 236); x.lineTo(cx + 104, cy + 236); x.lineTo(cx + 46, cy + 18);
+      x.closePath(); x.fill();
+    }
+    x.fillStyle = f.col1;
+    x.fillRect(cx - 40, cy + 150, 30, 86); x.fillRect(cx + 10, cy + 150, 30, 86);
+    x.fillRect(cx - 76, cy + 38, 26, 104); x.fillRect(cx + 50, cy + 38, 26, 104);
+    x.fillStyle = f.pell;
+    x.beginPath(); x.arc(cx - 63, cy + 150, 15, 0, 7); x.fill();
+    x.beginPath(); x.arc(cx + 63, cy + 150, 15, 0, 7); x.fill();
+    x.fillStyle = f.col1;
+    x.beginPath(); if (x.roundRect) x.roundRect(cx - 52, cy + 18, 104, 140, 16); else x.rect(cx - 52, cy + 18, 104, 140); x.fill();
+    if (f.roba === "armilla") { x.fillStyle = f.col2; x.fillRect(cx - 52, cy + 18, 26, 140); x.fillRect(cx + 26, cy + 18, 26, 140); }
+    x.fillStyle = f.col2; x.fillRect(cx - 54, cy + 118, 108, 18);
+    x.font = "46px system-ui,sans-serif"; x.textBaseline = "middle"; x.fillStyle = "#fff";
+    x.fillText(f.emblema, cx, cy + 72);
+    x.fillStyle = f.pell; x.beginPath(); x.arc(cx, cy - 40, 54, 0, 7); x.fill();
+    cap(x, f, cx, cy - 40);
+    if (f.roba === "caputxa") {
+      x.fillStyle = f.col2; x.beginPath(); x.arc(cx, cy - 40, 60, Math.PI, 0); x.fill();
+      x.fillRect(cx - 60, cy - 42, 120, 10);
+    }
+    /* L'antifaç va abans dels ulls: és la identitat secreta, i els ulls s'hi
+       veuen a través. */
+    if (f.mascara === "antifac") {
+      x.fillStyle = f.col2; x.beginPath();
+      if (x.roundRect) x.roundRect(cx - 50, cy - 58, 100, 28, 14); else x.rect(cx - 50, cy - 58, 100, 28);
+      x.fill();
+    }
+    x.fillStyle = f.ulls;
+    x.beginPath(); x.arc(cx - 19, cy - 44, 8, 0, 7); x.fill();
+    x.beginPath(); x.arc(cx + 19, cy - 44, 8, 0, 7); x.fill();
+    if (f.mascara === "ulleres") {
+      x.strokeStyle = f.col2; x.lineWidth = 5;
+      x.beginPath(); x.arc(cx - 19, cy - 44, 15, 0, 7); x.stroke();
+      x.beginPath(); x.arc(cx + 19, cy - 44, 15, 0, 7); x.stroke();
+      x.beginPath(); x.moveTo(cx - 4, cy - 44); x.lineTo(cx + 4, cy - 44); x.stroke();
+    }
+    x.strokeStyle = "rgba(0,0,0,.55)"; x.lineWidth = 3;
+    x.beginPath(); x.arc(cx, cy - 22, 16, .25, Math.PI - .25); x.stroke();
+
+    x.textBaseline = "alphabetic"; x.fillStyle = "#fff";
+    encabeix(x, d.nom || "El teu nom de guerra", cx, 548, 500, 46, 24, "800");
+    x.fillStyle = "rgba(255,255,255,.6)";
+    encabeix(x, (d.lloc || "").toUpperCase(), cx, 578, 480, 16, 12, "600");
+    x.strokeStyle = "rgba(255,255,255,.22)"; x.lineWidth = 2;
+    x.beginPath(); x.moveTo(70, 598); x.lineTo(W - 70, 598); x.stroke();
+
+    var p = (d.poders || []).slice(0, 3), a = (d.armes || []).slice(0, 2);
+    x.fillStyle = "rgba(255,255,255,.55)"; x.font = "400 15px system-ui,sans-serif";
+    x.fillText("SUPERPODERS", cx, 628);
+    x.fillStyle = "#fff";
+    if (!p.length) { x.fillStyle = "rgba(255,255,255,.4)"; encabeix(x, "Encara per dir", cx, 656, 500, 21, 15, "600"); }
+    p.forEach(function(t, i){ encabeix(x, t, cx, 656 + i * 26, 500, 21, 15, "600"); });
+    var ya = 656 + Math.max(1, p.length) * 26 + 16;
+    x.fillStyle = "rgba(255,255,255,.55)"; x.font = "400 15px system-ui,sans-serif";
+    x.fillText("SUPERARMES", cx, ya);
+    x.fillStyle = a.length ? "#fff" : "rgba(255,255,255,.4)";
+    encabeix(x, a.length ? a.join(" · ") : "Encara per dir", cx, ya + 28, 500, 19, 13, "600");
+
+    x.fillStyle = "rgba(255,255,255,.5)"; x.font = "400 14px system-ui,sans-serif";
+    x.fillText("molekulon.org" + (d.nick ? "  ·  @" + d.nick : ""), cx, 818);
+    return cv;
+  }
+
+  /* ── El directori, al Supabase del SOS ──────────────────────────────────── */
+  var API = { url: "", key: "" };
+  function rpc(nom, cos){
+    return fetch(API.url + "/rest/v1/rpc/" + nom, {
+      method: "POST",
+      headers: { apikey: API.key, Authorization: "Bearer " + API.key, "Content-Type": "application/json" },
+      body: JSON.stringify(cos || {})
+    }).then(function(r){
+      return r.json().catch(function(){ return null; }).then(function(j){
+        if (!r.ok) { var e = new Error((j && j.message) || ("HTTP " + r.status)); e.codi = j && j.message; throw e; }
+        return j;
+      });
+    });
+  }
+  /* Només YouTube, i sencer: és l'únic enllaç que un cromo pot portar. */
+  function video(u){
+    u = String(u || "").trim();
+    return /^https:\/\/(www\.|m\.)?(youtube\.com\/(watch\?v=|shorts\/)|youtu\.be\/)[A-Za-z0-9_-]{11}/.test(u) ? u : "";
+  }
+  return { O: O, BASE: BASE, aspecte: aspecte, atzar: atzar, nick: nick, pinta: pinta, rpc: rpc, video: video, API: API };
+})();
+
+CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_publishable_xsEfyOqJ5tJwaxcoH_CiNg_SlsqDZb1";
+
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var graella = $("cromos");
+  var el = function(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  var str = function(x, n){ return typeof x === "string" ? x.slice(0, n) : ""; };
+  var arr = function(x){ return Array.isArray(x) ? x.filter(function(s){ return typeof s === "string"; }).map(function(s){ return s.slice(0, 60); }).slice(0, 5) : []; };
+
+  /* Mateixa forma que els cromos del còmic —marc, nom, rol, dl—, perquè la
+     llista es llegeixi com una sola col·lecció. Tot el text va per textContent:
+     el que arriba de la base de dades ho ha escrit qualsevol. */
+  function targeta(c){
+    var f = c.fitxa || {};
+    var d = { nom: str(f.nom, 40), lloc: str(f.lloc, 60), poders: arr(f.poders), armes: arr(f.armes), nick: c.nick, aspecte: f.aspecte };
+    var a = el("article", "cromo gent"), marc = el("div", "marc"), cv = document.createElement("canvas");
+    cv.width = 600; cv.height = 840;
+    CROMO.pinta(cv, d);
+    cv.setAttribute("role", "img");
+    cv.setAttribute("aria-label", "Cromo de " + d.nom);
+    marc.appendChild(cv); a.appendChild(marc);
+    var cos = el("div", "cos");
+    cos.appendChild(el("h3", "", d.nom));
+    var rol = el("p", "rol", "@" + c.nick + (d.lloc ? " · " + d.lloc : ""));
+    if (f.sos === true) { var s = el("span", "sos", "comprovat al SOS"); s.title = "La seva fitxa firmada al SOS porta aquest mateix @nick"; rol.appendChild(s); }
+    cos.appendChild(rol);
+    var dl = el("dl");
+    var fila = function(k, v){ if (!v) return; dl.appendChild(el("dt", "", k)); dl.appendChild(el("dd", "", v)); };
+    fila("Superpoders", d.poders.join(" · "));
+    fila("Superarmes", d.armes.join(" · "));
+    fila("La demo", str(f.demo, 160));
+    cos.appendChild(dl);
+    if (f.relat) cos.appendChild(el("p", "lletra", str(f.relat, 300)));
+    var v = CROMO.video(f.video), enl = [];
+    if (v) enl.push(["Mira la demo ↗", v]);
+    if (f.sos === true) enl.push(["El directori del SOS ↗", "https://teamtowershuma.com/SOS/online.html"]);
+    if (enl.length) {
+      var p = el("p", "rol");
+      enl.forEach(function(e, i){
+        var l = el("a", "", e[0]); l.href = e[1]; l.rel = "noopener nofollow"; l.target = "_blank";
+        if (i) p.appendChild(document.createTextNode(" · "));
+        p.appendChild(l);
+      });
+      cos.appendChild(p);
+    }
+    a.appendChild(cos);
+    return a;
+  }
+
+  var tots = [], gent = 0;
+  function compta(){
+    var q = $("q").value.trim().toLowerCase(), n = 0;
+    tots.forEach(function(a){
+      var ok = !q || a.textContent.toLowerCase().indexOf(q) >= 0;
+      a.hidden = !ok; if (ok) n++;
+    });
+    $("q-n").textContent = q ? n + (n === 1 ? " cromo" : " cromos") + " amb «" + q + "»"
+      : graella.children.length - gent + " del còmic" + (gent ? " · " + gent + " de la gent" : "");
+  }
+  function refa(){ tots = Array.prototype.slice.call(graella.children); compta(); }
+  $("q").addEventListener("input", compta);
+  refa();
+
+  CROMO.rpc("directori_cromos", {}).then(function(files){
+    files = Array.isArray(files) ? files : [];
+    $("gent-estat").textContent = files.length ? ""
+      : "Encara no hi ha cap cromo de la gent aprovat. El primer pot ser el teu.";
+    files.forEach(function(c){ graella.appendChild(targeta(c)); });
+    gent = files.length;
+    refa();
+  }, function(){
+    $("gent-estat").textContent = "Ara mateix no s'han pogut llegir els cromos de la gent. No és que no n'hi hagi: torna-ho a provar d'aquí a una estona.";
+  });
+})();
+</script>
 </main>
 <footer>
 <div class="f">
