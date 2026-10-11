@@ -76,7 +76,12 @@ const PAGINES = [
      primera pàgina, entra sola al menú. */
   { f: 'comic.html', nav: 'El còmic', t: 'El còmic', menu: PAGS_MOSTRA > 0,
     tit: 'El còmic · Comando Molekulon',
-    desc: 'La mostra dels dos còmics, pàgina a pàgina i cada una amb la cançó que li toca. Així és com es van publicar: còmic i disc, per llegir-los alhora.' }
+    desc: 'La mostra dels dos còmics, pàgina a pàgina i cada una amb la cançó que li toca. Així és com es van publicar: còmic i disc, per llegir-los alhora.' },
+  /* El kit no va al menú —s'hi arriba des de cada «Fes-te el personatge»— però
+     sí al sitemap: és la pàgina que algú buscarà quan vulgui entrar-hi. */
+  { f: 'kit.html', nav: 'El kit', t: 'Fes-te el personatge', menu: false, mapa: true,
+    tit: 'Fes-te el personatge · el kit del Comando Molekulon',
+    desc: 'Quatre preguntes i surt la teva fitxa del Comando, amb el títol i les etiquetes del vídeo ja escrits. Sense compte de res, i no s\'envia enlloc.' }
 ];
 
 /* Les pàgines que encara viuen al SOS. S'enllacen amb el seu domini sencer i
@@ -468,7 +473,7 @@ const pagina = (p, cos) => `<!DOCTYPE html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${jsonld(p)}</script>
 <style>
-${CSS}
+${CSS}${p.f === 'kit.html' ? KIT_CSS : ''}
 </style>
 </head>
 <body>
@@ -964,12 +969,10 @@ const CAPS = {
    porta, el Comando el troba cercant-la; si no la porta, no hi ha cap safata on
    hagi arribat. I això és literalment el que diu la història —no els reclutem,
    els trobem—, aplicat a una caixa de cerca. */
-/* El kit narratiu propi del Comando, publicat com a artefacte de Claude. La IA
-   la posa qui l'obre, des del seu compte: el projecte no paga res per cada
-   personatge que es crea, que era la condició. I funciona igual sense IA —
-   munta la fitxa amb el que has escrit—, perquè qui no tingui compte no es pot
-   quedar a fora. */
-const KIT = 'https://claude.ai/artifact/13VhvsbsTQhgauoxMDfRY3';
+/* El kit del Comando viu a /kit, en aquesta mateixa web (vegeu «El kit, a
+   casa»). Abans era un artefacte de Claude, i un artefacte privat era una porta
+   tancada per a tothom menys per a qui el va fer. */
+const KIT = '/kit';
 
 const PUBLICAR = {
   durada: '30 a 60 segons',
@@ -1100,9 +1103,9 @@ barri et vingui a buscar.</p>
 <p>Amb això ja ets un personatge: <b>no un avatar inventat</b>, sinó el que ja fas,
 amb nom i amb superarma. I si no et surt explicar-ho, <b>no t'has de quedar fora per
 això</b>: el kit del Comando et fa les quatre preguntes i te'n torna el nom de guerra, el
-relat i el títol del vídeo ja escrits. <a href="${KIT}" rel="noopener">Obre el kit ↗</a></p>
+relat i el títol del vídeo ja escrits. <a href="${KIT}">Obre el kit →</a></p>
 
-<h3>I on es penja</h3>
+<h3 id="com-es-penja">I on es penja</h3>
 <p>El vídeo el puges <b>tu</b> a YouTube, des del teu compte, i queda teu. No hi ha cap
 formulari que se'l quedi ni cap safata nostra on acabi. El que el fa trobable és
 <b>l'etiqueta</b>, i això és exactament el que diu la història: <b>no et reclutem, et
@@ -1126,7 +1129,7 @@ fitxa del SOS és una altra cosa i es queda al teu aparell. <b>I a l'aula, no.</
 vídeos de criatures no es publiquen: a l'escola l'exercici es fa sense penjar res, i això
 ho explica la guia de la Fàbrica de Superherois.</p>
 <div class="acts">
-<a class="pri" href="${KIT}" rel="noopener">Fes-te el personatge ↗</a>
+<a class="pri" href="${KIT}">Fes-te el personatge →</a>
 <a href="${SOS}/sos#/alta" rel="noopener">Apunta'l al SOS ↗</a>
 <a href="/personatges">Mira els ${NUM.herois} cromos</a>
 </div>
@@ -1136,15 +1139,209 @@ t'encaixen, el que compta és que l'etiqueta hi sigui perquè algú et pugui tro
 </section>`;
 };
 
+/* ══ EL KIT, A CASA ══════════════════════════════════════════════════════════
+   El kit vivia en un artefacte de Claude, i això el feia una porta tancada: un
+   artefacte privat només l'obre qui el va fer, i qui no té compte de Claude no
+   hi entra encara que es comparteixi. El kit és qui obre la porta del Comando,
+   i la porta ha d'obrir-se per a tothom.
+
+   Aquí fa el mateix sense dependre de ningú: les quatre preguntes, la fitxa
+   muntada amb el que has escrit i el text del vídeo amb les etiquetes. I la IA
+   la segueix posant qui escriu, des del seu compte: la pàgina li prepara el
+   text per enganxar a **qualsevol xat**, com proposava l'estudi d'alta (§5).
+   El projecte no paga res, no hi ha cap servidor i no surt res de la pàgina. */
+const KIT_CSS = `
+.kit{max-width:46rem}
+.kit .q{display:grid;gap:.3rem;padding:.85rem 0;border-top:1px dashed var(--border)}
+.kit .q:first-of-type{border-top:0}
+.kit label{font-weight:700}
+.kit .q label b{color:var(--purple);margin-right:.4rem}
+.kit .ajuda{font-size:.84rem;color:var(--muted);margin:0}
+.kit input,.kit textarea{font:inherit;width:100%;min-width:0;background:var(--card);color:var(--text);
+  border:1px solid var(--border);border-radius:10px;padding:.55rem .7rem}
+.kit textarea{min-height:4.2rem;resize:vertical}
+.kit input:focus,.kit textarea:focus{outline:2px solid var(--purple);outline-offset:1px}
+.kit .exemple{font-size:.84rem;color:var(--light);background:var(--card);border-radius:10px;padding:.6rem .8rem;margin:.4rem 0 0}
+.kit button{font:inherit;font-weight:700;cursor:pointer;border-radius:10px}
+.kit .fer{margin-top:1rem;font-size:.95rem;padding:.65rem 1.2rem;background:var(--purple);border:1px solid var(--purple);color:#0b0b12}
+.kit .estat{min-height:1.3em;font-size:.86rem;color:var(--orange)}
+.kit .bloc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem;margin-top:.9rem}
+.kit .bloc h3{display:flex;justify-content:space-between;align-items:center;gap:.6rem;font-size:.98rem}
+.kit .copia{font-size:.78rem;padding:.25rem .7rem;background:transparent;border:1px solid var(--border);color:var(--text)}
+.kit .copia.fet{background:var(--green);border-color:var(--green);color:#0b0b12}
+.kit pre{font-family:var(--mono);font-size:.82rem;white-space:pre-wrap;word-break:break-word;margin:.5rem 0 0;color:var(--light)}
+.kit .llengua{display:flex;gap:.3rem;justify-content:flex-end}
+.kit .llengua button{font-size:.76rem;padding:.2rem .6rem;background:transparent;border:1px solid var(--border);color:var(--light)}
+.kit .llengua button[aria-pressed="true"]{background:var(--text);color:#0b0b12}
+`;
+
+/* El guió va amb `String.raw` perquè les barres de les expressions regulars
+   arribin a la pàgina tal com s'escriuen. No porta cap `${`: aquí no hi ha res a
+   interpolar, i si algun dia n'hi hagués, el generador el pintaria abans d'hora. */
+const KIT_JS = String.raw`
+(function(){
+  "use strict";
+  var T = {
+    ca: {
+      fer: "Munta la meva fitxa",
+      errBuit: "Omple almenys els superpoders: és el que fa que la fitxa sigui teva.",
+      senseNom: "Sense nom encara",
+      cap: ["Nom de guerra","Població","Superpoders","Superarmes","Demo"],
+      sap: "Sap ", porta: " Porta ", i: " i ", demo: " A la demo: ",
+      soc: "Sóc un dels 150.000. ",
+      ia: ["Ets qui escriu les fitxes de personatge del Comando Molekulon, un còmic i una banda del Penedès que vol fer una pel·lícula amb 150.000 persones reals. Escriu en català.",
+           "El to: frases curtes i afirmatives, humor abans que èpica, i cap superlatiu. La imatge fantàstica ha d'anomenar una cosa que de debò passa quan aquesta persona fa el que sap fer. Mai diguis que algú és increïble o especial: digues què fa.",
+           "Torna'm tres noms de guerra curts que surtin del que sé fer (si ja en tinc un, posa'l primer), un relat de dues o tres frases en segona persona (màxim 40 paraules) i una frase que digui què es veurà als deu segons de vídeo. No inventis res que no t'hagi dit.",
+           "El que sé i el que tinc:"]
+    },
+    es: {
+      fer: "Monta mi ficha",
+      errBuit: "Rellena al menos los superpoderes: es lo que hace que la ficha sea tuya.",
+      senseNom: "Sin nombre aún",
+      cap: ["Nombre de guerra","Población","Superpoderes","Superarmas","Demo"],
+      sap: "Sabe ", porta: " Lleva ", i: " y ", demo: " En la demo: ",
+      soc: "Soy uno de los 150.000. ",
+      ia: ["Eres quien escribe las fichas de personaje del Comando Molekulon, un cómic y una banda del Penedès que quiere hacer una película con 150.000 personas reales. Escribe en castellano.",
+           "El tono: frases cortas y afirmativas, humor antes que épica, y ningún superlativo. La imagen fantástica tiene que nombrar algo que de verdad pasa cuando esta persona hace lo que sabe hacer. Nunca digas que alguien es increíble o especial: di qué hace.",
+           "Devuélveme tres nombres de guerra cortos que salgan de lo que sé hacer (si ya tengo uno, ponlo primero), un relato de dos o tres frases en segunda persona (máximo 40 palabras) y una frase que diga qué se verá en los diez segundos de vídeo. No inventes nada que no te haya dicho.",
+           "Lo que sé y lo que tengo:"]
+    }
+  };
+  var lang = "ca", fet = null;
+  var $ = function(id){ return document.getElementById(id); };
+  var llista = function(s){ return s.split(/[,\n;]+/).map(function(x){ return x.trim(); }).filter(Boolean); };
+  var etiqueta = function(s){ return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]/g, ""); };
+
+  function munta(){
+    var t = T[lang];
+    var v = { nom: $("k-nom").value.trim(), poders: llista($("k-poders").value), armes: llista($("k-armes").value),
+              demo: $("k-demo").value.trim(), lloc: $("k-lloc").value.trim() };
+    if (!v.poders.length) { $("k-estat").textContent = t.errBuit; return; }
+    $("k-estat").textContent = "";
+    var nom = v.nom || t.senseNom;
+    var fitxa = [
+      t.cap[0] + ": " + nom,
+      v.lloc ? t.cap[1] + ": " + v.lloc : null,
+      t.cap[2] + ": " + v.poders.join(", "),
+      v.armes.length ? t.cap[3] + ": " + v.armes.join(", ") : null,
+      v.demo ? t.cap[4] + ": " + v.demo : null
+    ].filter(Boolean).join("\n");
+    var relat = (t.sap + v.poders.slice(0, 3).join(", ") + ".") +
+      (v.armes.length ? t.porta + v.armes.slice(0, 2).join(t.i) + "." : "") +
+      (v.demo ? t.demo + v.demo.replace(/\.$/, "") + "." : "");
+    var tags = ["comandomolekulon", "molekulon", "superpoders"];
+    if (v.lloc) tags.push(etiqueta(v.lloc));
+    v.poders.slice(0, 2).forEach(function(p){ var e = etiqueta(p); if (e && tags.indexOf(e) < 0) tags.push(e); });
+    var titol = "Comando Molekulon · " + nom + (v.lloc ? " · " + v.lloc : "");
+    var yt = [titol, "", fitxa, "", relat, "", t.soc + "https://molekulon.org", "",
+              tags.map(function(x){ return "#" + x; }).join(" ")].join("\n");
+    var ia = [t.ia[0], "", t.ia[1], "", t.ia[2], "", t.ia[3], fitxa].join("\n");
+    fet = { fitxa: fitxa + "\n\n" + relat, yt: yt, ia: ia };
+    $("k-fitxa").textContent = fet.fitxa;
+    $("k-yt").textContent = fet.yt;
+    $("k-ia").textContent = fet.ia;
+    $("k-sortida").hidden = false;
+    $("k-sortida").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  $("k-fer").addEventListener("click", munta);
+  document.querySelectorAll("#kit .copia").forEach(function(b){
+    b.addEventListener("click", function(){
+      if (!fet) return;
+      var pre = $(b.dataset.de);
+      var ok = function(){ b.classList.add("fet"); setTimeout(function(){ b.classList.remove("fet"); }, 1600); };
+      var marca = function(){
+        /* Si el porta-retalls no respon, el text queda seleccionat per copiar-lo
+           a mà. Un botó que no fa res i no ho diu és pitjor. */
+        var r = document.createRange(); r.selectNodeContents(pre);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      };
+      try { navigator.clipboard.writeText(pre.textContent).then(ok, marca); } catch (e) { marca(); }
+    });
+  });
+  document.querySelectorAll("#kit [data-llengua]").forEach(function(b){
+    b.addEventListener("click", function(){
+      lang = b.dataset.llengua;
+      document.querySelectorAll("#kit [data-llengua]").forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); });
+      $("k-fer").textContent = T[lang].fer;
+      if (fet) munta();
+    });
+  });
+})();
+`;
+
+const kit = () => `
+<header class="hero">
+<div class="hero-inner">
+<span class="tag">El kit del Comando</span>
+<h1>Fes-te <em>el personatge</em></h1>
+<p class="sub">Quatre preguntes i surt la teva fitxa, amb el títol i les etiquetes del vídeo ja
+escrits. <strong>No cal compte de res</strong>: tot passa en aquesta pàgina i no s'envia enlloc.</p>
+</div>
+</header>
+<div class="wrap">
+<section class="box kit" id="kit">
+<div class="llengua" role="group" aria-label="Llengua de la fitxa">
+<button type="button" data-llengua="ca" aria-pressed="true">CAT</button>
+<button type="button" data-llengua="es" aria-pressed="false">CAST</button>
+</div>
+<div class="q"><label for="k-nom"><b>1</b>Qui ets, al Comando?</label>
+<p class="ajuda">El teu <strong>nom de guerra</strong>, no el teu nom. Si encara no en tens, deixa-ho buit: la IA te'n proposarà tres.</p>
+<input type="text" id="k-nom" autocomplete="off"></div>
+<div class="q"><label for="k-poders"><b>2</b>Quins superpoders tens?</label>
+<p class="ajuda">El que saps fer i podries ensenyar o donar en hores. Fins a cinc, separats per comes. No cal que soni important.</p>
+<textarea id="k-poders"></textarea></div>
+<div class="q"><label for="k-armes"><b>3</b>I quines superarmes?</label>
+<p class="ajuda">El que tens i no fas servir cada dia, i que algú altre podria fer servir. Una escala, una càmera, un local, un trepant.</p>
+<textarea id="k-armes"></textarea></div>
+<div class="q"><label for="k-demo"><b>4</b>Què ensenyaràs a la demo?</label>
+<p class="ajuda">Els deu segons del vídeo on es veu el superpoder funcionant. No ho expliquis: fes-ho.</p>
+<input type="text" id="k-demo" autocomplete="off"></div>
+<div class="q"><label for="k-lloc"><b>·</b>D'on ets?</label>
+<p class="ajuda">Població o comarca, perquè et trobin a prop. Si no ho vols dir, deixa-ho buit.</p>
+<input type="text" id="k-lloc" autocomplete="off"></div>
+<p class="exemple"><strong>Exemple</strong>: Reciclator · soldar, desmuntar electrodomèstics, veure què es pot
+arreglar · un taller amb torn i soldador, una furgoneta · munta una llanterna amb una ampolla i un carregador vell.</p>
+<button type="button" class="fer" id="k-fer">Munta la meva fitxa</button>
+<p class="estat" id="k-estat" role="status" aria-live="polite"></p>
+
+<div id="k-sortida" hidden>
+<div class="bloc"><h3><span>La teva fitxa</span><button type="button" class="copia" data-de="k-fitxa">Copia</button></h3>
+<pre id="k-fitxa"></pre></div>
+<div class="bloc"><h3><span>Per al vídeo de YouTube</span><button type="button" class="copia" data-de="k-yt">Copia</button></h3>
+<p class="ajuda">Títol, descripció i etiquetes. <strong>L'etiqueta és el que fa que et trobin</strong>, i el vídeo ha de ser públic.</p>
+<pre id="k-yt"></pre></div>
+<div class="bloc"><h3><span>Vols que te l'escrigui una IA?</span><button type="button" class="copia" data-de="k-ia">Copia</button></h3>
+<p class="ajuda">Copia això i enganxa-ho al xat que facis servir (Claude o qualsevol altre). Et tornarà tres noms de
+guerra i el relat amb el to del Comando. La IA la posa el teu compte: el projecte no paga res i aquí no es guarda res.</p>
+<pre id="k-ia"></pre></div>
+<p class="lead">I ara, grava el vídeo i penja'l amb aquest títol i aquestes etiquetes: <strong>no et reclutem, et
+trobem</strong>. L'alta al directori de cromos encara no és oberta; quan ho sigui, aquesta fitxa és el que s'hi enganxa.</p>
+</div>
+</section>
+
+<section class="box">
+<h3>Les regles, abans que les preguntis</h3>
+<ul class="lead">
+<li><strong>Identitat secreta.</strong> Al Comando hi surt el personatge, no la persona: ni nom, ni cognoms, ni edat, ni manera de contactar-te.</li>
+<li><strong>El vídeo pot ser amb màscara</strong>, de disfressa, de mans o en off. El que ha de sortir és la demo, no la teva cara.</li>
+<li><strong>Pseudònim no vol dir anònim.</strong> Qui et conegui et reconeixerà per la veu o pel taller. Si vols el secret de debò, penja'l des d'un canal a nom del personatge.</li>
+<li><strong>Menors no.</strong> Això és per a persones adultes. A l'aula l'exercici es fa sense penjar res.</li>
+</ul>
+<div class="acts"><a href="/historia#com-es-penja">Com es penja el vídeo</a><a href="/personatges">Mira els ${NUM.herois} cromos</a></div>
+</section>
+</div>
+<script>${KIT_JS}</script>`;
+
 /* ══ EL SITEMAP ══════════════════════════════════════════════════════════════ */
 const sitemap = () => `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${PAGINES.filter(p => p.menu !== false).map(p => `<url><loc>${url(p.f)}</loc></url>`).join('\n')}
+${PAGINES.filter(p => p.menu !== false || p.mapa).map(p => `<url><loc>${url(p.f)}</loc></url>`).join('\n')}
 </urlset>
 `;
 
 /* ══ ESCRIURE ════════════════════════════════════════════════════════════════ */
-const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic };
+const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic, 'kit.html': kit };
 const sortida = () => {
   const l = PAGINES.map(p => [p.f, pagina(p, COSSOS[p.f]().trim())]);
   l.push(['sitemap.xml', sitemap()]);

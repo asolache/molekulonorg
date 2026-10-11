@@ -103,15 +103,18 @@ Qui continuï això s'hi trobarà i val més saber per què hi són:
 
 ## 4 · El kit narratiu
 
-- **Adreça**: https://claude.ai/artifact/13VhvsbsTQhgauoxMDfRY3
-- És un artefacte de Claude, **fora d'aquest repositori**. La landing hi enllaça
-  per la constant `KIT` de `tools/build.js`.
-- **La IA la posa qui l'obre, des del seu compte.** El projecte no paga res per
-  cada personatge que es crea: era la condició de l'encàrrec.
-- **Funciona sense IA**: qui no tingui compte de Claude munta la fitxa igual amb
-  el que ha escrit.
-- ⚠️ **Està publicat en privat.** Mentre no es comparteixi («qualsevol amb
-  l'enllaç»), el botó principal de la landing porta a una porta tancada.
+- **Adreça**: https://molekulon.org/kit, generat per `tools/build.js` com les
+  altres pàgines (funció `kit`). La constant `KIT` hi apunta.
+- **Per què a casa i no en un artefacte**: el primer kit era un artefacte de
+  Claude (https://claude.ai/artifact/13VhvsbsTQhgauoxMDfRY3), publicat en
+  privat. Un artefacte privat només l'obre qui el va fer, i qui no té compte de
+  Claude no hi entra ni compartint-lo. Era la porta principal de la landing i
+  estava tancada (2026-10-11).
+- **La IA la posa qui l'obre, des del seu compte**: la pàgina munta la fitxa
+  sense IA i prepara un text per enganxar a qualsevol xat. El projecte no paga
+  res, no hi ha servidor i no surt res de la pàgina.
+- L'artefacte segueix existint i no l'enllaça res. Si es vol la crida directa
+  a Claude, s'ha de compartir i provar abans de tornar-lo a enllaçar.
 
 ---
 
@@ -166,10 +169,7 @@ Les cinc que frenen feina, amb el motiu:
 
 **Encara obert:**
 
-- ⚠️ **El kit segueix publicat en privat.** Comprovat: només el veu el seu
-  propietari. Els dos botons de la landing porten a una porta tancada fins que
-  l'autor el comparteixi («qualsevol amb l'enllaç», al menú Compartir).
-- **La crida real a Claude del kit** es prova un cop compartit.
+- El kit privat ja no és un problema: ara viu a `/kit` (vegeu §4).
 - **Els enllaços d'Amazon i de SoundCloud** no s'han pogut obrir: els dos llocs
   no deixen que una eina automàtica els llegeixi. Cal un clic de persona.
 
