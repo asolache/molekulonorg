@@ -118,6 +118,39 @@ Qui continuï això s'hi trobarà i val més saber per què hi són:
 
 ---
 
+## 4bis · El cromo i la col·lecció viva (2026-10-11)
+
+- **El kit pinta el cromo.** Mateix dibuix que la Fàbrica de Superherois
+  (teamtowershuma `SOS/escola.html`), crescut per a adults: nom, lloc,
+  superpoders, superarmes i antifaç. Es baixa en PNG. El codi és `CROMO_JS` a
+  `tools/build.js`, compartit pel kit i la col·lecció.
+- **La base de dades és la del SOS**: Supabase, projecte *Teamtowershuma*
+  (`grkgrceioxktmbwdhvmm`), el mateix de `/SOS/online`. Taula `comando_cromos`,
+  tancada; s'hi entra només per `envia_cromo`, `directori_cromos` i
+  `el_meu_cromo`. Tot és a `sql/001_comando_cromos.sql`, aplicat i provat.
+- **Sense comptes ni correus.** El primer enviament d'un nick crea una clau
+  d'edició al navegador; amb ella es canvia, es mira l'estat o es retira.
+  Aquí només se'n guarda el resum.
+- **Aprovació mixta** (decisió de l'autor): el primer cromo de cada nick
+  l'aprova l'autor; els canvis d'un cromo aprovat surten sols. Un de retirat o
+  rebutjat torna a passar per l'autor.
+- **Moderar**: a **molekulon.org/modera** amb la clau de moderador (aprova,
+  rebutja amb nota o retira en un clic). També es pot fer a
+  Supabase › Table Editor › `comando_cromos`, canviant `estat` de
+  `pendent` a `aprovat` (o `rebutjat`, i si cal una `nota` que la persona veu
+  amb «Mira com està»). Surt a `/personatges`, darrere dels catorze del còmic,
+  a l'instant i sense desplegar. **Una sola llista**, decisió de l'autor.
+- **El pont amb el SOS**: el kit demana un `did:sos:…` opcional. Si l'última
+  fitxa d'aquell `did` a `online_fitxes` porta el mateix @nick, el cromo surt
+  amb la marca «comprovat al SOS».
+- **Un sol flux al kit**: el cromo i els textos del vídeo i de la IA es refan
+  a cada tecla, i l'única acció és enviar-lo. El dibuix (`CROMO_JS`) és el mateix
+  al kit i a la col·lecció.
+- **Noms reservats**: els catorze canònics i els nicks dels fundadors del SOS,
+  a la taula `comando_noms_reservats`.
+- **L'artefacte de Claude** (ara públic) segueix existint amb la IA dins; la
+  casa del cromo i de l'enviament és `/kit`, perquè funciona sense compte.
+
 ## 5 · El que espera una decisió de l'autor
 
 Les cinc que frenen feina, amb el motiu:

@@ -48,11 +48,12 @@ node tools/build.js --check && node tools/check.js
 |---|---|
 | `index.html` | La portada: la tesi, per a què serveix, els sis eixos i què encara viu al SOS |
 | `historia.html` | **La landing de la història.** De la frase que ho va encendre tot fins a les quatre preguntes |
-| `personatges.html` | Els catorze cromos: cara, poder, superarma i què vol dir cadascun en un equip |
+| `personatges.html` | **La col·lecció**: els catorze del còmic i, darrere, els de la gent, llegits en directe de la base de dades |
 | `peli.html` | El guió de la intro, pla a pla, amb què està filmat i què no |
 | `musica.html` | Els capítols, els videoclips, els temes i els directes |
 | `comic.html` | El lector de la mostra: pàgina a pàgina, cada una amb la seva cançó |
-| `kit.html` | **El kit**: fes-te el personatge, sense compte i sense que s'enviï res |
+| `kit.html` | **El kit**: fes-te el personatge i el cromo, sense compte, i envia'l a la col·lecció si vols |
+| `sql/001_comando_cromos.sql` | La taula dels cromos al Supabase del SOS, i les tres funcions per on s'hi entra |
 | `tools/build.js` | El generador. **Aquí és on s'edita el que diu la web** |
 | `tools/sync.js` | Baixa les dades de dalt i avisa si la còpia s'ha quedat vella |
 | `tools/check.js` | Deu regles sobre el que cap generador veurà mai |
@@ -64,8 +65,11 @@ node tools/build.js --check && node tools/check.js
 
 ## El kit narratiu
 
-`/kit`: les quatre preguntes, la fitxa, el text del vídeo amb les etiquetes i un
-text per enganxar a qualsevol xat si es vol que l'escrigui una IA. **No cal
+`/kit`: les quatre preguntes, com es veu el personatge, **el cromo pintat al
+moment** (el dibuix de la Fàbrica de Superherois del SOS, per a adults i amb
+antifaç), la fitxa, el text del vídeo i un text per enganxar a qualsevol xat si
+es vol que l'escrigui una IA. Des d'allà mateix s'envia a `/personatges`, que
+el llegeix en directe del Supabase del SOS (vegeu `knowledge/traspas.md` §4bis). **No cal
 compte de res**, i el projecte no paga res perquè la IA la posa qui escriu. Es
 genera a `tools/build.js` (funció `kit`) com les altres pàgines.
 
