@@ -82,6 +82,11 @@ const PAGINES = [
   { f: 'kit.html', nav: 'Fes-te el personatge', t: 'Fes-te el personatge',
     tit: 'Fes-te el personatge · el kit del Comando Molekulon',
     desc: 'Quatre preguntes i surt el teu cromo del Comando, amb la fitxa i el text del vídeo ja escrits. Sense compte de res, i si vols, l\'envies a la col·lecció.' },
+  /* Com es fa servir la IA: fora del menú (no és el relat) però al peu de totes
+     les pàgines i al sitemap. La regla és la veda 167 de TeamTowers. */
+  { f: 'ia.html', nav: 'La IA', t: 'Com fem servir la IA', menu: false, mapa: true,
+    tit: 'Com fem servir la IA · Comando Molekulon',
+    desc: 'Què fa la IA en aquesta web i què fem nosaltres, el que es pot comprovar a l\'historial i el compromís de gastar el mínim per token.' },
   /* La moderació dels cromos: ni menú, ni sitemap, ni cercadors. */
   { f: 'modera.html', nav: 'Moderar', t: 'Moderar els cromos', menu: false, noindex: true,
     tit: 'Moderar els cromos · Comando Molekulon',
@@ -446,7 +451,7 @@ const peu = `<footer>
 <div class="f">
 <span>Comando Molekulon · un projecte de <a href="${SOS}" rel="noopener">TeamTowers Humà</a></span>
 <span>L'eina que hi ha a sota és el <a href="${SOS}/sos" rel="noopener">SOS</a>, i és lliure</span>
-<span class="mut">Aquesta web es genera de les dades, no s'escriu a mà.</span>
+<span class="mut">Aquesta web es genera de les dades, no s'escriu a mà, i es fa amb IA a la vista: <a href="/ia">com</a>.</span>
 </div>
 </footer>`;
 
@@ -477,7 +482,7 @@ const pagina = (p, cos) => `<!DOCTYPE html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${jsonld(p)}</script>
 <style>
-${CSS}${p.f === 'kit.html' ? KIT_CSS : ''}${p.f === 'personatges.html' ? GENT_CSS : ''}${p.f === 'modera.html' ? MODERA_CSS : ''}
+${CSS}${p.f === 'kit.html' ? KIT_CSS : ''}${p.f === 'personatges.html' ? GENT_CSS : ''}${p.f === 'modera.html' ? MODERA_CSS : ''}${p.f === 'ia.html' ? IA_CSS : ''}
 </style>
 </head>
 <body>
@@ -1848,6 +1853,17 @@ const GENT_JS = String.raw`
    sense una clau que quadri amb `comando_moderadors`, i aquella taula no la pot
    llegir ningú des de fora. Per afegir algú que moderi, s'hi insereix el resum
    SHA-256 de la seva clau. */
+/* Les classes del giny de la matriu (js/ia-a-la-vista.js). */
+const IA_CSS = `
+.iav-cifra{font-size:clamp(1.6rem,5vw,2.2rem);font-weight:700}
+.iav-nota{color:var(--light);font-size:.85rem}
+.iav-llista{list-style:none;margin-top:.6rem;padding:0}
+.iav-llista li{display:flex;gap:.6rem;align-items:baseline;border-top:1px solid var(--border);padding:.45rem 0;font-size:.85rem}
+.iav-llista a{flex:1;min-width:0;overflow-wrap:anywhere}
+.iav-tag{flex:none;font-size:.72rem;padding:1px 8px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+.iav-tag.iav-ia{border-color:var(--purple);color:var(--text)}
+`;
+
 const MODERA_CSS = `
 .mod .clau{display:flex;gap:.5rem;flex-wrap:wrap}
 .mod input,.mod textarea{font:inherit;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:.5rem .7rem}
@@ -1973,6 +1989,38 @@ const modera = () => `
 CROMO.API.url = ${JSON.stringify(SUPA.url)}; CROMO.API.key = ${JSON.stringify(SUPA.key)};
 ${MODERA_JS}</script>`;
 
+/* ══ LA IA ═══════════════════════════════════════════════════════════════════
+   Veda 167 de TeamTowers: el que fa la IA es mostra llegint-lo de l'historial.
+   El giny és el de la matriu i s'hi enllaça, no es copia (veda 71). El que hi
+   ha dins el div és el recanvi si GitHub no respon. */
+const REPO = 'asolache/molekulonorg';
+const ia = () => `
+<div class="wrap">
+<section class="box proposit">
+<h2>Com fem servir la IA</h2>
+<p class="lead">Aquesta web es fa amb Claude, i ho diem. El compromís és de l'Àlvar Solache:
+<b>cobri el que cobri per token, el codex sempre serà el més intel·ligent possible al menor cost energètic.</b></p>
+</section>
+<section class="box">
+<h3>Què fa la IA i què fem nosaltres</h3>
+<p class="lead">Claude escriu el codi i els textos que se li demanen, i proposa cada canvi en un PR que porta la seva firma.
+Abans d'escriure llegeix el codex de <a href="${SOS}/SOS/vedes.html" rel="noopener">TeamTowers</a>, per no repetir errors ja pagats.
+Nosaltres demanem, decidim i acceptem: res no es publica sense que algú ho fusioni. El relat, els personatges i la música són de la gent del Comando.</p>
+</section>
+<section class="box">
+<h3>El que es pot comprovar</h3>
+<p class="lead">No ho escrivim a mà: surt de l'historial públic cada cop que obres la pàgina. Un commit fet amb Claude porta la línia <code>Co-Authored-By: Claude</code>.</p>
+<div class="iav" data-ia-a-la-vista="${REPO}"><p class="mut">L'historial és a <a href="https://github.com/${REPO}/commits/main" rel="noopener">github.com/${REPO}</a>.</p></div>
+</section>
+<section class="box">
+<h3>El que costa</h3>
+<p class="lead">El preu per token el posa qui ven el model; el que es gasta ho decidim nosaltres. Cada tasca va amb el model més petit que la fa bé.
+El cost real, amb la font i la data del preu, és a <a href="${SOS}/conecta/#ia" rel="noopener">teamtowershuma.com/conecta</a>, i l'han de pagar els ingressos recurrents dels serveis.
+L'energia no la mesurem directament: els tokens en són l'aproximació, i ho diem així.</p>
+</section>
+</div>
+<script src="${SOS}/js/ia-a-la-vista.js" defer></script>`;
+
 /* ══ EL SITEMAP ══════════════════════════════════════════════════════════════ */
 const sitemap = () => `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -1981,7 +2029,7 @@ ${PAGINES.filter(p => p.menu !== false || p.mapa).map(p => `<url><loc>${url(p.f)
 `;
 
 /* ══ ESCRIURE ════════════════════════════════════════════════════════════════ */
-const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic, 'kit.html': kit, 'modera.html': modera };
+const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic, 'kit.html': kit, 'modera.html': modera, 'ia.html': ia };
 const sortida = () => {
   const l = PAGINES.map(p => [p.f, pagina(p, COSSOS[p.f]().trim())]);
   l.push(['sitemap.xml', sitemap()]);
