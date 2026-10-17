@@ -4,7 +4,7 @@
 --
 -- Viu al mateix Supabase que el directori del SOS (`online_fitxes`, projecte
 -- Teamtowershuma) i amb la mateixa clau publicable: una sola infraestructura,
--- dues taules amb feines diferents (knowledge/alta-i-directori.md §3).
+-- dues taules amb feines diferents (saber/alta-i-directori.md §3).
 --
 -- La diferència amb `online_fitxes` és qui dona fe. Allà, la firma de la
 -- persona. Aquí, **l'autor de l'obra**: un cromo no surt al directori fins que
