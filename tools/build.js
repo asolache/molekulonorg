@@ -1751,8 +1751,8 @@ ${KIT_JS}</script>`;
    des de la web, que és l'opció C del mateix estudi, i la infraestructura ja hi
    era. El que es manté de l'estudi és el que importava: aprovació a mà,
    personatges secrets, cap dada personal, i el pont amb el SOS per un `did`
-   opcional (§3) que dona la marca «comprovat al SOS» quan la fitxa del SOS
-   d'aquell `did` porta el mateix @nick.
+   opcional (§3) que dona la marca «comprovat al SOS» quan l'última fitxa amb
+   firma vàlida d'aquell `did` porta el mateix @nick (vegeu marcaSOS).
 
    La clau és **publicable per disseny**. El que protegeix les dades és que la
    taula és tancada i només s'hi entra per tres funcions (vegeu el SQL). */
@@ -1793,7 +1793,7 @@ const GENT_JS = String.raw`
     var cos = el("div", "cos");
     cos.appendChild(el("h3", "", d.nom));
     var rol = el("p", "rol", "@" + c.nick + (d.lloc ? " · " + d.lloc : ""));
-    if (f.sos === true) { var s = el("span", "sos", "comprovat al SOS"); s.title = "La seva fitxa firmada al SOS porta aquest mateix @nick"; rol.appendChild(s); }
+    if (c.sos === true) { var s = el("span", "sos", "comprovat al SOS"); s.title = "La seva última fitxa al SOS, amb la firma comprovada en aquest navegador, porta aquest mateix @nick"; rol.appendChild(s); }
     cos.appendChild(rol);
     var dl = el("dl");
     var fila = function(k, v){ if (!v) return; dl.appendChild(el("dt", "", k)); dl.appendChild(el("dd", "", v)); };
@@ -1804,7 +1804,7 @@ const GENT_JS = String.raw`
     if (f.relat) cos.appendChild(el("p", "lletra", str(f.relat, 300)));
     var v = CROMO.video(f.video), enl = [];
     if (v) enl.push(["Mira la demo ↗", v]);
-    if (f.sos === true) enl.push(["El directori del SOS ↗", "https://teamtowershuma.com/SOS/online.html"]);
+    if (c.sos === true) enl.push(["El directori del SOS ↗", "https://teamtowershuma.com/SOS/online.html"]);
     if (enl.length) {
       var p = el("p", "rol");
       enl.forEach(function(e, i){
@@ -1832,10 +1832,70 @@ const GENT_JS = String.raw`
   $("q").addEventListener("input", compta);
   refa();
 
+  /* ── La marca «comprovat al SOS», comprovada de debò ──────────────────────
+     La taula del SOS (online_fitxes) accepta files de qualsevol: la integritat
+     no la dona el permís, la dona la firma, i Postgres no la pot comprovar. Per
+     això la marca no surt de la base de dades sinó d'aquí: per cada did es
+     llegeixen les seves fitxes i es pren **la més nova amb firma vàlida**, com
+     fa /SOS/online. Abans es prenia l'última fila, i qualsevol podia posar el
+     did d'una altra persona i el seu nick, i sortir «comprovat» (veda 61).
+
+     «canon», «didDe» i «valida» són còpia literal de «_canon», «_didFromJwk» i
+     «fitxaValida» de teamtowershuma SOS/online.html. Si divergissin, cap firma
+     del SOS quadraria aquí: si allà canvien, es canvien aquí. */
+  var te = new TextEncoder();
+  var b64u = function(b){ var s = "", u = new Uint8Array(b); for (var i = 0; i < u.length; i++) s += String.fromCharCode(u[i]); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
+  var unb64u = function(t){ var s = (t + "===".slice((t.length + 3) % 4)).replace(/-/g, "+").replace(/_/g, "/"), bin = atob(s), u = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; };
+  function canon(v){
+    if (v === null || typeof v !== "object") return JSON.stringify(v);
+    if (Array.isArray(v)) return "[" + v.map(canon).join(",") + "]";
+    var k = Object.keys(v).filter(function(x){ return x !== "sig" && x !== "signer" && x !== "sigTs" && x !== "hash" && v[x] !== undefined; }).sort();
+    return "{" + k.map(function(x){ return JSON.stringify(x) + ":" + canon(v[x]); }).join(",") + "}";
+  }
+  function didDe(alg, jwk){
+    return crypto.subtle.digest("SHA-256", te.encode(canon(jwk))).then(function(h){ return "did:sos:" + alg.toLowerCase() + ":" + b64u(h).slice(0, 32); });
+  }
+  function valida(f){
+    if (!f || typeof f !== "object" || !f.sig || !f.signer || !f.signer.pubJwk || !f.signer.alg) return Promise.resolve(false);
+    if (!f.did || f.signer.did !== f.did) return Promise.resolve(false);
+    var alg = f.signer.alg, ed = alg === "Ed25519";
+    return didDe(alg, f.signer.pubJwk).then(function(d){
+      if (d !== f.did) return false;
+      return crypto.subtle.importKey("jwk", f.signer.pubJwk, ed ? { name: "Ed25519" } : { name: "ECDSA", namedCurve: "P-256" }, true, ["verify"])
+        .then(function(k){ return crypto.subtle.verify(ed ? { name: "Ed25519" } : { name: "ECDSA", hash: "SHA-256" }, k, unb64u(f.sig), te.encode(canon(f))); });
+    }).catch(function(){ return false; });
+  }
+  /* La primera vàlida de la llista, que ja ve de la més nova a la més vella. */
+  function primeraValida(llista){
+    return llista.reduce(function(p, f){ return p.then(function(t){ return t || valida(f).then(function(ok){ return ok ? f : null; }); }); }, Promise.resolve(null));
+  }
+  function marcaSOS(files){
+    var dids = files.map(function(c){ var d = c.fitxa && c.fitxa.did; return typeof d === "string" && /^did:sos:[a-z0-9-]{4,16}:[A-Za-z0-9_-]{16,64}$/.test(d) ? d : null; })
+      .filter(function(d, i, a){ return d && a.indexOf(d) === i; });
+    if (!dids.length || !(window.crypto && crypto.subtle)) return Promise.resolve(files);
+    return fetch(CROMO.API.url + "/rest/v1/online_fitxes?select=did,fitxa&order=creat.desc&limit=500&did=in.(" + dids.map(encodeURIComponent).join(",") + ")", {
+      headers: { apikey: CROMO.API.key, Authorization: "Bearer " + CROMO.API.key }
+    }).then(function(r){ return r.ok ? r.json() : []; }).then(function(rows){
+      var per = {};
+      (Array.isArray(rows) ? rows : []).forEach(function(r){ (per[r.did] = per[r.did] || []).push(r.fitxa); });
+      return Promise.all(dids.map(function(d){ return primeraValida(per[d] || []).then(function(f){ return [d, f]; }); }));
+    }).then(function(parells){
+      var bona = {};
+      parells.forEach(function(p){ bona[p[0]] = p[1]; });
+      files.forEach(function(c){
+        var f = bona[c.fitxa && c.fitxa.did];
+        c.sos = !!f && f.nick === c.nick && f.retirada !== true;
+      });
+      return files;
+    }, function(){ return files; });
+  }
+
   CROMO.rpc("directori_cromos", {}).then(function(files){
     files = Array.isArray(files) ? files : [];
     $("gent-estat").textContent = files.length ? ""
       : "Encara no hi ha cap cromo de la gent aprovat. El primer pot ser el teu.";
+    return marcaSOS(files);
+  }).then(function(files){
     files.forEach(function(c){ graella.appendChild(targeta(c)); });
     gent = files.length;
     refa();
@@ -1937,18 +1997,26 @@ const MODERA_JS = String.raw`
     if (!vis.length) l.appendChild(el("p", "lead", "Res en aquesta llista."));
   }
 
+  /* La porta no peta amb una clau dolenta: ho diu, perquè l'intent quedi
+     anotat (sql/002_auditoria_cervell.sql). */
+  var PORTA = {
+    no_moderador: "Aquesta clau no és de moderador.",
+    massa_intents: "Massa intents amb una clau dolenta: la moderació es tanca uns minuts. Mentrestant, es pot fer des de Supabase."
+  };
   function carrega(){
     if (!clau()) { estat("Cal la clau de moderador."); return; }
     estat("Carregant…");
     CROMO.rpc("modera_llista", { p_clau: clau() }).then(function(r){
+      if (r && r.error) { estat(PORTA[r.error] || "No s'ha pogut carregar (" + r.error + ")."); return; }
       try { localStorage.setItem(CLAU, clau()); } catch (e) {}
       files = Array.isArray(r) ? r : []; estat(""); $("m-tauler").hidden = false; pinta();
-    }, function(e){ estat(e.codi === "no_moderador" ? "Aquesta clau no és de moderador." : "No s'ha pogut carregar (" + e.message + ")."); });
+    }, function(e){ estat(PORTA[e.codi] || "No s'ha pogut carregar (" + e.message + ")."); });
   }
 
   function decideix(c, nou, nota){
     estat("Desant…");
-    CROMO.rpc("modera_cromo", { p_clau: clau(), p_id: c.id, p_estat: nou, p_nota: nota || null }).then(function(){
+    CROMO.rpc("modera_cromo", { p_clau: clau(), p_id: c.id, p_estat: nou, p_nota: nota || null }).then(function(r){
+      if (r && r.error) { estat(PORTA[r.error] || "No s'ha pogut desar (" + r.error + ")."); return; }
       c.estat = nou; c.nota = nota; estat("@" + c.nick + " · " + nou); pinta();
     }, function(e){ estat("No s'ha pogut desar (" + e.message + ")."); });
   }

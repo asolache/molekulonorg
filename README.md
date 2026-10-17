@@ -39,8 +39,17 @@ node tools/check.js      # la guarda: canonical, enllaços, xifres, noms
 I abans d'empènyer, el que corre el CI:
 
 ```sh
-node tools/build.js --check && node tools/check.js
+node tools/build.js --check && node tools/check.js && node tools/prova-firma.js
+node guardas/cervell.js --check   # el cervell: el mapa i el contracte diuen la veritat
 ```
+
+## El cervell
+
+El projecte és fill de [TeamTowers](https://github.com/asolache/teamtowershuma):
+hereta 59 vedes del seu codex (`saber/vedes-heretades.md`) i hi afegeix les
+pròpies (`saber/codex.md`). Es posa al dia amb
+`node ../teamtowershuma/SOS/tools/cervell.js --actualitza .`, i el que s'aprèn
+aquí —vedes i `saber/productes.md`— puja a la matriu amb `--recull`.
 
 ## Què hi ha
 
@@ -53,15 +62,20 @@ node tools/build.js --check && node tools/check.js
 | `musica.html` | Els capítols, els videoclips, els temes i els directes |
 | `comic.html` | El lector de la mostra: pàgina a pàgina, cada una amb la seva cançó |
 | `kit.html` | **El kit**: fes-te el personatge i el cromo, sense compte, i envia'l a la col·lecció si vols |
-| `sql/001_comando_cromos.sql` | La taula dels cromos al Supabase del SOS, i les tres funcions per on s'hi entra |
+| `ia.html` | **Com fem servir la IA**: el compromís i el que es pot comprovar a l'historial |
+| `modera.html` | La moderació dels cromos. No s'enllaça, porta `noindex` i demana la clau de moderador |
+| `sql/` | La base de dades dels cromos al Supabase del SOS, un fitxer per canvi |
 | `tools/build.js` | El generador. **Aquí és on s'edita el que diu la web** |
 | `tools/sync.js` | Baixa les dades de dalt i avisa si la còpia s'ha quedat vella |
 | `tools/check.js` | Deu regles sobre el que cap generador veurà mai |
+| `tools/prova-firma.js` | La prova que la marca «comprovat al SOS» només surt amb una firma bona |
 | `data/comando.json` | Les dades del Comando. Importades, **mai editades aquí** |
 | `data/mostra.json` | Quines pàgines del còmic es publiquen i quin tema sona a cada una. **Sí** que s'edita |
 | `data/cromos.json` | Quin retrat fa de cara de qui. **Sí** que s'edita |
-| `knowledge/alta-i-directori.md` | L'estudi de com entra la gent: cromo primer, SOS després |
-| `knowledge/traspas.md` | **Comença per aquí.** Tot el que s'ha fet, les regles de la casa i per on es continua |
+| `CLAUDE.md` i `saber/` | **Comença per aquí.** El cervell: mapa, codex, contracte de la IA, backlog i productes |
+| `saber/traspas.md` | Tot el que s'ha fet fins al cervell, i el canal de dades |
+| `saber/alta-i-directori.md` | L'estudi de com entra la gent: cromo primer, SOS després |
+| `guardas/` i `herramientas/` | L'eina del cervell i les eines heretades de TeamTowers. No s'editen aquí |
 
 ## El kit narratiu
 
@@ -69,7 +83,7 @@ node tools/build.js --check && node tools/check.js
 moment** (el dibuix de la Fàbrica de Superherois del SOS, per a adults i amb
 antifaç), la fitxa, el text del vídeo i un text per enganxar a qualsevol xat si
 es vol que l'escrigui una IA. Des d'allà mateix s'envia a `/personatges`, que
-el llegeix en directe del Supabase del SOS (vegeu `knowledge/traspas.md` §4bis). **No cal
+el llegeix en directe del Supabase del SOS (vegeu `saber/traspas.md` §4bis). **No cal
 compte de res**, i el projecte no paga res perquè la IA la posa qui escriu. Es
 genera a `tools/build.js` (funció `kit`) com les altres pàgines.
 
@@ -79,7 +93,7 @@ Al dia d'avui, i escrit aquí perquè qui obri el repositori no ho hagi de dedui
 
 | | |
 |---|---|
-| **Pàgines** | 7, totes generades i amb les deu guardes en verd |
+| **Pàgines** | 9, totes generades i amb les guardes en verd |
 | **Còmic 1** | Portada i 7 pàgines publicades, amb el seu tema |
 | **Còmic 2** | Portada publicada i enllaç de compra. **Cap pàgina de mostra encara** |
 | **Cromos** | 11 cares de 14. Falten El Aviador, Pigmentón i Fraktalman |
@@ -87,17 +101,7 @@ Al dia d'avui, i escrit aquí perquè qui obri el repositori no ho hagi de dedui
 
 ### El que espera una decisió de l'autor
 
-1. **Les adreces canòniques de SoundCloud** dels dos temes. Les que hi ha són
-   enllaços curts (`on.soundcloud.com`), i el reproductor no els resol: mentre
-   siguin curts, la pàgina enllaça en comptes d'incrustar.
-2. **El repartiment de cançons** de les pàgines 1 a 6 del primer còmic. Ara
-   porten una proposta, i el lector ho diu: «(proposta, a confirmar)».
-3. **Si es publiquen les pàgines 8 i 9** del primer còmic, llegides i no
-   publicades.
-4. **Dos cromos sense confirmar**: Electroplasman i Afrodita són lectura meva de
-   la vinyeta, i la pàgina ho avisa damunt de la imatge.
-5. **Qui signa**: avís legal, contacte i llicència. Sense això no s'obre el
-   directori d'altes (vegeu l'estudi).
+Cinc decisions frenen feina. Són a `saber/backlog.md`, que és l'única llista.
 
 ## Desplegament
 
