@@ -1,0 +1,21 @@
+{
+  "nom": "Molekulon.org",
+  "idioma": "ca",
+  "eina": "guardas/cervell.js",
+  "taxonomia": "saber/taxonomia.md",
+  "mapa": "saber/MAPA.md",
+  "pagina": "saber/cervell.html",
+  "lectura": [
+    { "path": "saber/MAPA.md", "diu": "què hi ha" },
+    { "path": "saber/codex.md", "diu": "la llei" },
+    { "path": "saber/per-a-la-ia.md", "diu": "el contracte de feina" },
+    { "path": "saber/taxonomia.md", "diu": "on va cada cosa" },
+    { "path": "saber/traspas.md", "diu": "tot el que s'ha fet i per on es continua" }
+  ],
+  "backlog": "saber/backlog.md",
+  "comunicacio": "CLAUDE.md",
+  "noHiEs": ["misc/", "temp/", "package.json"],
+  "codex": "saber/codex.md",
+  "heretat": "saber/vedes-heretades.md",
+  "productes": "saber/productes.md"
+}

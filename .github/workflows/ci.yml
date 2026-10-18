@@ -24,3 +24,13 @@ jobs:
       # buides, els catorze noms i les xifres.
       - name: La web compleix el que promet
         run: node tools/check.js
+
+      # La marca «comprovat al SOS» la decideix el navegador amb la firma.
+      # Aquesta prova la fa petar amb fitxes falses (veda 3).
+      - name: La marca només surt amb una firma bona
+        run: node tools/prova-firma.js
+
+      # El cervell: cap carpeta sense cara, cap mapa vell, cap cita a un fitxer
+      # que no hi és (veda 161 heretada).
+      - name: El cervell diu la veritat
+        run: node guardas/cervell.js --check

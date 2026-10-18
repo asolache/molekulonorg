@@ -7,6 +7,10 @@
 >
 > El que no és aquí dins, no existeix.
 
+> **Des del 2026-10-17 el projecte té cervell**, el de TeamTowers: comença per
+> `MAPA.md`, `codex.md` i `per-a-la-ia.md`. El que queda per fer és a
+> `backlog.md`. Aquest traspàs queda com la història de com s'hi va arribar.
+
 ---
 
 ## 1 · Les tres cases, i què mana a cadascuna
@@ -32,7 +36,7 @@ molekulonorg/tools/sync.js                     ← el baixa (cada dilluns el com
         ▼
 molekulonorg/data/comando.json                 ← la còpia. MAI s'edita aquí
         ▼
-molekulonorg/tools/build.js                    ← genera les sis pàgines
+molekulonorg/tools/build.js                    ← genera les pàgines
 ```
 
 **Si cal canviar un nom d'heroi, un vídeo o un pla del guió: es canvia a dalt.**
@@ -65,7 +69,7 @@ Divuit commits a `molekulonorg`, i quatre PR a `teamtowershuma`.
 
 | PR | Què hi entra |
 |---|---|
-| **#162** | El pla de molekulon.org, i l'export `molekulon-data.json` |
+| **#162** | El pla de molekulon.org, i l'export [molekulon-data.json](https://github.com/asolache/teamtowershuma/blob/main/SOS/molekulon-data.json) |
 | **#164** | El tema de Mazinguer a la llista, i el camp `soundcloud` |
 | **#165** | «Espermatozoide soy», i l'ordre del trasllat |
 | **#166** | L'heroi passa a dir-se **Afrodita** (tercera i última volta) |
@@ -121,7 +125,7 @@ Qui continuï això s'hi trobarà i val més saber per què hi són:
 ## 4bis · El cromo i la col·lecció viva (2026-10-11)
 
 - **El kit pinta el cromo.** Mateix dibuix que la Fàbrica de Superherois
-  (teamtowershuma `SOS/escola.html`), crescut per a adults: nom, lloc,
+  (teamtowershuma [SOS/escola.html](https://github.com/asolache/teamtowershuma/blob/main/SOS/escola.html)), crescut per a adults: nom, lloc,
   superpoders, superarmes i antifaç. Es baixa en PNG. El codi és `CROMO_JS` a
   `tools/build.js`, compartit pel kit i la col·lecció.
 - **La base de dades és la del SOS**: Supabase, projecte *Teamtowershuma*
@@ -153,19 +157,8 @@ Qui continuï això s'hi trobarà i val més saber per què hi són:
 
 ## 5 · El que espera una decisió de l'autor
 
-Les cinc que frenen feina, amb el motiu:
-
-1. **Les adreces canòniques de SoundCloud** dels dos temes. Les que hi ha són
-   enllaços curts (`on.soundcloud.com`) i el reproductor no els resol: mentre
-   siguin curts, la pàgina enllaça en comptes d'incrustar. Amb l'adreça llarga,
-   sona dins de la web sense tocar res més.
-2. **El repartiment de cançons** de les pàgines 1 a 6 del primer còmic.
-3. **Si es publiquen les pàgines 8 i 9**, llegides i guardades al canon.
-4. **Electroplasman i Afrodita**: les dues identificacions de la vinyeta que
-   segueixen sent lectura meva.
-5. **Qui signa**: nom fiscal, NIF, contacte i llicència. **Sense això no s'obre
-   el directori d'altes**, perquè guardar correus de gent és guardar dades
-   personals encara que el que es publiqui siguin pseudònims.
+Viu a `backlog.md`, «El que espera una decisió de l'autor»: una sola llista, que
+el README i aquest traspàs citen i no copien (veda 71 heretada).
 
 ---
 
@@ -193,7 +186,7 @@ Les cinc que frenen feina, amb el motiu:
 **Trobat i arreglat al mateix PR que afegeix aquesta secció:**
 
 - `teamtowershuma.com/banc-temps` i `/biblioteca` donaven **404**: allà no tenen
-  adreça curta. Ara s'enllaça `/SOS/banc-temps.html` i `/SOS/biblioteca.html`,
+  adreça curta. Ara s'enllaça /SOS/banc-temps.html i /SOS/biblioteca.html,
   que sí que hi són. **El bo seria declarar-les a l'altra casa** com `/escola`.
 - El canal de YouTube era `@comando-molekulon`, que **no existeix**. El de debò
   és `@comandomolekulon`.
@@ -215,11 +208,11 @@ L'ordre és el del pla, i cada passa funciona encara que la següent no arribi:
    cal exportar-les com es va fer amb el Comando i generar-les aquí.
 3. **La Fàbrica de Superherois**, que no es pot moure fins que hi hagi contacte
    i avís legal: allà hi escriuen escoles.
-4. **El directori i l'alta**, segons `knowledge/alta-i-directori.md`.
+4. **El directori i l'alta**, segons `alta-i-directori.md`.
 5. **El joc**, l'últim: moure'l no desbloqueja res.
 
 ```sh
 node tools/sync.js        # baixa les dades de teamtowershuma
-node tools/build.js       # escriu les sis pàgines i el sitemap
+node tools/build.js       # escriu les pàgines i el sitemap
 node tools/check.js       # les deu guardes
 ```

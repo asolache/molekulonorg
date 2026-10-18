@@ -524,18 +524,26 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     if (!vis.length) l.appendChild(el("p", "lead", "Res en aquesta llista."));
   }
 
+  /* La porta no peta amb una clau dolenta: ho diu, perquè l'intent quedi
+     anotat (sql/002_auditoria_cervell.sql). */
+  var PORTA = {
+    no_moderador: "Aquesta clau no és de moderador.",
+    massa_intents: "Massa intents amb una clau dolenta: la moderació es tanca uns minuts. Mentrestant, es pot fer des de Supabase."
+  };
   function carrega(){
     if (!clau()) { estat("Cal la clau de moderador."); return; }
     estat("Carregant…");
     CROMO.rpc("modera_llista", { p_clau: clau() }).then(function(r){
+      if (r && r.error) { estat(PORTA[r.error] || "No s'ha pogut carregar (" + r.error + ")."); return; }
       try { localStorage.setItem(CLAU, clau()); } catch (e) {}
       files = Array.isArray(r) ? r : []; estat(""); $("m-tauler").hidden = false; pinta();
-    }, function(e){ estat(e.codi === "no_moderador" ? "Aquesta clau no és de moderador." : "No s'ha pogut carregar (" + e.message + ")."); });
+    }, function(e){ estat(PORTA[e.codi] || "No s'ha pogut carregar (" + e.message + ")."); });
   }
 
   function decideix(c, nou, nota){
     estat("Desant…");
-    CROMO.rpc("modera_cromo", { p_clau: clau(), p_id: c.id, p_estat: nou, p_nota: nota || null }).then(function(){
+    CROMO.rpc("modera_cromo", { p_clau: clau(), p_id: c.id, p_estat: nou, p_nota: nota || null }).then(function(r){
+      if (r && r.error) { estat(PORTA[r.error] || "No s'ha pogut desar (" + r.error + ")."); return; }
       c.estat = nou; c.nota = nota; estat("@" + c.nick + " · " + nou); pinta();
     }, function(e){ estat("No s'ha pogut desar (" + e.message + ")."); });
   }
