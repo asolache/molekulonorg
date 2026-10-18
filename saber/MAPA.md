@@ -18,7 +18,7 @@ La cosa mateixa: el que fa servir la gent. Una sola font de veritat per cada cos
 | `herramientas/` | El que el projecte hereta per treballar: l'editor del mapa, revisar-lo i treure'n la web. No s'edita aquí | 7 · 741 KB |
 | `mostra/` | Les pàgines del còmic que es publiquen al lector | 9 · 2714 KB |
 | `sql/` | La base de dades dels cromos al Supabase del SOS: un fitxer per canvi, en ordre | 2 · 20 KB |
-| `tools/` | El generador de les pàgines, la sincronia amb teamtowershuma i les seves guardes (`check.js`, `prova-firma.js`) | 4 · 141 KB |
+| `tools/` | El generador de les pàgines, la sincronia amb teamtowershuma i les seves guardes (`check.js`, `prova-firma.js`) | 5 · 147 KB |
 
 ## prova
 

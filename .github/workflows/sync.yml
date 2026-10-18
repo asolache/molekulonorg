@@ -1,7 +1,8 @@
 name: Dades del Comando
 
 # Les dades venen del repositori teamtowershuma i aquí n'hi ha una còpia. Això
-# mira un cop per setmana si la còpia s'ha quedat vella. No corre a cada empenta
+# mira un cop per setmana si la còpia s'ha quedat vella, i si el codi de la
+# firma de personatges.html fa encara el mateix que el de SOS/online.html. No corre a cada empenta
 # a posta: una guarda que depèn de la xarxa fallant un dimarts a la tarda no vol
 # dir que el codi estigui malament, i una guarda que falla per motius que no són
 # el seu s'acaba ignorant.
@@ -18,5 +19,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: La còpia d'aquí és la de dalt
+      - name: Les dades i la firma d'aquí són les de dalt
         run: node tools/sync.js --check

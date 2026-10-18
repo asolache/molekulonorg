@@ -7,13 +7,13 @@
  * que no hi és o una porta cap a `null`. Cap d'aquestes coses peta: la pàgina
  * es veu bé i el problema el troba un visitant.
  *
- * Aquestes són les set regles. Cadascuna tapa una manera concreta que això es
+ * Aquestes són les onze regles. Cadascuna tapa una manera concreta que això es
  * podria podrir en silenci.
  *
  *   node tools/check.js
  */
 'use strict';
-const { readFileSync, existsSync } = require('node:fs');
+const { readFileSync, existsSync, readdirSync } = require('node:fs');
 const { join } = require('node:path');
 const { PAGINES, DOMINI, SOS, NUM } = require('./build.js');
 
@@ -192,6 +192,27 @@ if (faltants.length) {
   else if (dups.length) bad(`el mateix heroi amb dos retrats: ${dups.join(', ')}`);
   else if (!existsSync(join(ARREL, C.font.img))) bad(`la imatge d'on surten els retrats no hi és: ${C.font.img}`);
   else ok(`${pl(C.retrats.length, 'retrat', 'retrats')} de ${D.herois.length}, tots amb fitxer i amb nom de la llista`);
+}
+
+/* ── 11 · Cap porta pública cap a claude.ai ───────────────────────────────
+   El kit va néixer com un artefacte privat de Claude, i un enllaç a un
+   artefacte porta el visitant a una pàgina que demana compte o que no és seva
+   (veda 2). Es miren tots els `.html` del lloc, no només els generats: /modera
+   i les eines també es serveixen. Dir «claude.ai» en un text sí que es pot; el
+   que no es pot és una adreça. */
+{
+  const tots = [];
+  const camina = d => { for (const e of readdirSync(d, { withFileTypes: true })) {
+    if (e.name.startsWith('.') || e.name === 'node_modules') continue;
+    const c = join(d, e.name);
+    if (e.isDirectory()) camina(c); else if (e.name.endsWith('.html')) tots.push(c);
+  } };
+  camina(ARREL);
+  const CLAUDE = /(?:https?:)?\/\/(?:[a-z0-9-]+\.)*claude\.(?:ai|site)\b[^\s"'<>)]*/gi;
+  const portes = [];
+  for (const f of tots) for (const m of readFileSync(f, 'utf8').matchAll(CLAUDE)) portes.push(`${f.slice(ARREL.length + 1)} · ${m[0]}`);
+  portes.length ? bad(`${pl(portes.length, 'adreça', 'adreces')} de Claude en una pàgina pública: ${portes.join(', ')}`)
+    : ok(`cap dels ${tots.length} fitxers .html porta una adreça de claude.ai`);
 }
 
 console.log(fails ? `\n❌ ${pl(fails, 'problema', 'problemes')}.` : '\n✅ La web compleix el que promet.');

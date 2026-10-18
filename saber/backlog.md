@@ -16,20 +16,6 @@ com a `anon`: deu claus dolentes tanquen `/modera` quinze minuts, i
 `directori_cromos` ja no porta `sos`. Fins llavors la web nova funciona igual
 amb el SQL vell (la marca ja es decideix al navegador).
 
-### La còpia de la firma, vigilada contra la de dalt (demanat 2026-10-17)
-
-**Demanat per:** l'auditoria. **Què:** `canon`, `didDe` i `valida` de
-`../tools/build.js` són còpia de `SOS/online.html` de teamtowershuma; si allà
-canvien, aquí deixaria de quadrar cap firma (veda 71). **Com es tanca:** el
-treball setmanal de `sync.js` compara també aquestes funcions.
-
-### Cap porta pública cap a `claude.ai` (demanat 2026-10-11)
-
-**Demanat per:** l'Àlvar, quan el kit era un artefacte privat (veda 2).
-**Què:** que `../tools/check.js` peti si una pàgina enllaça un artefacte de
-Claude. **Com es tanca:** la regla al `check.js`, vista petar amb un enllaç de
-prova.
-
 ### El que espera una decisió de l'autor (des del 2026-10-10)
 
 **Demanat per:** el traspàs. Les cinc que frenen feina:
@@ -47,8 +33,24 @@ prova.
    directori d'altes, perquè guardar correus és guardar dades personals.
 
 **Com es tanca:** cada punt, amb la resposta de l'autor i el canvi fet.
+L'Àlvar hi respon el dimecres 21 d'octubre (dit el 2026-10-18).
 
 ## Fet
+
+### La còpia de la firma, vigilada contra la de dalt (demanat 2026-10-17)
+
+**Demanat per:** l'auditoria. **Fet:** `../tools/firma.js` treu «_canon»,
+«_didFromJwk» i «fitxaValida» de `SOS/online.html` i el treball setmanal de
+`sync.js` hi passa les mateixes fitxes que a `canon`, `didDe` i `valida`
+d'aquí, fetes amb el codi de cada banda. Vist petar amb tres canvis fets a
+dalt: sense comprovar el did, `canon` sense ordenar i el did amb una altra
+llargada.
+
+### Cap porta pública cap a `claude.ai` (demanat 2026-10-11)
+
+**Demanat per:** l'Àlvar (veda 2). **Fet:** la regla 11 de `../tools/check.js`
+mira tots els `.html` del lloc i peta amb qualsevol adreça de `claude.ai` o
+`claude.site`. Vista petar amb un enllaç de prova a `kit.html`.
 
 ### L'auditoria amb el cervell (demanat 2026-10-17)
 
