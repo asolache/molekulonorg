@@ -7,6 +7,30 @@ la citen.
 
 ## Pendent
 
+### Aplicar `sql/003_convits.sql` (demanat 2026-10-29)
+
+**Demanat per:** l'Àlvar: «enviar un link con la información precargada» i que
+la persona pugui «ir creando su red de moleculones». **Què:** els codis de
+convit i la xarxa (qui ha convidat qui). La web ja funciona sense: l'enllaç
+porta la fitxa igual, només que no queda lligat a la xarxa. **Com es tanca:**
+aplicat al projecte Teamtowershuma (els dos `revoke` en una migració a part) i
+provat com a `anon`: un cromo pendent no pot convidar, una clau de moderador
+dolenta torna `no_moderador`, un codi no es pot fer servir dues vegades i
+`xarxa_cromos` només ensenya arestes entre cromos aprovats.
+
+### Els gags del directe, confirmats (demanat 2026-10-29)
+
+**Demanat per:** l'Àlvar, després de retrobar un fan del directe. **Què:**
+`directe.md` proposa una entrada per heroi i cinc seqüències. **Com es tanca:**
+l'autor diu què és memòria i què proposta, i el que quedi puja al guió de
+teamtowershuma (veda 1).
+
+### Ensenyar la xarxa a Moleculandia (demanat 2026-10-29)
+
+**Què:** `xarxa_cromos()` ja torna les arestes; falta pintar-les (a
+`/personatges` o a Moleculandia). **Com es tanca:** quan hi hagi prou convits
+usats per veure-hi una xarxa i no tres punts.
+
 ### Aplicar `sql/002_auditoria_cervell.sql` (demanat 2026-10-17)
 
 **Demanat per:** l'Àlvar, a l'auditoria («corrígelo»). **Què:** treure la marca

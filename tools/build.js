@@ -87,6 +87,11 @@ const PAGINES = [
   { f: 'ia.html', nav: 'La IA', t: 'Com fem servir la IA', menu: false, mapa: true,
     tit: 'Com fem servir la IA · Comando Molekulon',
     desc: 'Què fa la IA en aquesta web i què fem nosaltres, el que es pot comprovar a l\'historial i el compromís de gastar el mínim per token.' },
+  /* Convidar: s'hi arriba des del kit quan ja tens cromo. Fora del menú i dels
+     cercadors: és una eina de qui ja és dins, no una porta. */
+  { f: 'convida.html', nav: 'Convida', t: 'Convida un moleculon', menu: false, noindex: true,
+    tit: 'Convida un moleculon · Comando Molekulon',
+    desc: 'Comença el cromo d\'algú que ja és un superheroi i no ho sap, i envia-li l\'enllaç perquè el faci seu.' },
   /* La moderació dels cromos: ni menú, ni sitemap, ni cercadors. */
   { f: 'modera.html', nav: 'Moderar', t: 'Moderar els cromos', menu: false, noindex: true,
     tit: 'Moderar els cromos · Comando Molekulon',
@@ -482,7 +487,7 @@ const pagina = (p, cos) => `<!DOCTYPE html>
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${jsonld(p)}</script>
 <style>
-${CSS}${p.f === 'kit.html' ? KIT_CSS : ''}${p.f === 'personatges.html' ? GENT_CSS : ''}${p.f === 'modera.html' ? MODERA_CSS : ''}${p.f === 'ia.html' ? IA_CSS : ''}
+${CSS}${p.f === 'kit.html' || p.f === 'convida.html' ? KIT_CSS : ''}${p.f === 'personatges.html' ? GENT_CSS : ''}${p.f === 'modera.html' ? MODERA_CSS : ''}${p.f === 'ia.html' ? IA_CSS : ''}
 </style>
 </head>
 <body>
@@ -1179,7 +1184,7 @@ const KIT_CSS = `
 .kit label{font-weight:700}
 .kit .q label b{color:var(--purple);margin-right:.4rem}
 .kit .ajuda{font-size:.84rem;color:var(--muted);margin:0}
-.kit input[type=text],.kit input[type=url],.kit textarea{font:inherit;width:100%;min-width:0;background:var(--card);color:var(--text);
+.kit input[type=text],.kit input[type=url],.kit textarea,.kit select{font:inherit;width:100%;min-width:0;background:var(--card);color:var(--text);
   border:1px solid var(--border);border-radius:10px;padding:.55rem .7rem}
 .kit textarea{min-height:4.2rem;resize:vertical}
 .kit input:focus,.kit textarea:focus{outline:2px solid var(--purple);outline-offset:1px}
@@ -1216,6 +1221,8 @@ const KIT_CSS = `
 .kit .accepto input{margin-top:.3rem}
 .kit .clau{font-family:var(--mono);font-size:.95rem;background:var(--bg);border:1px dashed var(--purple);border-radius:8px;padding:.5rem .7rem;word-break:break-all;margin:.4rem 0 0}
 .kit details{margin-top:.8rem}
+.kit a.boto{display:inline-block;text-decoration:none;font-weight:700;font-size:.9rem;padding:.6rem 1rem;border:1px solid var(--border);border-radius:10px;color:var(--text)}
+.kit .convit{border-color:var(--purple);margin:0 0 .9rem}
 .kit summary{cursor:pointer;font-weight:600;color:var(--light);font-size:.9rem}
 `;
 
@@ -1238,7 +1245,7 @@ var CROMO = (function(){
   var O = {
     col: ["#e040fb","#00b0ff","#00e676","#ff9100","#ffd700","#e53935","#5e35b1","#00acc1","#f5f5f7","#26262f"],
     pell: ["#f8d5c2","#f0c3a0","#d9a271","#b87d4f","#8d5524","#5c3a21"],
-    cabell: [["curt","Curt"],["llarg","Llarg"],["arrissat","Arrissat"],["trenes","Trenes"],["monyo","Monyo"],["rapat","Rapat"]],
+    cabell: [["curt","Curt"],["mitja","Mitja melena"],["llarg","Llarg"],["arrissat","Arrissat"],["trenes","Trenes"],["monyo","Monyo"],["rapat","Rapat"]],
     colCab: ["#2b2b2b","#5d4037","#a1662f","#e0b34a","#c62828","#7e57c2","#26c6da","#eeeeee"],
     ulls: ["#3e2723","#5d4037","#2e7d32","#1565c0","#6a1b9a","#00838f"],
     roba: [["capa","Amb capa"],["caputxa","Amb caputxa"],["armilla","Amb armilla"],["res","Sense res"]],
@@ -1281,6 +1288,7 @@ var CROMO = (function(){
     if (f.cabell === "arrissat") { [[-38,-30],[0,-46],[38,-30],[-52,-4],[52,-4]].forEach(function(d){ arc(d[0], d[1], 24); }); return; }
     arc(0, -6, 55, Math.PI, 0);
     if (f.cabell === "llarg") { x.fillRect(cx - 58, cy - 8, 20, 96); x.fillRect(cx + 38, cy - 8, 20, 96); }
+    if (f.cabell === "mitja") { x.fillRect(cx - 58, cy - 8, 18, 52); x.fillRect(cx + 40, cy - 8, 18, 52); }
     if (f.cabell === "trenes") { x.fillRect(cx - 62, cy - 4, 18, 74); x.fillRect(cx + 44, cy - 4, 18, 74); arc(-53, 74, 13); arc(53, 74, 13); }
     if (f.cabell === "monyo") arc(0, -62, 24);
   }
@@ -1394,7 +1402,67 @@ var CROMO = (function(){
     u = String(u || "").trim();
     return /^https:\/\/(www\.|m\.)?(youtube\.com\/(watch\?v=|shorts\/)|youtu\.be\/)[A-Za-z0-9_-]{11}/.test(u) ? u : "";
   }
-  return { O: O, BASE: BASE, aspecte: aspecte, atzar: atzar, nick: nick, pinta: pinta, rpc: rpc, video: video, API: API };
+
+  /* Els controls de l'aspecte surten de les llistes del dibuix: la pantalla no
+     pot oferir una opció que el dibuix no sap pintar. El fan servir el kit i
+     /convida, que pinten el mateix cromo. */
+  function tries(asp, canvi){
+    var fila = function(id, opcions, clau, color){
+      var c = document.getElementById(id); c.innerHTML = "";
+      opcions.forEach(function(o){
+        var v = Array.isArray(o) ? o[0] : o, b = document.createElement("button");
+        b.type = "button";
+        if (color) { b.className = "color"; b.style.background = v; b.setAttribute("aria-label", v); }
+        else b.textContent = Array.isArray(o) ? o[1] : o;
+        b.setAttribute("aria-pressed", String(asp[clau] === v));
+        b.addEventListener("click", function(){ asp[clau] = v; tries(asp, canvi); canvi(); });
+        c.appendChild(b);
+      });
+    };
+    fila("a-col1", O.col, "col1", true); fila("a-col2", O.col, "col2", true);
+    fila("a-pell", O.pell, "pell", true); fila("a-cabell", O.cabell, "cabell");
+    fila("a-colCab", O.colCab, "colCab", true); fila("a-ulls", O.ulls, "ulls", true);
+    fila("a-roba", O.roba, "roba"); fila("a-mascara", O.mascara, "mascara"); fila("a-emblema", O.emblema, "emblema");
+  }
+
+  /* ── El convit: una fitxa començada, dins l'enllaç ──────────────────────────
+     Qui convida omple el que sap de l'altra persona i en surt un enllaç
+     /kit#convit=…. La fitxa viatja **a la part de després del #**, que el
+     navegador no envia mai a cap servidor: no es guarda enlloc fins que la
+     persona convidada la fa seva i l'envia ella. El codi «c», si n'hi ha, és el
+     que lliga el cromo nou amb qui l'ha convidat (sql/003_convits.sql).
+
+     El que arriba per l'enllaç ho pot haver escrit qualsevol: es retalla amb
+     les mateixes mides del kit i l'aspecte passa per aspecte(). */
+  var b64 = {
+    fa: function(txt){ var b = new TextEncoder().encode(txt), s = ""; for (var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+      return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); },
+    desfa: function(t){ var s = atob(String(t).replace(/-/g, "+").replace(/_/g, "/")), b = new Uint8Array(s.length);
+      for (var i = 0; i < s.length; i++) b[i] = s.charCodeAt(i); return new TextDecoder().decode(b); }
+  };
+  var talla = function(v, n){ return String(v == null ? "" : v).trim().slice(0, n); };
+  var tallaL = function(l, n){ return (Array.isArray(l) ? l : []).map(function(x){ return talla(x, 60); }).filter(Boolean).slice(0, n); };
+  function convit(c){
+    return { nom: talla(c.nom, 40), poders: tallaL(c.poders, 5), armes: tallaL(c.armes, 5), demo: talla(c.demo, 160),
+             lloc: talla(c.lloc, 60), relat: talla(c.relat, 300), aspecte: aspecte(c.aspecte),
+             de: nick(c.de) || "comando", c: /^[A-Za-z0-9_-]{12,32}$/.test(c.c || "") ? c.c : "" };
+  }
+  function enllacConvit(c){ return "https://molekulon.org/kit#convit=" + b64.fa(JSON.stringify(convit(c))); }
+  function llegeixConvit(hash){
+    var m = /(?:^#|&)convit=([A-Za-z0-9_-]+)/.exec(hash || "");
+    if (!m) return null;
+    try { return convit(JSON.parse(b64.desfa(m[1]))); } catch (e) { return null; }
+  }
+  /* L'enllaç d'entrada: el nick i la clau d'edició dins un enllaç personal, per
+     entrar des de qualsevol aparell sense compte. És la clau mateixa, i es diu. */
+  function enllacEntrada(n, clau){ return "https://molekulon.org/kit#entra=" + n + "." + clau; }
+  function llegeixEntrada(hash){
+    var m = /(?:^#|&)entra=([a-z0-9-]{2,20})\.([A-Za-z0-9_-]{20,200})/.exec(hash || "");
+    return m ? { nick: m[1], clau: m[2] } : null;
+  }
+
+  return { O: O, BASE: BASE, aspecte: aspecte, atzar: atzar, nick: nick, pinta: pinta, rpc: rpc, video: video, API: API,
+           tries: tries, enllacConvit: enllacConvit, llegeixConvit: llegeixConvit, enllacEntrada: enllacEntrada, llegeixEntrada: llegeixEntrada };
 })();
 `;
 
@@ -1436,7 +1504,7 @@ const KIT_JS = String.raw`
     did_forma: "El did del SOS no té la forma bona: comença per did:sos: i es copia sencer del teu perfil."
   };
   var DESA = "molekulon_cromo";
-  var lang = "ca", asp = CROMO.aspecte(CROMO.BASE);
+  var lang = "ca", asp = CROMO.aspecte(CROMO.BASE), convit = null;
   var $ = function(id){ return document.getElementById(id); };
   var llista = function(s){ return s.split(/[,\n;]+/).map(function(x){ return x.trim(); }).filter(Boolean); };
   var etiqueta = function(s){ return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]/g, ""); };
@@ -1457,27 +1525,7 @@ const KIT_JS = String.raw`
     $("k-nick").textContent = n ? "@" + n : "—";
   }
 
-  /* Els controls surten de les llistes del dibuix: la pantalla no pot oferir
-     una opció que el dibuix no sap pintar. */
-  function tries(){
-    var O = CROMO.O;
-    var fila = function(id, opcions, clau, color){
-      var c = $(id); c.innerHTML = "";
-      opcions.forEach(function(o){
-        var v = Array.isArray(o) ? o[0] : o, b = document.createElement("button");
-        b.type = "button";
-        if (color) { b.className = "color"; b.style.background = v; b.setAttribute("aria-label", v); }
-        else b.textContent = Array.isArray(o) ? o[1] : o;
-        b.setAttribute("aria-pressed", String(asp[clau] === v));
-        b.addEventListener("click", function(){ asp[clau] = v; tries(); redibuixa(); });
-        c.appendChild(b);
-      });
-    };
-    fila("a-col1", O.col, "col1", true); fila("a-col2", O.col, "col2", true);
-    fila("a-pell", O.pell, "pell", true); fila("a-cabell", O.cabell, "cabell");
-    fila("a-colCab", O.colCab, "colCab", true); fila("a-ulls", O.ulls, "ulls", true);
-    fila("a-roba", O.roba, "roba"); fila("a-mascara", O.mascara, "mascara"); fila("a-emblema", O.emblema, "emblema");
-  }
+  function tries(){ CROMO.tries(asp, redibuixa); }
 
   function munta(){
     var t = T[lang], v = llegeix();
@@ -1527,7 +1575,52 @@ const KIT_JS = String.raw`
   function pintaDesat(){
     var d = desat();
     $("e-desat").hidden = !d;
-    if (d) { $("e-desat-nick").textContent = "@" + d.nick; $("e-clau").textContent = d.clau; }
+    if (d) { $("e-desat-nick").textContent = "@" + d.nick; $("e-clau").textContent = d.clau;
+             $("e-entra").textContent = CROMO.enllacEntrada(d.nick, d.clau); xarxa(d); }
+  }
+
+  /* La xarxa: qui has convidat i qui ja hi és. Si la base de dades encara no
+     sap de convits (sql/003_convits.sql sense aplicar), el bloc no surt i la
+     resta funciona igual. */
+  function xarxa(d){
+    CROMO.rpc("la_meva_xarxa", { p_nick: d.nick, p_clau: d.clau }).then(function(r){
+      var l = $("e-xarxa-llista"); l.innerHTML = "";
+      if (!r || r.error) { $("e-xarxa").hidden = true; return; }
+      $("e-xarxa").hidden = false;
+      $("e-de").textContent = r.de ? (r.de === "comando" ? "Et va convidar el Comando." : "Et va convidar @" + r.de + ".") : "";
+      (r.convits || []).forEach(function(c){
+        var li = document.createElement("li");
+        li.textContent = c.usat_per ? "@" + c.usat_per + (c.aprovat ? " · ja és a la col·lecció" : " · pendent d'aprovar") :
+          "Un convit del " + String(c.creat || "").slice(0, 10) + " · encara no l'han obert";
+        l.appendChild(li);
+      });
+      if (!(r.convits || []).length) { var li = document.createElement("li"); li.textContent = "Encara no has convidat ningú."; l.appendChild(li); }
+    }, function(){ $("e-xarxa").hidden = true; });
+  }
+
+  /* Lliga el cromo nou amb qui el va convidar. Si falla, el cromo ja és enviat
+     i no es perd res: només que la xarxa no ho sabrà. */
+  function lliga(n, clau){
+    CROMO.rpc("lliga_convit", { p_codi: convit.c, p_nick: n, p_clau: clau }).then(function(){ var d = desat(); if (d) xarxa(d); }, function(){});
+  }
+
+  /* Arribar amb un enllaç. #entra=… és el teu enllaç personal: recupera el
+     cromo i s'esborra de la barra d'adreces, perquè porta la clau. #convit=… és
+     una fitxa començada per algú altre: omple el kit si en aquest navegador no
+     hi ha ja un cromo teu, i la persona la canvia, la fa seva i l'envia. */
+  function arriba(){
+    var h = location.hash, e = CROMO.llegeixEntrada(h);
+    if (e) { try { history.replaceState(null, "", location.pathname); } catch (x) {} recupera(e.nick, e.clau); return; }
+    convit = CROMO.llegeixConvit(h);
+    if (!convit) return;
+    $("k-convit").hidden = false;
+    $("k-convit-de").textContent = convit.de === "comando" ? "el Comando" : "@" + convit.de;
+    $("k-convit-nom").textContent = convit.nom || "tu";
+    if (desat()) { $("k-convit-ja").hidden = false; return; }
+    $("k-nom").value = convit.nom; $("k-poders").value = convit.poders.join(", ");
+    $("k-armes").value = convit.armes.join(", "); $("k-demo").value = convit.demo;
+    $("k-lloc").value = convit.lloc; $("e-relat").value = convit.relat;
+    asp = convit.aspecte;
   }
 
   function envia(retira){
@@ -1540,7 +1633,7 @@ const KIT_JS = String.raw`
       if (dd && !/^did:sos:[a-z0-9-]{4,16}:[A-Za-z0-9_-]{16,64}$/.test(dd)) { estatEnvia(ERR.did_forma); return; }
       if (vu && !CROMO.video(vu)) { estatEnvia("L'enllaç del vídeo ha de ser de YouTube i sencer (https://www.youtube.com/watch?v=… o https://youtu.be/…)."); return; }
     } else if (!d) { estatEnvia("En aquest navegador no hi ha cap cromo teu desat."); return; }
-    var n = d ? d.nick : CROMO.nick(v.nom), clau = d ? d.clau : novaClau();
+    var n = d ? d.nick : CROMO.nick(v.nom), clau = d ? d.clau : novaClau(), primer = !d;
     var fitxa = { nom: v.nom, lloc: v.lloc, poders: v.poders, armes: v.armes, demo: v.demo,
                   relat: $("e-relat").value.trim().slice(0, 300), video: CROMO.video($("e-video").value),
                   did: $("e-did").value.trim().slice(0, 100),
@@ -1550,6 +1643,7 @@ const KIT_JS = String.raw`
     estatEnvia(retira ? "Retirant…" : "Enviant…");
     CROMO.rpc("envia_cromo", { p_nick: n, p_fitxa: fitxa, p_clau: clau, p_retira: !!retira }).then(function(r){
       desa({ nick: n, clau: clau }); pintaDesat(); redibuixa();
+      if (primer && !retira && convit && convit.c) lliga(n, clau);
       /* Aprovació mixta: el primer cromo l'aprova l'autor, i els canvis d'un
          cromo ja aprovat surten sols. La base de dades diu quin dels dos ha estat. */
       estatEnvia(retira ? "Retirat. Ja no surt a la col·lecció." :
@@ -1614,11 +1708,14 @@ const KIT_JS = String.raw`
       munta();
     });
   });
-  tries(); pintaDesat(); redibuixa(); munta();
+  arriba(); tries(); pintaDesat(); redibuixa(); munta();
 })();
 `;
 
 const fila = (id, k) => `<div class="fila"><span class="k">${k}</span><div class="tries" id="${id}"></div></div>`;
+const ASPECTE = `${fila('a-col1', 'Vestit')}${fila('a-col2', 'Segon color')}${fila('a-pell', 'Pell')}${fila('a-cabell', 'Cabell')}
+${fila('a-colCab', 'Color del cabell')}${fila('a-ulls', 'Ulls')}${fila('a-roba', 'Roba')}${fila('a-mascara', 'Màscara')}
+${fila('a-emblema', 'Emblema')}`;
 
 const kit = () => `
 <header class="hero">
@@ -1632,6 +1729,13 @@ al costat dels del còmic, l'envies des d'aquí mateix.</p>
 </header>
 <div class="wrap">
 <section class="box kit" id="kit">
+<div class="bloc convit" id="k-convit" hidden>
+<h3><span>Benvingut a Moleculandia, <span id="k-convit-nom"></span></span></h3>
+<p class="ajuda">T'hi convida <strong id="k-convit-de"></strong>, i t'ha començat la fitxa amb el que sap de tu.
+<strong>És un esborrany, no un retrat</strong>: canvia-ho tot, tria el teu nom de guerra de debò i, quan t'agradi,
+envia'l a la col·lecció. Un cop hi siguis, també podràs convidar els teus.</p>
+<p class="ajuda" id="k-convit-ja" hidden>En aquest navegador ja hi ha un cromo teu, i no l'hem tocat.</p>
+</div>
 <div class="llengua" role="group" aria-label="Llengua de la fitxa">
 <button type="button" data-llengua="ca" aria-pressed="true">CAT</button>
 <button type="button" data-llengua="es" aria-pressed="false">CAST</button>
@@ -1656,9 +1760,7 @@ al costat dels del còmic, l'envies des d'aquí mateix.</p>
 <div class="aspecte" role="group" aria-label="Com es veu el personatge">
 <label>Com es veu el teu personatge</label>
 <p class="ajuda">El dibuix és del personatge, no teu: per això porta antifaç de sèrie. Es pinta sol mentre tries.</p>
-${fila('a-col1', 'Vestit')}${fila('a-col2', 'Segon color')}${fila('a-pell', 'Pell')}${fila('a-cabell', 'Cabell')}
-${fila('a-colCab', 'Color del cabell')}${fila('a-ulls', 'Ulls')}${fila('a-roba', 'Roba')}${fila('a-mascara', 'Màscara')}
-${fila('a-emblema', 'Emblema')}
+${ASPECTE}
 </div>
 <p class="exemple"><strong>Exemple</strong>: Reciclator · soldar, desmuntar electrodomèstics, veure què es pot
 arreglar · un taller amb torn i soldador, una furgoneta · munta una llanterna amb una ampolla i un carregador vell.</p>
@@ -1709,8 +1811,19 @@ personatge surti a la col·lecció de molekulon.org si l'autor l'aprova.</label>
 ja és aprovat o retirar-lo, des d'aquí o des d'un altre aparell. Guarda-la: <strong>no la podem recuperar</strong>,
 perquè no tenim el teu correu. Si tornes a enviar, s'envia una versió nova del mateix cromo; si ja estava aprovat, surt a l'instant.</p>
 <pre class="clau" id="e-clau"></pre>
+<h3><span>El teu enllaç d'entrada</span><button type="button" class="copia" data-de="e-entra">Copia l'enllaç</button></h3>
+<p class="ajuda">Entra com vulguis: <strong>aquest navegador ja et recorda</strong>; en un altre aparell, obre aquest enllaç
+(guarda'l on guardis les coses teves: un xat amb tu mateix, el correu, els marcadors) o escriu el nom i la clau a baix.
+Porta la clau a dins: <strong>no el comparteixis</strong>.</p>
+<pre class="clau" id="e-entra"></pre>
 <div class="botons"><button type="button" class="seg" id="e-mira">Mira com està</button>
-<button type="button" class="seg" id="e-retira">Retira'l de la col·lecció</button></div>
+<button type="button" class="seg" id="e-retira">Retira'l de la col·lecció</button>
+<a class="seg boto" href="/convida">Convida algú a Moleculandia →</a></div>
+<div id="e-xarxa" hidden>
+<h3><span>La teva xarxa de moleculons</span></h3>
+<p class="ajuda" id="e-de"></p>
+<ul class="lead" id="e-xarxa-llista"></ul>
+</div>
 </div>
 
 <details>
@@ -1737,6 +1850,161 @@ perquè no tenim el teu correu. Si tornes a enviar, s'envia una versió nova del
 <script>${CROMO_JS}
 CROMO.API.url = ${JSON.stringify(SUPA.url)}; CROMO.API.key = ${JSON.stringify(SUPA.key)};
 ${KIT_JS}</script>`;
+
+/* ══ CONVIDA ALGÚ ════════════════════════════════════════════════════════════
+   La xarxa de moleculons creix així: qui ja hi és pensa en algú que és un
+   superheroi i no ho sap, li comença la fitxa amb el que en sap —com es veu,
+   què arregla, què ha fet— i li envia un enllaç. La persona l'obre al kit,
+   amb tot omplert, i només ha de fer-la seva.
+
+   Res d'això passa per cap servidor fins que la persona convidada envia el
+   cromo: la fitxa viatja dins l'enllaç, darrere del # (vegeu CROMO.enllacConvit).
+   L'únic que es guarda abans és un codi sense dades, si qui convida té cromo
+   aprovat o és moderador: és el que demostra qui ha convidat qui
+   (sql/003_convits.sql). Sense codi l'enllaç funciona igual; només que la
+   xarxa no el compta, i la pàgina ho diu.
+
+   El primer cromo de la persona convidada passa per l'autor com tots
+   (aprovació mixta): convidar no és aprovar. */
+const CONVIDA_JS = String.raw`
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var asp = CROMO.aspecte(CROMO.BASE);
+  var llista = function(t){ return t.split(/[,\n;]+/).map(function(x){ return x.trim(); }).filter(Boolean); };
+  var llegeix = function(k){ try { return JSON.parse(localStorage.getItem(k) || "null"); } catch (e) { return null; } };
+  var jo = llegeix("molekulon_cromo"), mod = null;
+  try { mod = localStorage.getItem("molekulon_moderador") || null; } catch (e) {}
+
+  function fitxa(){
+    return { nom: $("c-nom").value, poders: llista($("c-poders").value), armes: llista($("c-armes").value),
+             demo: $("c-demo").value, lloc: $("c-lloc").value, relat: $("c-relat").value, aspecte: asp };
+  }
+  function redibuixa(){
+    var f = fitxa();
+    CROMO.pinta($("k-cv"), { nom: f.nom, lloc: f.lloc, poders: f.poders.slice(0, 5), armes: f.armes.slice(0, 5), nick: CROMO.nick(f.nom), aspecte: asp });
+    $("c-sortida").hidden = true;
+  }
+  function tries(){ CROMO.tries(asp, redibuixa); }
+
+  var com = $("c-com");
+  if (jo && jo.nick) com.appendChild(new Option("Com a @" + jo.nick, "jo"));
+  if (mod) com.appendChild(new Option("Com el Comando (moderador)", "mod"));
+  com.appendChild(new Option("Sense codi: l'enllaç funciona, però la xarxa no el compta", "res"));
+
+  function mostra(f, de, codi, nota){
+    var enllac = CROMO.enllacConvit({ nom: f.nom, poders: f.poders, armes: f.armes, demo: f.demo, lloc: f.lloc,
+                                      relat: f.relat, aspecte: f.aspecte, de: de, c: codi });
+    var nom = f.nom.trim() || "";
+    var msg = "Ei" + (nom ? " " + nom : "") + "! T'he fet un lloc al Comando Molekulon, a Moleculandia: ja tens el cromo començat. " +
+              "Obre'l, canvia el que vulguis i fes-lo teu. No cal compte de res:\n" + enllac;
+    $("c-enllac").textContent = enllac; $("c-msg").textContent = msg;
+    $("c-wa").href = "https://wa.me/?text=" + encodeURIComponent(msg);
+    $("c-obre").href = enllac.replace("https://molekulon.org", "");
+    $("c-nota").textContent = nota || "";
+    $("c-sortida").hidden = false;
+  }
+
+  $("c-fes").addEventListener("click", function(){
+    var f = fitxa();
+    if (!f.nom.trim() && !f.poders.length) { $("c-estat").textContent = "Posa-hi almenys un nom provisional o un superpoder."; return; }
+    $("c-estat").textContent = "";
+    var tria = com.value;
+    if (tria === "res") { mostra(f, "", "", "Enllaç sense codi: la persona entra igual, però no queda lligada a la teva xarxa."); return; }
+    var cos = tria === "jo" ? { p_nick: jo.nick, p_clau: jo.clau } : { p_nick: null, p_clau: mod };
+    $("c-fes").disabled = true; $("c-estat").textContent = "Preparant…";
+    CROMO.rpc("crea_convit", cos).then(function(r){
+      if (!r || r.error) throw new Error(r && r.error);
+      $("c-estat").textContent = "";
+      mostra(f, r.de, r.codi, "El convit queda lligat a " + (r.de === "comando" ? "el Comando" : "@" + r.de) + ". Cada enllaç serveix per a una persona.");
+    }).catch(function(e){
+      var m = e && e.message;
+      mostra(f, tria === "jo" ? jo.nick : "comando", "",
+        m === "no_aprovat" ? "El teu cromo encara no és aprovat: l'enllaç va sense codi fins que ho sigui." :
+        "No s'ha pogut fer el codi (" + (m || "sense resposta") + "): l'enllaç va sense, i funciona igual.");
+    }).then(function(){ $("c-fes").disabled = false; });
+  });
+
+  ["c-nom", "c-poders", "c-armes", "c-lloc", "c-demo", "c-relat"].forEach(function(id){ $(id).addEventListener("input", redibuixa); });
+  $("k-atzar").addEventListener("click", function(){ asp = CROMO.atzar(); tries(); redibuixa(); });
+  document.querySelectorAll(".kit .copia").forEach(function(b){
+    b.addEventListener("click", function(){
+      var pre = $(b.dataset.de), ok = function(){ b.classList.add("fet"); setTimeout(function(){ b.classList.remove("fet"); }, 1600); };
+      var marca = function(){ var r = document.createRange(); r.selectNodeContents(pre); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); };
+      try { navigator.clipboard.writeText(pre.textContent).then(ok, marca); } catch (e) { marca(); }
+    });
+  });
+  tries(); redibuixa();
+})();
+`;
+
+const convida = () => `
+<header class="hero">
+<div class="hero-inner">
+<span class="tag">Moleculandia creix</span>
+<h1>Convida <em>un moleculon</em></h1>
+<p class="sub">Tens al cap algú que ja és un superheroi i no ho sap? Comença-li el cromo amb el que en saps
+—com es veu, què arregla, què t'ha fet— i envia-li l'enllaç. L'obrirà al <a href="${KIT}">kit</a> amb tot omplert,
+i només l'haurà de fer seu.</p>
+</div>
+</header>
+<div class="wrap">
+<section class="box kit">
+<div class="kit-graella">
+<div>
+<div class="q"><label for="c-nom"><b>1</b>Com li dius, de moment?</label>
+<p class="ajuda">Un nom provisional. El nom de guerra de debò el triarà ell o ella.</p>
+<input type="text" id="c-nom" maxlength="40" autocomplete="off"></div>
+<div class="q"><label for="c-poders"><b>2</b>Quins superpoders li has vist?</label>
+<p class="ajuda">El que l'has vist fer. Fins a cinc, separats per comes.</p>
+<textarea id="c-poders"></textarea></div>
+<div class="q"><label for="c-armes"><b>3</b>I quines superarmes té?</label>
+<p class="ajuda">Si no ho saps, deixa-ho buit: ja ho dirà.</p>
+<textarea id="c-armes"></textarea></div>
+<div class="q"><label for="c-demo"><b>4</b>Què podria ensenyar a la demo?</label>
+<input type="text" id="c-demo" maxlength="160" autocomplete="off"></div>
+<div class="q"><label for="c-lloc"><b>·</b>D'on és?</label>
+<p class="ajuda">Només si saps que ho vol dir.</p>
+<input type="text" id="c-lloc" maxlength="60" autocomplete="off"></div>
+<div class="q"><label for="c-relat"><b>·</b>La gesta per la qual el convides</label>
+<p class="ajuda">Dues o tres frases amb el to del Comando. Li surt com a relat del cromo, i el pot canviar.</p>
+<textarea id="c-relat" maxlength="300"></textarea></div>
+<div class="aspecte" role="group" aria-label="Com es veu el personatge">
+<label>Com es veu</label>
+<p class="ajuda">El cabell, els ulls i els colors. El cromo porta antifaç: és el personatge, no la persona.</p>
+${ASPECTE}
+</div>
+</div>
+<div class="kit-cromo">
+<canvas id="k-cv" width="600" height="840" aria-label="El cromo que li prepares"></canvas>
+<div class="botons"><button type="button" class="seg" id="k-atzar">🎲 Sorpresa</button></div>
+</div>
+</div>
+</section>
+
+<section class="box kit">
+<h2>L'enllaç</h2>
+<p class="lead"><strong>La fitxa va dins l'enllaç i no es guarda enlloc</strong> fins que la persona l'envia ella.
+No hi posis res que no voldria veure al seu cromo: ni el nom de debò, ni on viu, ni com contactar-la.</p>
+<div class="q"><label for="c-com">Qui convida</label>
+<p class="ajuda">Si tens cromo aprovat en aquest navegador, el convit queda lligat a la teva xarxa.</p>
+<select id="c-com"></select></div>
+<div class="botons"><button type="button" class="fer" id="c-fes">Prepara l'enllaç</button></div>
+<p class="estat" id="c-estat" role="status" aria-live="polite"></p>
+<div id="c-sortida" hidden>
+<p class="estat ok" id="c-nota"></p>
+<div class="bloc"><h3><span>El missatge</span><button type="button" class="copia" data-de="c-msg">Copia</button></h3>
+<pre id="c-msg"></pre>
+<div class="botons"><a class="seg boto" id="c-wa" rel="noopener">Envia-ho per WhatsApp ↗</a>
+<a class="seg boto" id="c-obre">Mira com li arribarà</a></div></div>
+<div class="bloc"><h3><span>Només l'enllaç</span><button type="button" class="copia" data-de="c-enllac">Copia</button></h3>
+<pre id="c-enllac"></pre></div>
+</div>
+</section>
+</div>
+<script>${CROMO_JS}
+CROMO.API.url = ${JSON.stringify(SUPA.url)}; CROMO.API.key = ${JSON.stringify(SUPA.key)};
+${CONVIDA_JS}</script>`;
 
 /* ══ ELS CROMOS DE LA GENT, VIUS ═════════════════════════════════════════════
    Una sola llista: els catorze del còmic i, a continuació, els de la gent que
@@ -2097,7 +2365,7 @@ ${PAGINES.filter(p => p.menu !== false || p.mapa).map(p => `<url><loc>${url(p.f)
 `;
 
 /* ══ ESCRIURE ════════════════════════════════════════════════════════════════ */
-const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic, 'kit.html': kit, 'modera.html': modera, 'ia.html': ia };
+const COSSOS = { 'convida.html': convida, 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic, 'kit.html': kit, 'modera.html': modera, 'ia.html': ia };
 const sortida = () => {
   const l = PAGINES.map(p => [p.f, pagina(p, COSSOS[p.f]().trim())]);
   l.push(['sitemap.xml', sitemap()]);

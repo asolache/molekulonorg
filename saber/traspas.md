@@ -155,6 +155,22 @@ Qui continuï això s'hi trobarà i val més saber per què hi són:
 - **L'artefacte de Claude** (ara públic) segueix existint amb la IA dins; la
   casa del cromo i de l'enviament és `/kit`, perquè funciona sense compte.
 
+## 4ter · Els convits i la xarxa de moleculons (2026-10-29)
+
+- **Convidar és començar el cromo d'algú.** A `/convida` (fora del menú; s'hi
+  arriba des del kit) qui ja és dins omple el que sap de l'altra persona i en
+  surt un enllaç `/kit#convit=…`. La fitxa va **dins l'enllaç, darrere del #**:
+  no arriba a cap servidor ni es guarda enlloc fins que la persona l'envia.
+- **El kit l'omple sol** i diu qui convida. Si en aquell navegador ja hi ha un
+  cromo, no el toca.
+- **Entrar com vulguis, sense comptes:** el navegador et recorda; l'enllaç
+  d'entrada (`/kit#entra=nick.clau`, que el kit dona un cop enviat) obre el teu
+  cromo en un altre aparell i s'esborra de la barra; o el nom i la clau a mà.
+  Comptes amb correu o Google no: guardar correus espera «qui signa».
+- **La xarxa** (qui ha convidat qui) és a `sql/003_convits.sql`, **sense
+  aplicar** fins que l'autor ho digui. Convidar no és aprovar: el primer cromo
+  de qui arriba convidat passa per `/modera` com tots.
+
 ## 5 · El que espera una decisió de l'autor
 
 Viu a `backlog.md`, «El que espera una decisió de l'autor»: una sola llista, que
