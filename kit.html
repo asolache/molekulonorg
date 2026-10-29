@@ -257,7 +257,7 @@ footer a{color:var(--light)}
 .kit label{font-weight:700}
 .kit .q label b{color:var(--purple);margin-right:.4rem}
 .kit .ajuda{font-size:.84rem;color:var(--muted);margin:0}
-.kit input[type=text],.kit input[type=url],.kit textarea{font:inherit;width:100%;min-width:0;background:var(--card);color:var(--text);
+.kit input[type=text],.kit input[type=url],.kit textarea,.kit select{font:inherit;width:100%;min-width:0;background:var(--card);color:var(--text);
   border:1px solid var(--border);border-radius:10px;padding:.55rem .7rem}
 .kit textarea{min-height:4.2rem;resize:vertical}
 .kit input:focus,.kit textarea:focus{outline:2px solid var(--purple);outline-offset:1px}
@@ -294,6 +294,8 @@ footer a{color:var(--light)}
 .kit .accepto input{margin-top:.3rem}
 .kit .clau{font-family:var(--mono);font-size:.95rem;background:var(--bg);border:1px dashed var(--purple);border-radius:8px;padding:.5rem .7rem;word-break:break-all;margin:.4rem 0 0}
 .kit details{margin-top:.8rem}
+.kit a.boto{display:inline-block;text-decoration:none;font-weight:700;font-size:.9rem;padding:.6rem 1rem;border:1px solid var(--border);border-radius:10px;color:var(--text)}
+.kit .convit{border-color:var(--purple);margin:0 0 .9rem}
 .kit summary{cursor:pointer;font-weight:600;color:var(--light);font-size:.9rem}
 
 </style>
@@ -323,6 +325,13 @@ al costat dels del còmic, l'envies des d'aquí mateix.</p>
 </header>
 <div class="wrap">
 <section class="box kit" id="kit">
+<div class="bloc convit" id="k-convit" hidden>
+<h3><span>Benvingut a Moleculandia, <span id="k-convit-nom"></span></span></h3>
+<p class="ajuda">T'hi convida <strong id="k-convit-de"></strong>, i t'ha començat la fitxa amb el que sap de tu.
+<strong>És un esborrany, no un retrat</strong>: canvia-ho tot, tria el teu nom de guerra de debò i, quan t'agradi,
+envia'l a la col·lecció. Un cop hi siguis, també podràs convidar els teus.</p>
+<p class="ajuda" id="k-convit-ja" hidden>En aquest navegador ja hi ha un cromo teu, i no l'hem tocat.</p>
+</div>
 <div class="llengua" role="group" aria-label="Llengua de la fitxa">
 <button type="button" data-llengua="ca" aria-pressed="true">CAT</button>
 <button type="button" data-llengua="es" aria-pressed="false">CAST</button>
@@ -400,8 +409,19 @@ personatge surti a la col·lecció de molekulon.org si l'autor l'aprova.</label>
 ja és aprovat o retirar-lo, des d'aquí o des d'un altre aparell. Guarda-la: <strong>no la podem recuperar</strong>,
 perquè no tenim el teu correu. Si tornes a enviar, s'envia una versió nova del mateix cromo; si ja estava aprovat, surt a l'instant.</p>
 <pre class="clau" id="e-clau"></pre>
+<h3><span>El teu enllaç d'entrada</span><button type="button" class="copia" data-de="e-entra">Copia l'enllaç</button></h3>
+<p class="ajuda">Entra com vulguis: <strong>aquest navegador ja et recorda</strong>; en un altre aparell, obre aquest enllaç
+(guarda'l on guardis les coses teves: un xat amb tu mateix, el correu, els marcadors) o escriu el nom i la clau a baix.
+Porta la clau a dins: <strong>no el comparteixis</strong>.</p>
+<pre class="clau" id="e-entra"></pre>
 <div class="botons"><button type="button" class="seg" id="e-mira">Mira com està</button>
-<button type="button" class="seg" id="e-retira">Retira'l de la col·lecció</button></div>
+<button type="button" class="seg" id="e-retira">Retira'l de la col·lecció</button>
+<a class="seg boto" href="/convida">Convida algú a Moleculandia →</a></div>
+<div id="e-xarxa" hidden>
+<h3><span>La teva xarxa de moleculons</span></h3>
+<p class="ajuda" id="e-de"></p>
+<ul class="lead" id="e-xarxa-llista"></ul>
+</div>
 </div>
 
 <details>
@@ -431,7 +451,7 @@ var CROMO = (function(){
   var O = {
     col: ["#e040fb","#00b0ff","#00e676","#ff9100","#ffd700","#e53935","#5e35b1","#00acc1","#f5f5f7","#26262f"],
     pell: ["#f8d5c2","#f0c3a0","#d9a271","#b87d4f","#8d5524","#5c3a21"],
-    cabell: [["curt","Curt"],["llarg","Llarg"],["arrissat","Arrissat"],["trenes","Trenes"],["monyo","Monyo"],["rapat","Rapat"]],
+    cabell: [["curt","Curt"],["mitja","Mitja melena"],["llarg","Llarg"],["arrissat","Arrissat"],["trenes","Trenes"],["monyo","Monyo"],["rapat","Rapat"]],
     colCab: ["#2b2b2b","#5d4037","#a1662f","#e0b34a","#c62828","#7e57c2","#26c6da","#eeeeee"],
     ulls: ["#3e2723","#5d4037","#2e7d32","#1565c0","#6a1b9a","#00838f"],
     roba: [["capa","Amb capa"],["caputxa","Amb caputxa"],["armilla","Amb armilla"],["res","Sense res"]],
@@ -474,6 +494,7 @@ var CROMO = (function(){
     if (f.cabell === "arrissat") { [[-38,-30],[0,-46],[38,-30],[-52,-4],[52,-4]].forEach(function(d){ arc(d[0], d[1], 24); }); return; }
     arc(0, -6, 55, Math.PI, 0);
     if (f.cabell === "llarg") { x.fillRect(cx - 58, cy - 8, 20, 96); x.fillRect(cx + 38, cy - 8, 20, 96); }
+    if (f.cabell === "mitja") { x.fillRect(cx - 58, cy - 8, 18, 52); x.fillRect(cx + 40, cy - 8, 18, 52); }
     if (f.cabell === "trenes") { x.fillRect(cx - 62, cy - 4, 18, 74); x.fillRect(cx + 44, cy - 4, 18, 74); arc(-53, 74, 13); arc(53, 74, 13); }
     if (f.cabell === "monyo") arc(0, -62, 24);
   }
@@ -587,7 +608,67 @@ var CROMO = (function(){
     u = String(u || "").trim();
     return /^https:\/\/(www\.|m\.)?(youtube\.com\/(watch\?v=|shorts\/)|youtu\.be\/)[A-Za-z0-9_-]{11}/.test(u) ? u : "";
   }
-  return { O: O, BASE: BASE, aspecte: aspecte, atzar: atzar, nick: nick, pinta: pinta, rpc: rpc, video: video, API: API };
+
+  /* Els controls de l'aspecte surten de les llistes del dibuix: la pantalla no
+     pot oferir una opció que el dibuix no sap pintar. El fan servir el kit i
+     /convida, que pinten el mateix cromo. */
+  function tries(asp, canvi){
+    var fila = function(id, opcions, clau, color){
+      var c = document.getElementById(id); c.innerHTML = "";
+      opcions.forEach(function(o){
+        var v = Array.isArray(o) ? o[0] : o, b = document.createElement("button");
+        b.type = "button";
+        if (color) { b.className = "color"; b.style.background = v; b.setAttribute("aria-label", v); }
+        else b.textContent = Array.isArray(o) ? o[1] : o;
+        b.setAttribute("aria-pressed", String(asp[clau] === v));
+        b.addEventListener("click", function(){ asp[clau] = v; tries(asp, canvi); canvi(); });
+        c.appendChild(b);
+      });
+    };
+    fila("a-col1", O.col, "col1", true); fila("a-col2", O.col, "col2", true);
+    fila("a-pell", O.pell, "pell", true); fila("a-cabell", O.cabell, "cabell");
+    fila("a-colCab", O.colCab, "colCab", true); fila("a-ulls", O.ulls, "ulls", true);
+    fila("a-roba", O.roba, "roba"); fila("a-mascara", O.mascara, "mascara"); fila("a-emblema", O.emblema, "emblema");
+  }
+
+  /* ── El convit: una fitxa començada, dins l'enllaç ──────────────────────────
+     Qui convida omple el que sap de l'altra persona i en surt un enllaç
+     /kit#convit=…. La fitxa viatja **a la part de després del #**, que el
+     navegador no envia mai a cap servidor: no es guarda enlloc fins que la
+     persona convidada la fa seva i l'envia ella. El codi «c», si n'hi ha, és el
+     que lliga el cromo nou amb qui l'ha convidat (sql/003_convits.sql).
+
+     El que arriba per l'enllaç ho pot haver escrit qualsevol: es retalla amb
+     les mateixes mides del kit i l'aspecte passa per aspecte(). */
+  var b64 = {
+    fa: function(txt){ var b = new TextEncoder().encode(txt), s = ""; for (var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+      return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); },
+    desfa: function(t){ var s = atob(String(t).replace(/-/g, "+").replace(/_/g, "/")), b = new Uint8Array(s.length);
+      for (var i = 0; i < s.length; i++) b[i] = s.charCodeAt(i); return new TextDecoder().decode(b); }
+  };
+  var talla = function(v, n){ return String(v == null ? "" : v).trim().slice(0, n); };
+  var tallaL = function(l, n){ return (Array.isArray(l) ? l : []).map(function(x){ return talla(x, 60); }).filter(Boolean).slice(0, n); };
+  function convit(c){
+    return { nom: talla(c.nom, 40), poders: tallaL(c.poders, 5), armes: tallaL(c.armes, 5), demo: talla(c.demo, 160),
+             lloc: talla(c.lloc, 60), relat: talla(c.relat, 300), aspecte: aspecte(c.aspecte),
+             de: nick(c.de) || "comando", c: /^[A-Za-z0-9_-]{12,32}$/.test(c.c || "") ? c.c : "" };
+  }
+  function enllacConvit(c){ return "https://molekulon.org/kit#convit=" + b64.fa(JSON.stringify(convit(c))); }
+  function llegeixConvit(hash){
+    var m = /(?:^#|&)convit=([A-Za-z0-9_-]+)/.exec(hash || "");
+    if (!m) return null;
+    try { return convit(JSON.parse(b64.desfa(m[1]))); } catch (e) { return null; }
+  }
+  /* L'enllaç d'entrada: el nick i la clau d'edició dins un enllaç personal, per
+     entrar des de qualsevol aparell sense compte. És la clau mateixa, i es diu. */
+  function enllacEntrada(n, clau){ return "https://molekulon.org/kit#entra=" + n + "." + clau; }
+  function llegeixEntrada(hash){
+    var m = /(?:^#|&)entra=([a-z0-9-]{2,20})\.([A-Za-z0-9_-]{20,200})/.exec(hash || "");
+    return m ? { nick: m[1], clau: m[2] } : null;
+  }
+
+  return { O: O, BASE: BASE, aspecte: aspecte, atzar: atzar, nick: nick, pinta: pinta, rpc: rpc, video: video, API: API,
+           tries: tries, enllacConvit: enllacConvit, llegeixConvit: llegeixConvit, enllacEntrada: enllacEntrada, llegeixEntrada: llegeixEntrada };
 })();
 
 CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_publishable_xsEfyOqJ5tJwaxcoH_CiNg_SlsqDZb1";
@@ -629,7 +710,7 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     did_forma: "El did del SOS no té la forma bona: comença per did:sos: i es copia sencer del teu perfil."
   };
   var DESA = "molekulon_cromo";
-  var lang = "ca", asp = CROMO.aspecte(CROMO.BASE);
+  var lang = "ca", asp = CROMO.aspecte(CROMO.BASE), convit = null;
   var $ = function(id){ return document.getElementById(id); };
   var llista = function(s){ return s.split(/[,\n;]+/).map(function(x){ return x.trim(); }).filter(Boolean); };
   var etiqueta = function(s){ return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]/g, ""); };
@@ -650,27 +731,7 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     $("k-nick").textContent = n ? "@" + n : "—";
   }
 
-  /* Els controls surten de les llistes del dibuix: la pantalla no pot oferir
-     una opció que el dibuix no sap pintar. */
-  function tries(){
-    var O = CROMO.O;
-    var fila = function(id, opcions, clau, color){
-      var c = $(id); c.innerHTML = "";
-      opcions.forEach(function(o){
-        var v = Array.isArray(o) ? o[0] : o, b = document.createElement("button");
-        b.type = "button";
-        if (color) { b.className = "color"; b.style.background = v; b.setAttribute("aria-label", v); }
-        else b.textContent = Array.isArray(o) ? o[1] : o;
-        b.setAttribute("aria-pressed", String(asp[clau] === v));
-        b.addEventListener("click", function(){ asp[clau] = v; tries(); redibuixa(); });
-        c.appendChild(b);
-      });
-    };
-    fila("a-col1", O.col, "col1", true); fila("a-col2", O.col, "col2", true);
-    fila("a-pell", O.pell, "pell", true); fila("a-cabell", O.cabell, "cabell");
-    fila("a-colCab", O.colCab, "colCab", true); fila("a-ulls", O.ulls, "ulls", true);
-    fila("a-roba", O.roba, "roba"); fila("a-mascara", O.mascara, "mascara"); fila("a-emblema", O.emblema, "emblema");
-  }
+  function tries(){ CROMO.tries(asp, redibuixa); }
 
   function munta(){
     var t = T[lang], v = llegeix();
@@ -720,7 +781,52 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
   function pintaDesat(){
     var d = desat();
     $("e-desat").hidden = !d;
-    if (d) { $("e-desat-nick").textContent = "@" + d.nick; $("e-clau").textContent = d.clau; }
+    if (d) { $("e-desat-nick").textContent = "@" + d.nick; $("e-clau").textContent = d.clau;
+             $("e-entra").textContent = CROMO.enllacEntrada(d.nick, d.clau); xarxa(d); }
+  }
+
+  /* La xarxa: qui has convidat i qui ja hi és. Si la base de dades encara no
+     sap de convits (sql/003_convits.sql sense aplicar), el bloc no surt i la
+     resta funciona igual. */
+  function xarxa(d){
+    CROMO.rpc("la_meva_xarxa", { p_nick: d.nick, p_clau: d.clau }).then(function(r){
+      var l = $("e-xarxa-llista"); l.innerHTML = "";
+      if (!r || r.error) { $("e-xarxa").hidden = true; return; }
+      $("e-xarxa").hidden = false;
+      $("e-de").textContent = r.de ? (r.de === "comando" ? "Et va convidar el Comando." : "Et va convidar @" + r.de + ".") : "";
+      (r.convits || []).forEach(function(c){
+        var li = document.createElement("li");
+        li.textContent = c.usat_per ? "@" + c.usat_per + (c.aprovat ? " · ja és a la col·lecció" : " · pendent d'aprovar") :
+          "Un convit del " + String(c.creat || "").slice(0, 10) + " · encara no l'han obert";
+        l.appendChild(li);
+      });
+      if (!(r.convits || []).length) { var li = document.createElement("li"); li.textContent = "Encara no has convidat ningú."; l.appendChild(li); }
+    }, function(){ $("e-xarxa").hidden = true; });
+  }
+
+  /* Lliga el cromo nou amb qui el va convidar. Si falla, el cromo ja és enviat
+     i no es perd res: només que la xarxa no ho sabrà. */
+  function lliga(n, clau){
+    CROMO.rpc("lliga_convit", { p_codi: convit.c, p_nick: n, p_clau: clau }).then(function(){ var d = desat(); if (d) xarxa(d); }, function(){});
+  }
+
+  /* Arribar amb un enllaç. #entra=… és el teu enllaç personal: recupera el
+     cromo i s'esborra de la barra d'adreces, perquè porta la clau. #convit=… és
+     una fitxa començada per algú altre: omple el kit si en aquest navegador no
+     hi ha ja un cromo teu, i la persona la canvia, la fa seva i l'envia. */
+  function arriba(){
+    var h = location.hash, e = CROMO.llegeixEntrada(h);
+    if (e) { try { history.replaceState(null, "", location.pathname); } catch (x) {} recupera(e.nick, e.clau); return; }
+    convit = CROMO.llegeixConvit(h);
+    if (!convit) return;
+    $("k-convit").hidden = false;
+    $("k-convit-de").textContent = convit.de === "comando" ? "el Comando" : "@" + convit.de;
+    $("k-convit-nom").textContent = convit.nom || "tu";
+    if (desat()) { $("k-convit-ja").hidden = false; return; }
+    $("k-nom").value = convit.nom; $("k-poders").value = convit.poders.join(", ");
+    $("k-armes").value = convit.armes.join(", "); $("k-demo").value = convit.demo;
+    $("k-lloc").value = convit.lloc; $("e-relat").value = convit.relat;
+    asp = convit.aspecte;
   }
 
   function envia(retira){
@@ -733,7 +839,7 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
       if (dd && !/^did:sos:[a-z0-9-]{4,16}:[A-Za-z0-9_-]{16,64}$/.test(dd)) { estatEnvia(ERR.did_forma); return; }
       if (vu && !CROMO.video(vu)) { estatEnvia("L'enllaç del vídeo ha de ser de YouTube i sencer (https://www.youtube.com/watch?v=… o https://youtu.be/…)."); return; }
     } else if (!d) { estatEnvia("En aquest navegador no hi ha cap cromo teu desat."); return; }
-    var n = d ? d.nick : CROMO.nick(v.nom), clau = d ? d.clau : novaClau();
+    var n = d ? d.nick : CROMO.nick(v.nom), clau = d ? d.clau : novaClau(), primer = !d;
     var fitxa = { nom: v.nom, lloc: v.lloc, poders: v.poders, armes: v.armes, demo: v.demo,
                   relat: $("e-relat").value.trim().slice(0, 300), video: CROMO.video($("e-video").value),
                   did: $("e-did").value.trim().slice(0, 100),
@@ -743,6 +849,7 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     estatEnvia(retira ? "Retirant…" : "Enviant…");
     CROMO.rpc("envia_cromo", { p_nick: n, p_fitxa: fitxa, p_clau: clau, p_retira: !!retira }).then(function(r){
       desa({ nick: n, clau: clau }); pintaDesat(); redibuixa();
+      if (primer && !retira && convit && convit.c) lliga(n, clau);
       /* Aprovació mixta: el primer cromo l'aprova l'autor, i els canvis d'un
          cromo ja aprovat surten sols. La base de dades diu quin dels dos ha estat. */
       estatEnvia(retira ? "Retirat. Ja no surt a la col·lecció." :
@@ -807,7 +914,7 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
       munta();
     });
   });
-  tries(); pintaDesat(); redibuixa(); munta();
+  arriba(); tries(); pintaDesat(); redibuixa(); munta();
 })();
 </script>
 </main>

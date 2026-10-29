@@ -20,7 +20,7 @@ es buida mai.
 Format: `- ruta · cara · una línia del que hi entra`. El generador llegeix
 aquesta llista i res més. Crear una carpeta sense declarar-la trenca el CI.
 
-- `saber` · saber · El cervell: mapa, codex, contracte de la IA, taxonomia, backlog, productes, el traspàs i l'estudi d'alta. `heredado/` ve de TeamTowers i no s'edita
+- `saber` · saber · El cervell: mapa, codex, contracte de la IA, taxonomia, backlog, productes, el traspàs, l'estudi d'alta i els gags del directe. `heredado/` ve de TeamTowers i no s'edita
 - `data` · obra · Les dades de les pàgines: `comando.json` ve de teamtowershuma i no s'edita; `mostra.json` i `cromos.json`, sí
 - `cromos` · obra · Els retrats dels cromos del còmic
 - `mostra` · obra · Les pàgines del còmic que es publiquen al lector
