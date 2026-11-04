@@ -7,6 +7,40 @@ la citen.
 
 ## Pendent
 
+### Com arriba el missatge del final (demanat 2026-11-04)
+
+**Demanat per:** l'Àlvar: la pel·lícula acaba quan el repartiment rep un
+missatge que els diu on anar per trobar-se amb més superherois del Comando.
+La web ja ho diu (constant `FINAL` de `../tools/build.js`), sense lloc ni data.
+**Què falta:** per on arriba el missatge. Els cromos no guarden cap contacte, a
+posta. Opcions: el kit (qui obre el seu cromo amb la clau el veu), el canal de
+YouTube, o un contacte opcional quan hi hagi «qui signa». **Com es tanca:** l'autor
+tria el canal i el kit el sap ensenyar.
+
+### Aplicar `sql/003_convits.sql` (demanat 2026-10-29)
+
+**Demanat per:** l'Àlvar: «enviar un link con la información precargada» i que
+la persona pugui «ir creando su red de moleculones». **Què:** els codis de
+convit i la xarxa (qui ha convidat qui). La web ja funciona sense: l'enllaç
+porta la fitxa igual, només que no queda lligat a la xarxa. **Com es tanca:**
+aplicat al projecte Teamtowershuma (els dos `revoke` en una migració a part) i
+provat com a `anon`: un cromo pendent no pot convidar, una clau de moderador
+dolenta torna `no_moderador`, un codi no es pot fer servir dues vegades i
+`xarxa_cromos` només ensenya arestes entre cromos aprovats.
+
+### Els gags del directe, confirmats (demanat 2026-10-29)
+
+**Demanat per:** l'Àlvar, després de retrobar un fan del directe. **Què:**
+`directe.md` proposa una entrada per heroi i cinc seqüències. **Com es tanca:**
+l'autor diu què és memòria i què proposta, i el que quedi puja al guió de
+teamtowershuma (veda 1).
+
+### Ensenyar la xarxa a Moleculandia (demanat 2026-10-29)
+
+**Què:** `xarxa_cromos()` ja torna les arestes; falta pintar-les (a
+`/personatges` o a Moleculandia). **Com es tanca:** quan hi hagi prou convits
+usats per veure-hi una xarxa i no tres punts.
+
 ### Aplicar `sql/002_auditoria_cervell.sql` (demanat 2026-10-17)
 
 **Demanat per:** l'Àlvar, a l'auditoria («corrígelo»). **Què:** treure la marca

@@ -17,8 +17,8 @@ La cosa mateixa: el que fa servir la gent. Una sola font de veritat per cada cos
 | `data/` | Les dades de les pàgines: `comando.json` ve de teamtowershuma i no s'edita; `mostra.json` i `cromos.json`, sí | 3 · 31 KB |
 | `herramientas/` | El que el projecte hereta per treballar: l'editor del mapa, revisar-lo i treure'n la web. No s'edita aquí | 7 · 741 KB |
 | `mostra/` | Les pàgines del còmic que es publiquen al lector | 9 · 2714 KB |
-| `sql/` | La base de dades dels cromos al Supabase del SOS: un fitxer per canvi, en ordre | 2 · 20 KB |
-| `tools/` | El generador de les pàgines, la sincronia amb teamtowershuma i les seves guardes (`check.js`, `prova-firma.js`) | 4 · 141 KB |
+| `sql/` | La base de dades dels cromos al Supabase del SOS: un fitxer per canvi, en ordre | 3 · 28 KB |
+| `tools/` | El generador de les pàgines, la sincronia amb teamtowershuma i les seves guardes (`check.js`, `prova-firma.js`) | 4 · 175 KB |
 
 ## prova
 
@@ -35,7 +35,7 @@ El que sabem i encara no és obra. Es cita, no es copia.
 
 | carpeta | què hi entra | fitxers |
 |---|---|---|
-| `saber/` | El cervell: mapa, codex, contracte de la IA, taxonomia, backlog, productes, el traspàs i l'estudi d'alta. `heredado/` ve de TeamTowers i no s'edita | 12 · 176 KB |
+| `saber/` | El cervell: mapa, codex, contracte de la IA, taxonomia, backlog, productes, el traspàs, l'estudi d'alta i els gags del directe. `heredado/` ve de TeamTowers i no s'edita | 13 · 187 KB |
 
 ---
 

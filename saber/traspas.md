@@ -155,6 +155,40 @@ Qui continuï això s'hi trobarà i val més saber per què hi són:
 - **L'artefacte de Claude** (ara públic) segueix existint amb la IA dins; la
   casa del cromo i de l'enviament és `/kit`, perquè funciona sense compte.
 
+## 4ter · Els convits i la xarxa de moleculons (2026-10-29)
+
+- **Convidar és començar el cromo d'algú.** A `/convida` (fora del menú; s'hi
+  arriba des del kit) qui ja és dins omple el que sap de l'altra persona i en
+  surt un enllaç `/kit#convit=…`. La fitxa va **dins l'enllaç, darrere del #**:
+  no arriba a cap servidor ni es guarda enlloc fins que la persona l'envia.
+- **El kit l'omple sol** i diu qui convida. Si en aquell navegador ja hi ha un
+  cromo, no el toca.
+- **Entrar com vulguis, sense comptes:** el navegador et recorda; l'enllaç
+  d'entrada (`/kit#entra=nick.clau`, que el kit dona un cop enviat) obre el teu
+  cromo en un altre aparell i s'esborra de la barra; o el nom i la clau a mà.
+  Comptes amb correu o Google no: guardar correus espera «qui signa».
+- **La xarxa** (qui ha convidat qui) és a `sql/003_convits.sql`, **sense
+  aplicar** fins que l'autor ho digui. Convidar no és aprovar: el primer cromo
+  de qui arriba convidat passa per `/modera` com tots.
+
+## 4quater · L'alta sencera i l'acte III (2026-11-04)
+
+- **La fitxa sencera**, com els catorze del còmic: a més del cromo v1, el
+  paper (`rol`, surt al cromo sota el nom), què aporta a un equip (`equip`),
+  una frase (`lema`) i com entra a l'acte III (`escena`). Viatgen al convit,
+  surten a `/personatges` («On surt: Acte III») i a `/modera`. La `fitxa` és
+  `jsonb` lliure: **no cal cap migració**.
+- **L'esborrany es desa** al navegador a cada tecla; tornar al kit amb un cromo
+  publicat el porta de la base de dades en comptes d'ensenyar la fitxa buida.
+- **Més d'un personatge per navegador**: «Crea un altre personatge» i la llista
+  «Els teus personatges», cadascun amb la seva clau.
+- **«Per a mostra, un botó»** omple un superheroi inventat; el kit no el deixa
+  publicar tal qual. `/kit#mostra` l'obre directament.
+- **La memètica** (`MEMA`): «Totes som superherois. Totes tenim superpoders.» al
+  kit, la portada, la història, la col·lecció i /convida. **El final** (`FINAL`),
+  dit per l'autor: un missatge us diu on anar i allà us trobeu amb més superherois
+  del Comando. On i quan no surten: són del canon.
+
 ## 5 · El que espera una decisió de l'autor
 
 Viu a `backlog.md`, «El que espera una decisió de l'autor»: una sola llista, que
