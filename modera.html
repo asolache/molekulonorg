@@ -69,6 +69,7 @@ nav.barra .dret{margin-left:auto;font-size:.82rem}
 .acts{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:1.4rem}
 .acts a{text-decoration:none;font-size:.88rem;font-weight:600;padding:.6rem 1.1rem;border-radius:10px;
   border:1px solid var(--border);background:var(--card);color:var(--text)}
+.final{border-left:3px solid var(--purple);padding:.5rem .9rem;margin:1rem 0;background:var(--card);border-radius:0 10px 10px 0}
 .acts a.pri{background:var(--purple);border-color:var(--purple);color:#0b0b12}
 
 .wrap{max-width:1060px;margin:0 auto;padding:0 1.2rem 4rem}
@@ -373,7 +374,7 @@ var CROMO = (function(){
     x.fillText(s, cx, y);
   }
 
-  /* f = { nom, lloc, poders[], armes[], nick, aspecte } */
+  /* f = { nom, rol, lloc, poders[], armes[], nick, aspecte } */
   function pinta(cv, d){
     var W = 600, H = 840, x = cv.getContext("2d"), f = aspecte(d.aspecte), cx = 300, cy = 250;
     var g = x.createLinearGradient(0, 0, W, H);
@@ -430,7 +431,7 @@ var CROMO = (function(){
     x.textBaseline = "alphabetic"; x.fillStyle = "#fff";
     encabeix(x, d.nom || "El teu nom de guerra", cx, 548, 500, 46, 24, "800");
     x.fillStyle = "rgba(255,255,255,.6)";
-    encabeix(x, (d.lloc || "").toUpperCase(), cx, 578, 480, 16, 12, "600");
+    encabeix(x, [d.rol, d.lloc].filter(Boolean).join("  ·  ").toUpperCase(), cx, 578, 480, 16, 12, "600");
     x.strokeStyle = "rgba(255,255,255,.22)"; x.lineWidth = 2;
     x.beginPath(); x.moveTo(70, 598); x.lineTo(W - 70, 598); x.stroke();
 
@@ -508,11 +509,16 @@ var CROMO = (function(){
     desfa: function(t){ var s = atob(String(t).replace(/-/g, "+").replace(/_/g, "/")), b = new Uint8Array(s.length);
       for (var i = 0; i < s.length; i++) b[i] = s.charCodeAt(i); return new TextDecoder().decode(b); }
   };
+  /* La fitxa sencera, la mateixa que porten els catorze del còmic: rol, què
+     aporta a un equip, una frase seva, i com entra a l'acte III. Les mides
+     són les mateixes al kit, al convit, a la col·lecció i a /modera. */
+  var MIDA = { rol: 60, equip: 160, lema: 120, escena: 160 };
   var talla = function(v, n){ return String(v == null ? "" : v).trim().slice(0, n); };
   var tallaL = function(l, n){ return (Array.isArray(l) ? l : []).map(function(x){ return talla(x, 60); }).filter(Boolean).slice(0, n); };
   function convit(c){
-    return { nom: talla(c.nom, 40), poders: tallaL(c.poders, 5), armes: tallaL(c.armes, 5), demo: talla(c.demo, 160),
-             lloc: talla(c.lloc, 60), relat: talla(c.relat, 300), aspecte: aspecte(c.aspecte),
+    return { nom: talla(c.nom, 40), rol: talla(c.rol, MIDA.rol), poders: tallaL(c.poders, 5), armes: tallaL(c.armes, 5), demo: talla(c.demo, 160),
+             lloc: talla(c.lloc, 60), equip: talla(c.equip, MIDA.equip), lema: talla(c.lema, MIDA.lema), escena: talla(c.escena, MIDA.escena),
+             relat: talla(c.relat, 300), aspecte: aspecte(c.aspecte),
              de: nick(c.de) || "comando", c: /^[A-Za-z0-9_-]{12,32}$/.test(c.c || "") ? c.c : "" };
   }
   function enllacConvit(c){ return "https://molekulon.org/kit#convit=" + b64.fa(JSON.stringify(convit(c))); }
@@ -529,7 +535,7 @@ var CROMO = (function(){
     return m ? { nick: m[1], clau: m[2] } : null;
   }
 
-  return { O: O, BASE: BASE, aspecte: aspecte, atzar: atzar, nick: nick, pinta: pinta, rpc: rpc, video: video, API: API,
+  return { O: O, BASE: BASE, MIDA: MIDA, aspecte: aspecte, atzar: atzar, nick: nick, pinta: pinta, rpc: rpc, video: video, API: API,
            tries: tries, enllacConvit: enllacConvit, llegeixConvit: llegeixConvit, enllacEntrada: enllacEntrada, llegeixEntrada: llegeixEntrada };
 })();
 
@@ -547,7 +553,7 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
   function fila(c){
     var f = c.fitxa || {}, a = el("article", "mod-fila"), cv = document.createElement("canvas");
     cv.width = 600; cv.height = 840;
-    CROMO.pinta(cv, { nom: String(f.nom || ""), lloc: String(f.lloc || ""), poders: f.poders || [], armes: f.armes || [], nick: c.nick, aspecte: f.aspecte });
+    CROMO.pinta(cv, { nom: String(f.nom || ""), rol: String(f.rol || ""), lloc: String(f.lloc || ""), poders: f.poders || [], armes: f.armes || [], nick: c.nick, aspecte: f.aspecte });
     a.appendChild(cv);
     var cos = el("div");
     cos.appendChild(el("h3", "", (f.nom || c.nick) + "  ·  @" + c.nick));
@@ -556,7 +562,8 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     var txt = function(k, v){ if (!v) return; cos.appendChild(el("p", "k", k)); cos.appendChild(el("p", "", v)); };
     txt("Superpoders", (f.poders || []).join(" · "));
     txt("Superarmes", (f.armes || []).join(" · "));
-    txt("La demo", f.demo); txt("El relat", f.relat); txt("did", f.did);
+    txt("El paper", f.rol); txt("La demo", f.demo); txt("En un equip", f.equip); txt("Entrada a l'acte III", f.escena);
+    txt("La frase", f.lema); txt("El relat", f.relat); txt("did", f.did);
     var v = CROMO.video(f.video);
     if (v) { var p = el("p"), l = el("a", "", "Mira el vídeo ↗"); l.href = v; l.target = "_blank"; l.rel = "noopener nofollow"; p.appendChild(l); cos.appendChild(p); }
     else cos.appendChild(el("p", "est-pendent", "Sense vídeo de YouTube"));

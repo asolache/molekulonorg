@@ -69,6 +69,7 @@ nav.barra .dret{margin-left:auto;font-size:.82rem}
 .acts{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:1.4rem}
 .acts a{text-decoration:none;font-size:.88rem;font-weight:600;padding:.6rem 1.1rem;border-radius:10px;
   border:1px solid var(--border);background:var(--card);color:var(--text)}
+.final{border-left:3px solid var(--purple);padding:.5rem .9rem;margin:1rem 0;background:var(--card);border-radius:0 10px 10px 0}
 .acts a.pri{background:var(--purple);border-color:var(--purple);color:#0b0b12}
 
 .wrap{max-width:1060px;margin:0 auto;padding:0 1.2rem 4rem}
@@ -298,6 +299,20 @@ footer a{color:var(--light)}
 .kit a.boto{display:inline-block;text-decoration:none;font-weight:700;font-size:.9rem;padding:.6rem 1rem;border:1px solid var(--border);border-radius:10px;color:var(--text)}
 .kit .convit{border-color:var(--purple);margin:0 0 .9rem}
 .kit summary{cursor:pointer;font-weight:600;color:var(--light);font-size:.9rem}
+.kit .pas{margin:1.1rem 0 0;font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--purple)}
+.kit .pas:first-child{margin-top:0}
+.kit .mostra-boto{display:grid;grid-template-columns:auto 1fr auto;gap:.4rem .8rem;align-items:center;margin-bottom:1rem}
+@media (max-width:620px){.kit .mostra-boto{grid-template-columns:1fr}.kit .mostra-boto .llengua{justify-content:flex-start}}
+.kit .progres{margin:.6rem auto 0;max-width:320px}
+.kit .barra-p{height:8px;border-radius:999px;background:var(--border);overflow:hidden}
+.kit .barra-p span{display:block;height:100%;width:0;background:linear-gradient(90deg,#e040fb,#00b0ff);transition:width .3s}
+.kit .progres .ajuda{text-align:center;margin-top:.35rem}
+.kit .desat-ok{text-align:center;min-height:1.2em;color:var(--green)}
+.kit .crida{text-align:center}
+.kit .benvinguda{text-align:center;border-bottom:1px dashed var(--border);padding-bottom:.9rem;margin-bottom:.6rem}
+.kit .benvinguda h3{justify-content:center}
+.kit .benvinguda .botons{justify-content:center}
+.kit a.fer.boto{background:var(--purple);border-color:var(--purple);color:#0b0b12}
 
 </style>
 </head>
@@ -319,7 +334,9 @@ footer a{color:var(--light)}
 <div class="hero-inner">
 <span class="tag">Moleculandia creix</span>
 <h1>Convida <em>un moleculon</em></h1>
-<p class="sub">Tens al cap algú que ja és un superheroi i no ho sap? Comença-li el cromo amb el que en saps
+<p class="crida"><b>Totes som superherois. Totes tenim superpoders.</b></p>
+<p class="sub">Tens al cap algú que ja és un superheroi i no ho sap? A l'acte III el Comando surt a buscar-los, i tu ja
+n'has trobat un. Comença-li el cromo amb el que en saps
 —com es veu, què arregla, què t'ha fet— i envia-li l'enllaç. L'obrirà al <a href="/kit">kit</a> amb tot omplert,
 i només l'haurà de fer seu.</p>
 </div>
@@ -331,6 +348,9 @@ i només l'haurà de fer seu.</p>
 <div class="q"><label for="c-nom"><b>1</b>Com li dius, de moment?</label>
 <p class="ajuda">Un nom provisional. El nom de guerra de debò el triarà ell o ella.</p>
 <input type="text" id="c-nom" maxlength="40" autocomplete="off"></div>
+<div class="q"><label for="c-rol"><b>·</b>Quin paper hi faria?</label>
+<p class="ajuda">Com els del còmic: «Mecànic de guàrdia», «La que fa que la gent es parli».</p>
+<input type="text" id="c-rol" maxlength="60" autocomplete="off"></div>
 <div class="q"><label for="c-poders"><b>2</b>Quins superpoders li has vist?</label>
 <p class="ajuda">El que l'has vist fer. Fins a cinc, separats per comes.</p>
 <textarea id="c-poders"></textarea></div>
@@ -342,6 +362,11 @@ i només l'haurà de fer seu.</p>
 <div class="q"><label for="c-lloc"><b>·</b>D'on és?</label>
 <p class="ajuda">Només si saps que ho vol dir.</p>
 <input type="text" id="c-lloc" maxlength="60" autocomplete="off"></div>
+<div class="q"><label for="c-equip"><b>·</b>Què aporta a un equip?</label>
+<input type="text" id="c-equip" maxlength="160" autocomplete="off"></div>
+<div class="q"><label for="c-escena"><b>·</b>Com l'imagines entrant a l'acte III?</label>
+<p class="ajuda">El Comando surt a buscar els 150.000. Una frase: què fa quan apareix.</p>
+<input type="text" id="c-escena" maxlength="160" autocomplete="off"></div>
 <div class="q"><label for="c-relat"><b>·</b>La gesta per la qual el convides</label>
 <p class="ajuda">Dues o tres frases amb el to del Comando. Li surt com a relat del cromo, i el pot canviar.</p>
 <textarea id="c-relat" maxlength="300"></textarea></div>
@@ -446,7 +471,7 @@ var CROMO = (function(){
     x.fillText(s, cx, y);
   }
 
-  /* f = { nom, lloc, poders[], armes[], nick, aspecte } */
+  /* f = { nom, rol, lloc, poders[], armes[], nick, aspecte } */
   function pinta(cv, d){
     var W = 600, H = 840, x = cv.getContext("2d"), f = aspecte(d.aspecte), cx = 300, cy = 250;
     var g = x.createLinearGradient(0, 0, W, H);
@@ -503,7 +528,7 @@ var CROMO = (function(){
     x.textBaseline = "alphabetic"; x.fillStyle = "#fff";
     encabeix(x, d.nom || "El teu nom de guerra", cx, 548, 500, 46, 24, "800");
     x.fillStyle = "rgba(255,255,255,.6)";
-    encabeix(x, (d.lloc || "").toUpperCase(), cx, 578, 480, 16, 12, "600");
+    encabeix(x, [d.rol, d.lloc].filter(Boolean).join("  ·  ").toUpperCase(), cx, 578, 480, 16, 12, "600");
     x.strokeStyle = "rgba(255,255,255,.22)"; x.lineWidth = 2;
     x.beginPath(); x.moveTo(70, 598); x.lineTo(W - 70, 598); x.stroke();
 
@@ -581,11 +606,16 @@ var CROMO = (function(){
     desfa: function(t){ var s = atob(String(t).replace(/-/g, "+").replace(/_/g, "/")), b = new Uint8Array(s.length);
       for (var i = 0; i < s.length; i++) b[i] = s.charCodeAt(i); return new TextDecoder().decode(b); }
   };
+  /* La fitxa sencera, la mateixa que porten els catorze del còmic: rol, què
+     aporta a un equip, una frase seva, i com entra a l'acte III. Les mides
+     són les mateixes al kit, al convit, a la col·lecció i a /modera. */
+  var MIDA = { rol: 60, equip: 160, lema: 120, escena: 160 };
   var talla = function(v, n){ return String(v == null ? "" : v).trim().slice(0, n); };
   var tallaL = function(l, n){ return (Array.isArray(l) ? l : []).map(function(x){ return talla(x, 60); }).filter(Boolean).slice(0, n); };
   function convit(c){
-    return { nom: talla(c.nom, 40), poders: tallaL(c.poders, 5), armes: tallaL(c.armes, 5), demo: talla(c.demo, 160),
-             lloc: talla(c.lloc, 60), relat: talla(c.relat, 300), aspecte: aspecte(c.aspecte),
+    return { nom: talla(c.nom, 40), rol: talla(c.rol, MIDA.rol), poders: tallaL(c.poders, 5), armes: tallaL(c.armes, 5), demo: talla(c.demo, 160),
+             lloc: talla(c.lloc, 60), equip: talla(c.equip, MIDA.equip), lema: talla(c.lema, MIDA.lema), escena: talla(c.escena, MIDA.escena),
+             relat: talla(c.relat, 300), aspecte: aspecte(c.aspecte),
              de: nick(c.de) || "comando", c: /^[A-Za-z0-9_-]{12,32}$/.test(c.c || "") ? c.c : "" };
   }
   function enllacConvit(c){ return "https://molekulon.org/kit#convit=" + b64.fa(JSON.stringify(convit(c))); }
@@ -602,7 +632,7 @@ var CROMO = (function(){
     return m ? { nick: m[1], clau: m[2] } : null;
   }
 
-  return { O: O, BASE: BASE, aspecte: aspecte, atzar: atzar, nick: nick, pinta: pinta, rpc: rpc, video: video, API: API,
+  return { O: O, BASE: BASE, MIDA: MIDA, aspecte: aspecte, atzar: atzar, nick: nick, pinta: pinta, rpc: rpc, video: video, API: API,
            tries: tries, enllacConvit: enllacConvit, llegeixConvit: llegeixConvit, enllacEntrada: enllacEntrada, llegeixEntrada: llegeixEntrada };
 })();
 
@@ -618,12 +648,13 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
   try { mod = localStorage.getItem("molekulon_moderador") || null; } catch (e) {}
 
   function fitxa(){
-    return { nom: $("c-nom").value, poders: llista($("c-poders").value), armes: llista($("c-armes").value),
-             demo: $("c-demo").value, lloc: $("c-lloc").value, relat: $("c-relat").value, aspecte: asp };
+    return { nom: $("c-nom").value, rol: $("c-rol").value, poders: llista($("c-poders").value), armes: llista($("c-armes").value),
+             demo: $("c-demo").value, lloc: $("c-lloc").value, equip: $("c-equip").value, escena: $("c-escena").value,
+             relat: $("c-relat").value, aspecte: asp };
   }
   function redibuixa(){
     var f = fitxa();
-    CROMO.pinta($("k-cv"), { nom: f.nom, lloc: f.lloc, poders: f.poders.slice(0, 5), armes: f.armes.slice(0, 5), nick: CROMO.nick(f.nom), aspecte: asp });
+    CROMO.pinta($("k-cv"), { nom: f.nom, rol: f.rol, lloc: f.lloc, poders: f.poders.slice(0, 5), armes: f.armes.slice(0, 5), nick: CROMO.nick(f.nom), aspecte: asp });
     $("c-sortida").hidden = true;
   }
   function tries(){ CROMO.tries(asp, redibuixa); }
@@ -634,10 +665,11 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
   com.appendChild(new Option("Sense codi: l'enllaç funciona, però la xarxa no el compta", "res"));
 
   function mostra(f, de, codi, nota){
-    var enllac = CROMO.enllacConvit({ nom: f.nom, poders: f.poders, armes: f.armes, demo: f.demo, lloc: f.lloc,
-                                      relat: f.relat, aspecte: f.aspecte, de: de, c: codi });
+    var enllac = CROMO.enllacConvit({ nom: f.nom, rol: f.rol, poders: f.poders, armes: f.armes, demo: f.demo, lloc: f.lloc,
+                                      equip: f.equip, escena: f.escena, relat: f.relat, aspecte: f.aspecte, de: de, c: codi });
     var nom = f.nom.trim() || "";
-    var msg = "Ei" + (nom ? " " + nom : "") + "! T'he fet un lloc al Comando Molekulon, a Moleculandia: ja tens el cromo començat. " +
+    var msg = "Ei" + (nom ? " " + nom : "") + "! Totes som superherois, totes tenim superpoders, i el teu ja l'he vist. " +
+              "T'he fet un lloc al Comando Molekulon per a l'acte III de la pel·lícula: ja tens el cromo començat. " +
               "Obre'l, canvia el que vulguis i fes-lo teu. No cal compte de res:\n" + enllac;
     $("c-enllac").textContent = enllac; $("c-msg").textContent = msg;
     $("c-wa").href = "https://wa.me/?text=" + encodeURIComponent(msg);
@@ -666,7 +698,7 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     }).then(function(){ $("c-fes").disabled = false; });
   });
 
-  ["c-nom", "c-poders", "c-armes", "c-lloc", "c-demo", "c-relat"].forEach(function(id){ $(id).addEventListener("input", redibuixa); });
+  ["c-nom", "c-rol", "c-poders", "c-armes", "c-lloc", "c-demo", "c-equip", "c-escena", "c-relat"].forEach(function(id){ $(id).addEventListener("input", redibuixa); });
   $("k-atzar").addEventListener("click", function(){ asp = CROMO.atzar(); tries(); redibuixa(); });
   document.querySelectorAll(".kit .copia").forEach(function(b){
     b.addEventListener("click", function(){

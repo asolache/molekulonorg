@@ -171,6 +171,24 @@ Qui continuï això s'hi trobarà i val més saber per què hi són:
   aplicar** fins que l'autor ho digui. Convidar no és aprovar: el primer cromo
   de qui arriba convidat passa per `/modera` com tots.
 
+## 4quater · L'alta sencera i l'acte III (2026-11-04)
+
+- **La fitxa sencera**, com els catorze del còmic: a més del cromo v1, el
+  paper (`rol`, surt al cromo sota el nom), què aporta a un equip (`equip`),
+  una frase (`lema`) i com entra a l'acte III (`escena`). Viatgen al convit,
+  surten a `/personatges` («On surt: Acte III») i a `/modera`. La `fitxa` és
+  `jsonb` lliure: **no cal cap migració**.
+- **L'esborrany es desa** al navegador a cada tecla; tornar al kit amb un cromo
+  publicat el porta de la base de dades en comptes d'ensenyar la fitxa buida.
+- **Més d'un personatge per navegador**: «Crea un altre personatge» i la llista
+  «Els teus personatges», cadascun amb la seva clau.
+- **«Per a mostra, un botó»** omple un superheroi inventat; el kit no el deixa
+  publicar tal qual. `/kit#mostra` l'obre directament.
+- **La memètica** (`MEMA`): «Totes som superherois. Totes tenim superpoders.» al
+  kit, la portada, la història, la col·lecció i /convida. **El final** (`FINAL`),
+  dit per l'autor: un missatge us diu on anar i allà us trobeu amb més superherois
+  del Comando. On i quan no surten: són del canon.
+
 ## 5 · El que espera una decisió de l'autor
 
 Viu a `backlog.md`, «El que espera una decisió de l'autor»: una sola llista, que

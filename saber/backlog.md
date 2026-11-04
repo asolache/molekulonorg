@@ -7,6 +7,16 @@ la citen.
 
 ## Pendent
 
+### Com arriba el missatge del final (demanat 2026-11-04)
+
+**Demanat per:** l'Àlvar: la pel·lícula acaba quan el repartiment rep un
+missatge que els diu on anar per trobar-se amb més superherois del Comando.
+La web ja ho diu (constant `FINAL` de `../tools/build.js`), sense lloc ni data.
+**Què falta:** per on arriba el missatge. Els cromos no guarden cap contacte, a
+posta. Opcions: el kit (qui obre el seu cromo amb la clau el veu), el canal de
+YouTube, o un contacte opcional quan hi hagi «qui signa». **Com es tanca:** l'autor
+tria el canal i el kit el sap ensenyar.
+
 ### Aplicar `sql/003_convits.sql` (demanat 2026-10-29)
 
 **Demanat per:** l'Àlvar: «enviar un link con la información precargada» i que
