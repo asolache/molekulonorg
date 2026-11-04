@@ -1516,6 +1516,7 @@ const KIT_JS = String.raw`
       cap: ["Nom de guerra","Paper","Població","Superpoders","Superarmes","Demo","En un equip","Entrada a l'acte III","Frase"],
       sap: "Sap ", porta: " Porta ", i: " i ", demo: " A la demo: ",
       soc: "Sóc un dels 150.000. ", mema: "Totes som superherois. Totes tenim superpoders.",
+      comp: ["El meu: ", "Sóc ", " al Comando Molekulon. I el teu, quin és? Descobreix-lo aquí:"],
       ia: ["Ets qui escriu les fitxes de personatge del Comando Molekulon, un còmic i una banda del Penedès que vol fer una pel·lícula amb 150.000 persones reals. A l'acte III el Comando surt a buscar-les, i cadascuna hi entra com a superheroi fent el que ja sap fer. La pel·lícula acaba quan totes reben un missatge que els diu on anar per trobar-se amb més superherois del Comando. Escriu en català.",
            "El to: frases curtes i afirmatives, humor abans que èpica, i cap superlatiu. La imatge fantàstica ha d'anomenar una cosa que de debò passa quan aquesta persona fa el que sap fer. Mai diguis que algú és increïble o especial: digues què fa. La idea de fons: totes som superherois, totes tenim superpoders.",
            "Torna'm tres noms de guerra curts que surtin del que sé fer (si ja en tinc un, posa'l primer), el meu paper al Comando en quatre paraules, què aporto a un equip en una frase, una frase meva per sota del cromo (màxim 12 paraules), com entro en escena a l'acte III en una frase, un relat de dues o tres frases en segona persona (màxim 40 paraules) i què es veurà als deu segons de vídeo. No inventis res que no t'hagi dit.",
@@ -1526,6 +1527,7 @@ const KIT_JS = String.raw`
       cap: ["Nombre de guerra","Papel","Población","Superpoderes","Superarmas","Demo","En un equipo","Entrada en el acto III","Frase"],
       sap: "Sabe ", porta: " Lleva ", i: " y ", demo: " En la demo: ",
       soc: "Soy uno de los 150.000. ", mema: "Todas somos superhéroes. Todas tenemos superpoderes.",
+      comp: ["El mío: ", "Soy ", " en el Comando Molekulon. ¿Y el tuyo, cuál es? Descúbrelo aquí:"],
       ia: ["Eres quien escribe las fichas de personaje del Comando Molekulon, un cómic y una banda del Penedès que quiere hacer una película con 150.000 personas reales. En el acto III el Comando sale a buscarlas, y cada una entra como superhéroe haciendo lo que ya sabe hacer. La película acaba cuando todas reciben un mensaje que les dice adónde ir para encontrarse con más superhéroes del Comando. Escribe en castellano.",
            "El tono: frases cortas y afirmativas, humor antes que épica, y ningún superlativo. La imagen fantástica tiene que nombrar algo que de verdad pasa cuando esta persona hace lo que sabe hacer. Nunca digas que alguien es increíble o especial: di qué hace. La idea de fondo: todas somos superhéroes, todas tenemos superpoderes.",
            "Devuélveme tres nombres de guerra cortos que salgan de lo que sé hacer (si ya tengo uno, ponlo primero), mi papel en el Comando en cuatro palabras, qué aporto a un equipo en una frase, una frase mía para debajo del cromo (máximo 12 palabras), cómo entro en escena en el acto III en una frase, un relato de dos o tres frases en segunda persona (máximo 40 palabras) y qué se verá en los diez segundos de vídeo. No inventes nada que no te haya dicho.",
@@ -1660,6 +1662,26 @@ const KIT_JS = String.raw`
     a.href = $("k-cv").toDataURL("image/png");
     a.download = "cromo-" + (nickDe(v) || "comando") + ".png";
     document.body.appendChild(a); a.click(); setTimeout(function(){ a.remove(); }, 120);
+  }
+
+  /* Comparteix els teus superpoders: el cromo en PNG, la memètica i l'enllaç al
+     kit perquè qui ho rebi descobreixi el seu. Al mòbil obre el menú de
+     compartir del sistema (WhatsApp, Instagram…) amb la imatge; on no n'hi ha,
+     WhatsApp amb el text. No porta la clau ni res de la persona: el que hi ha
+     al cromo i prou. */
+  function comparteix(){
+    var t = T[lang], v = llegeix(), url = "https://molekulon.org/kit";
+    if (!v.poders.length) { estatEnvia("Primer escriu almenys un superpoder: és el que compartiràs."); $("k-poders").focus(); return; }
+    var txt = t.mema + " " + t.comp[0] + v.poders.slice(0, 3).join(", ") + ". " +
+      (v.nom ? t.comp[1] + v.nom + t.comp[2] : t.comp[2].replace(/^ (al|en el) /, ""));
+    var wa = function(){ window.open("https://wa.me/?text=" + encodeURIComponent(txt + " " + url), "_blank", "noopener"); };
+    if (!navigator.share) { wa(); return; }
+    $("k-cv").toBlob(function(b){
+      var f = b && typeof File === "function" ? new File([b], "cromo-" + (nickDe(v) || "comando") + ".png", { type: "image/png" }) : null;
+      var dades = { title: "Comando Molekulon", text: txt, url: url };
+      if (f && navigator.canShare && navigator.canShare({ files: [f] })) dades.files = [f];
+      navigator.share(dades).catch(function(e){ if (e && e.name !== "AbortError") wa(); });
+    }, "image/png");
   }
 
   /* «Per a mostra, un botó»: un superheroi inventat, sencer, perquè es vegi de
@@ -1835,6 +1857,7 @@ const KIT_JS = String.raw`
   $("k-baixa").addEventListener("click", baixa);
   $("k-atzar").addEventListener("click", function(){ asp = CROMO.atzar(); tries(); canvi(); });
   $("k-mostra").addEventListener("click", mostra);
+  document.querySelectorAll("[data-comparteix]").forEach(function(b){ b.addEventListener("click", comparteix); });
   $("k-buida").addEventListener("click", comencaDeZero);
   $("k-convit-nou").addEventListener("click", function(){ if (nou(convit)) $("k-convit-ja").hidden = true; });
   $("e-nou").addEventListener("click", function(){ nou(null); });
@@ -1957,6 +1980,7 @@ ${ASPECTE}
 <p class="ajuda" id="k-progres"></p></div>
 <div class="botons"><button type="button" class="fer" id="k-baixa">⬇ Baixa el cromo</button>
 <button type="button" class="seg" id="k-atzar">🎲 Sorpresa</button></div>
+<div class="botons"><button type="button" class="fer comparteix" data-comparteix>📣 Comparteix els teus superpoders</button></div>
 <p class="ajuda desat-ok" id="k-esborrany" aria-live="polite"></p>
 <div class="botons"><a class="seg boto" href="#envia">Publica'l →</a>
 <button type="button" class="seg" id="k-buida">Comença de zero</button></div>
@@ -1999,7 +2023,8 @@ personatge surti a la col·lecció de molekulon.org si l'autor l'aprova.</label>
 <h3><span>I ara el teu té nom: <span id="e-desat-nick"></span></span></h3>
 <p class="lead" id="e-escena"></p>
 <p class="lead final"><b>${FINAL.ca}</b></p>
-<div class="botons"><a class="fer boto" href="/convida">Porta algú a l'acte III →</a>
+<div class="botons"><button type="button" class="fer comparteix" data-comparteix>📣 Comparteix els teus superpoders</button>
+<a class="fer boto" href="/convida">Porta algú a l'acte III →</a>
 <a class="seg boto" href="/personatges#cromos">Mira el repartiment</a></div>
 </div>
 <h3><span>La teva clau d'edició</span><button type="button" class="copia" data-de="e-clau">Copia la clau</button></h3>
