@@ -15,7 +15,8 @@
 'use strict';
 const { readFileSync, existsSync } = require('node:fs');
 const { join } = require('node:path');
-const { PAGINES, DOMINI, SOS, NUM } = require('./build.js');
+const { PAGINES, DOMINI, SOS, NUM, castella } = require('./build.js');
+const { sobrants } = require('./llengua.js');
 
 const ARREL = join(__dirname, '..');
 const D = JSON.parse(readFileSync(join(ARREL, 'data', 'comando.json'), 'utf8'));
@@ -27,8 +28,12 @@ const pl = (n, u, m) => `${n} ${n === 1 ? u : m}`;
 
 console.log('\nGuarda de molekulon.org · el que cap generador veurà mai');
 
-const pag = Object.fromEntries(PAGINES.map(p => [p.f, existsSync(join(ARREL, p.f)) ? readFileSync(join(ARREL, p.f), 'utf8') : null]));
-const faltants = PAGINES.filter(p => pag[p.f] === null).map(p => p.f);
+/* Cada pàgina, i la seva versió en castellà (es/…) si en té. Les regles que
+   valen per a qualsevol pàgina passen per totes dues; les que miren una xifra
+   o un nom concret miren l'original, que és d'on surt la traducció. */
+const TOTES = PAGINES.flatMap(p => p.es === false ? [{ ...p, lang: 'ca' }] : [{ ...p, lang: 'ca' }, { ...p, f: 'es/' + p.f, lang: 'es' }]);
+const pag = Object.fromEntries(TOTES.map(p => [p.f, existsSync(join(ARREL, p.f)) ? readFileSync(join(ARREL, p.f), 'utf8') : null]));
+const faltants = TOTES.filter(p => pag[p.f] === null).map(p => p.f);
 if (faltants.length) {
   bad(`falten pàgines al disc: ${faltants.join(', ')}. Corre \`node tools/build.js\`.`);
   console.log('\n❌ 1 problema.');
@@ -41,25 +46,25 @@ if (faltants.length) {
    sempre tria la que volem. */
 {
   const falta = [];
-  for (const p of PAGINES) {
+  for (const p of TOTES) {
     const s = pag[p.f];
     for (const [q, r] of [['<title>', /<title>[^<]{10,}<\/title>/], ['description', /name="description" content="[^"]{40,}"/],
       ['canonical', /rel="canonical" href="https:\/\/[^"]+"/], ['og:title', /property="og:title"/],
-      ['og:description', /property="og:description"/], ['og:url', /property="og:url"/], ['lang', /<html lang="ca">/]]) {
+      ['og:description', /property="og:description"/], ['og:url', /property="og:url"/], ['lang', new RegExp(`<html lang="${p.lang}">`)]]) {
       if (!r.test(s)) falta.push(`${p.f} · ${q}`);
     }
   }
   falta.length ? bad(`${pl(falta.length, 'etiqueta', 'etiquetes')} de cap: ${falta.join(', ')}`)
-    : ok(`les ${PAGINES.length} pàgines porten títol, descripció, canonical, Open Graph i llengua`);
+    : ok(`les ${TOTES.length} pàgines (${PAGINES.length} i ${TOTES.length - PAGINES.length} en castellà) porten títol, descripció, canonical, Open Graph i llengua`);
 }
 
 /* ── 2 · Cap enllaç intern a un fitxer que no hi és ───────────────────────
    Un enllaç mort a la portada és el pitjor lloc possible per tenir-ne un. */
 {
   const morts = [];
-  for (const p of PAGINES) {
+  for (const p of TOTES) {
     for (const m of pag[p.f].matchAll(/href="\/([^"#?]*)"/g)) {
-      const dest = m[1] === '' ? 'index.html' : (m[1].includes('.') ? m[1] : m[1] + '.html');
+      const dest = m[1] === '' || m[1].endsWith('/') ? m[1] + 'index.html' : (m[1].includes('.') ? m[1] : m[1] + '.html');
       if (!existsSync(join(ARREL, dest))) morts.push(`${p.f} → /${m[1]}`);
     }
   }
@@ -72,7 +77,7 @@ if (faltants.length) {
    —amagar-les seria fer veure que no existeixen— però no com un enllaç. */
 {
   const buits = [];
-  for (const p of PAGINES) {
+  for (const p of TOTES) {
     for (const m of pag[p.f].matchAll(/href="(null|undefined|#|)"/g)) buits.push(`${p.f} · href="${m[1]}"`);
   }
   /* Es compta la marca i no la frase: «encara no té adreça» surt també a la
@@ -114,7 +119,7 @@ if (faltants.length) {
 {
   const objectiu = D.objectiu.toLocaleString('ca-ES').replace(/ | | /g, '.');
   const dolentes = [];
-  for (const p of PAGINES) {
+  for (const p of TOTES) {
     for (const m of pag[p.f].matchAll(/\b\d{3}\.\d{3}\b/g)) if (m[0] !== objectiu) dolentes.push(`${p.f} · ${m[0]}`);
   }
   dolentes.length ? bad(`xifres de sis dígits que no són l'objectiu (${objectiu}): ${dolentes.join(', ')}`)
@@ -126,7 +131,7 @@ if (faltants.length) {
    de franc i un canvi de domini el dia que se serveixi des d'un altre lloc. */
 {
   const mal = [];
-  for (const p of PAGINES) {
+  for (const p of TOTES) {
     /* Només els enllaços de navegar. El `canonical` i l'`og:url` **han** de
        portar el domini sencer: són precisament els que diuen quin domini mana. */
     for (const m of pag[p.f].matchAll(/<a [^>]*href="(http:\/\/[^"]+)"/g)) mal.push(`${p.f} · ${m[1]}`);
@@ -146,7 +151,7 @@ if (faltants.length) {
   const bons = new Set();
   for (const v of D.videos) { if (!v.url) continue; for (const m of v.url.matchAll(YT)) bons.add(m[1]); }
   const forasters = [];
-  for (const p of PAGINES) {
+  for (const p of TOTES) {
     for (const m of pag[p.f].matchAll(YT)) if (!bons.has(m[1])) forasters.push(`${p.f} · ${m[1]}`);
   }
   forasters.length ? bad(`${pl(forasters.length, 'vídeo', 'vídeos')} que no són a les dades: ${forasters.join(', ')}`)
@@ -192,6 +197,21 @@ if (faltants.length) {
   else if (dups.length) bad(`el mateix heroi amb dos retrats: ${dups.join(', ')}`);
   else if (!existsSync(join(ARREL, C.font.img))) bad(`la imatge d'on surten els retrats no hi és: ${C.font.img}`);
   else ok(`${pl(C.retrats.length, 'retrat', 'retrats')} de ${D.herois.length}, tots amb fitxer i amb nom de la llista`);
+}
+
+/* ── 12 · La versió en castellà, sencera ──────────────────────────────────
+   La pàgina en castellà surt de la catalana passada pel diccionari
+   (data/es.json). Una frase nova en català que no hi és surt en català enmig
+   del castellà, i la pàgina es veu bé: per això es compta aquí. I també el que
+   el diccionari porta i ja no fa servir cap pàgina, perquè una traducció
+   òrfena és el rastre d'una frase que ha canviat. */
+{
+  const { falten, usats, codi } = castella();
+  const sob = sobrants(usats);
+  if (falten.size) bad(`${pl(falten.size, 'tros', 'trossos')} sense traduir al castellà (corre \`node tools/llengua.js\`): ${[...falten.keys()].slice(0, 5).map(k => `«${k.slice(0, 50)}»`).join(', ')}${falten.size > 5 ? '…' : ''}`);
+  else if (sob.length) bad(`${pl(sob.length, 'entrada', 'entrades')} del diccionari que ja no surten enlloc: ${sob.slice(0, 5).map(k => `«${k.slice(0, 50)}»`).join(', ')}${sob.length > 5 ? '…' : ''}`);
+  else if (codi.length) bad(`canvis de codi del castellà que ja no quadren: ${codi.join('; ')}`);
+  else ok(`la versió en castellà és sencera: ${pl(Object.keys(require('./llengua.js').ES.textos).length, 'tros traduït', 'trossos traduïts')} i cap de sobrant`);
 }
 
 console.log(fails ? `\n❌ ${pl(fails, 'problema', 'problemes')}.` : '\n✅ La web compleix el que promet.');

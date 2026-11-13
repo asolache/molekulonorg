@@ -6,6 +6,9 @@
 <title>La història · Comando Molekulon</title>
 <meta name="description" content="De la frase que ho va encendre tot fins al tercer acte, que s'està rodant ara. El còmic, la banda i la pel·lícula, en ordre i en imatges.">
 <link rel="canonical" href="https://molekulon.org/historia">
+<link rel="alternate" hreflang="ca" href="https://molekulon.org/historia">
+<link rel="alternate" hreflang="es" href="https://molekulon.org/es/historia">
+<link rel="alternate" hreflang="x-default" href="https://molekulon.org/historia">
 <meta property="og:title" content="La història · Comando Molekulon">
 <meta property="og:description" content="De la frase que ho va encendre tot fins al tercer acte, que s'està rodant ara. El còmic, la banda i la pel·lícula, en ordre i en imatges.">
 <meta property="og:type" content="website">
@@ -251,7 +254,10 @@ tr.te td{background:rgba(0,230,118,.06)}
 footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}
-@media (max-width:560px){nav.barra{padding:.5rem .7rem}nav.barra .dret{display:none}}
+nav.barra .idioma{display:flex;gap:.1rem;margin-left:.3rem}
+nav.barra .idioma .l{font-size:.74rem;font-weight:700;letter-spacing:.04em;padding:.3rem .45rem}
+nav.barra .idioma span.l{color:var(--text);border-bottom:2px solid var(--purple);border-radius:0}
+@media (max-width:560px){nav.barra{padding:.5rem .7rem}nav.barra .dret{display:none}nav.barra .idioma{margin-left:auto}}
 </style>
 </head>
 <body>
@@ -266,6 +272,7 @@ footer a{color:var(--light)}
 <a class="l" href="/comic">El còmic</a>
 <a class="l" href="/kit">Fes-te el personatge</a>
 <a class="l dret" href="https://teamtowershuma.com/sos" rel="noopener">Obre el SOS ↗</a>
+<span class="idioma" role="group" aria-label="Llengua"><span class="l" lang="ca" aria-current="true">CAT</span><a class="l" href="/es/historia" hreflang="es" lang="es">CAST</a></span>
 </nav>
 <main id="principal">
 <section class="acte">

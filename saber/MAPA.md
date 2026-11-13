@@ -14,11 +14,12 @@ La cosa mateixa: el que fa servir la gent. Una sola font de veritat per cada cos
 | carpeta | què hi entra | fitxers |
 |---|---|---|
 | `cromos/` | Els retrats dels cromos del còmic | 11 · 228 KB |
-| `data/` | Les dades de les pàgines: `comando.json` ve de teamtowershuma i no s'edita; `mostra.json` i `cromos.json`, sí | 3 · 31 KB |
+| `data/` | Les dades de les pàgines: `comando.json` ve de teamtowershuma i no s'edita; `mostra.json`, `cromos.json` i `es.json` (el diccionari del castellà), sí | 4 · 111 KB |
+| `es/` | La web en castellà: es genera de la catalana passant-la per `data/es.json` (`tools/llengua.js`). No s'edita a mà | 8 · 265 KB |
 | `herramientas/` | El que el projecte hereta per treballar: l'editor del mapa, revisar-lo i treure'n la web. No s'edita aquí | 7 · 741 KB |
 | `mostra/` | Les pàgines del còmic que es publiquen al lector | 9 · 2714 KB |
 | `sql/` | La base de dades dels cromos al Supabase del SOS: un fitxer per canvi, en ordre | 2 · 20 KB |
-| `tools/` | El generador de les pàgines, la sincronia amb teamtowershuma i les seves guardes (`check.js`, `prova-firma.js`) | 4 · 141 KB |
+| `tools/` | El generador de les pàgines, la traducció al castellà (`llengua.js`), la sincronia amb teamtowershuma i les seves guardes (`check.js`, `prova-firma.js`) | 5 · 153 KB |
 
 ## prova
 
@@ -39,4 +40,4 @@ El que sabem i encara no és obra. Es cita, no es copia.
 
 ---
 
-*9 carpetes declarades · generat des de l'arbre, no escrit.*
+*10 carpetes declarades · generat des de l'arbre, no escrit.*

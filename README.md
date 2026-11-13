@@ -33,8 +33,13 @@ tampoc.** Les dues coses es generen.
 ```sh
 node tools/sync.js       # baixa les dades de teamtowershuma (opcional)
 node tools/build.js      # escriu les pàgines i el sitemap
-node tools/check.js      # la guarda: canonical, enllaços, xifres, noms
+node tools/check.js      # la guarda: canonical, enllaços, xifres, noms, castellà sencer
+node tools/llengua.js    # què falta per traduir al castellà, a punt d'enganxar a data/es.json
 ```
+
+**El català és l'original.** Quan una frase canvia o n'entra una de nova,
+`check.js` peta fins que el diccionari en té la traducció: la web no pot sortir
+amb un tros en català enmig del castellà sense que ningú ho sàpiga.
 
 I abans d'empènyer, el que corre el CI:
 
@@ -64,14 +69,17 @@ aquí —vedes i `saber/productes.md`— puja a la matriu amb `--recull`.
 | `kit.html` | **El kit**: fes-te el personatge i el cromo, sense compte, i envia'l a la col·lecció si vols |
 | `ia.html` | **Com fem servir la IA**: el compromís i el que es pot comprovar a l'historial |
 | `modera.html` | La moderació dels cromos. No s'enllaça, porta `noindex` i demana la clau de moderador |
+| `es/` | **La web en castellà**, amb el selector CAT · CAST. Surt de la catalana passada per `data/es.json`: no s'edita ni es genera a part |
 | `sql/` | La base de dades dels cromos al Supabase del SOS, un fitxer per canvi |
 | `tools/build.js` | El generador. **Aquí és on s'edita el que diu la web** |
 | `tools/sync.js` | Baixa les dades de dalt i avisa si la còpia s'ha quedat vella |
-| `tools/check.js` | Deu regles sobre el que cap generador veurà mai |
+| `tools/check.js` | Les regles sobre el que cap generador veurà mai |
+| `tools/llengua.js` | La traducció: aplica el diccionari a cada pàgina i, corregut sol, diu què falta per traduir |
 | `tools/prova-firma.js` | La prova que la marca «comprovat al SOS» només surt amb una firma bona |
 | `data/comando.json` | Les dades del Comando. Importades, **mai editades aquí** |
 | `data/mostra.json` | Quines pàgines del còmic es publiquen i quin tema sona a cada una. **Sí** que s'edita |
 | `data/cromos.json` | Quin retrat fa de cara de qui. **Sí** que s'edita |
+| `data/es.json` | El diccionari del castellà: cada tros de text català i com es diu en castellà. **Sí** que s'edita |
 | `CLAUDE.md` i `saber/` | **Comença per aquí.** El cervell: mapa, codex, contracte de la IA, backlog i productes |
 | `saber/traspas.md` | Tot el que s'ha fet fins al cervell, i el canal de dades |
 | `saber/alta-i-directori.md` | L'estudi de com entra la gent: cromo primer, SOS després |
