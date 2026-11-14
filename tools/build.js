@@ -23,8 +23,9 @@
  *   node tools/build.js --check    falla si el que hi ha al disc està vell
  */
 'use strict';
-const { readFileSync, writeFileSync, existsSync } = require('node:fs');
+const { readFileSync, writeFileSync, existsSync, mkdirSync } = require('node:fs');
 const { join } = require('node:path');
+const LL = require('./llengua.js');
 
 const ARREL = join(__dirname, '..');
 const CHECK = process.argv.includes('--check');
@@ -88,7 +89,8 @@ const PAGINES = [
     tit: 'Com fem servir la IA · Comando Molekulon',
     desc: 'Què fa la IA en aquesta web i què fem nosaltres, el que es pot comprovar a l\'historial i el compromís de gastar el mínim per token.' },
   /* La moderació dels cromos: ni menú, ni sitemap, ni cercadors. */
-  { f: 'modera.html', nav: 'Moderar', t: 'Moderar els cromos', menu: false, noindex: true,
+  /* No té versió en castellà (`es: false`): només la fa servir l'autor. */
+  { f: 'modera.html', nav: 'Moderar', t: 'Moderar els cromos', menu: false, noindex: true, es: false,
     tit: 'Moderar els cromos · Comando Molekulon',
     desc: 'La cua de cromos que la gent envia des del kit, per aprovar-los, rebutjar-los o retirar-los. Només per a qui té clau de moderador.' }
 ];
@@ -437,7 +439,10 @@ tr.te td{background:rgba(0,230,118,.06)}
 footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}
-@media (max-width:560px){nav.barra{padding:.5rem .7rem}nav.barra .dret{display:none}}
+nav.barra .idioma{display:flex;gap:.1rem;margin-left:.3rem}
+nav.barra .idioma .l{font-size:.74rem;font-weight:700;letter-spacing:.04em;padding:.3rem .45rem}
+nav.barra .idioma span.l{color:var(--text);border-bottom:2px solid var(--purple);border-radius:0}
+@media (max-width:560px){nav.barra{padding:.5rem .7rem}nav.barra .dret{display:none}nav.barra .idioma{margin-left:auto}}
 `.trim();
 
 /* ══ L'ESQUELET ══════════════════════════════════════════════════════════════ */
@@ -445,6 +450,7 @@ const nav = actual => `<nav class="barra" aria-label="Principal">
 <a class="marca" href="/">Comando <span>Molekulon</span></a>
 ${PAGINES.filter(p => p.menu !== false).map(p => `<a class="l" href="${p.f === 'index.html' ? '/' : '/' + p.f.replace(/\.html$/, '')}"${p.f === actual ? ' aria-current="page"' : ''}>${esc(p.nav)}</a>`).join('\n')}
 <a class="l dret" href="${SOS}/sos" rel="noopener">Obre el SOS ↗</a>
+${PAGINES.find(p => p.f === actual).es === false ? '' : LL.selector(actual, 'ca')}
 </nav>`;
 
 const peu = `<footer>
@@ -473,7 +479,7 @@ const pagina = (p, cos) => `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(p.tit)}</title>
 <meta name="description" content="${esc(p.desc)}">${p.noindex ? '\n<meta name="robots" content="noindex,nofollow">' : ''}
-<link rel="canonical" href="${url(p.f)}">
+<link rel="canonical" href="${url(p.f)}">${p.es === false ? '' : '\n' + LL.alternatives(p.f, DOMINI)}
 <meta property="og:title" content="${esc(p.tit)}">
 <meta property="og:description" content="${esc(p.desc)}">
 <meta property="og:type" content="website">
@@ -1401,6 +1407,7 @@ var CROMO = (function(){
 const KIT_JS = String.raw`
 (function(){
   "use strict";
+  /* llengua:fixa */
   var T = {
     ca: {
       senseNom: "Sense nom encara",
@@ -1423,6 +1430,7 @@ const KIT_JS = String.raw`
            "Lo que sé y lo que tengo:"]
     }
   };
+  /* /llengua:fixa */
   /* Els errors de la base de dades, dits a la persona. El codi és el que
      llença «envia_cromo» (sql/001_comando_cromos.sql). */
   var ERR = {
@@ -2093,13 +2101,31 @@ L'energia no la mesurem directament: els tokens en són l'aproximació, i ho die
 const sitemap = () => `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${PAGINES.filter(p => p.menu !== false || p.mapa).map(p => `<url><loc>${url(p.f)}</loc></url>`).join('\n')}
+${PAGINES.filter(p => (p.menu !== false || p.mapa) && p.es !== false).map(p => `<url><loc>${DOMINI}${LL.camí(p.f, 'es')}</loc></url>`).join('\n')}
 </urlset>
 `;
 
 /* ══ ESCRIURE ════════════════════════════════════════════════════════════════ */
 const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic, 'kit.html': kit, 'modera.html': modera, 'ia.html': ia };
+/* La versió en castellà surt de la catalana, passada pel diccionari
+   (`tools/llengua.js`). El que falta per traduir no atura el build —la pàgina
+   surt amb el tros en català— però `tools/check.js` no la deixa passar. */
+const castella = (ca = PAGINES.map(p => [p.f, pagina(p, COSSOS[p.f]().trim())])) => {
+  const ambEs = PAGINES.filter(p => p.es !== false).map(p => p.f);
+  const falten = new Map(), usats = new Set(), codi = [], pagines = [];
+  for (const [f, html] of ca) {
+    if (!ambEs.includes(f)) continue;
+    const r = LL.tradueix(f, html, { pagines: ambEs, domini: DOMINI });
+    pagines.push(['es/' + f, r.html]);
+    r.falten.forEach((v, k) => falten.has(k) || falten.set(k, v));
+    r.usats.forEach(k => usats.add(k));
+    codi.push(...r.codi);
+  }
+  return { pagines, falten, usats, codi };
+};
 const sortida = () => {
   const l = PAGINES.map(p => [p.f, pagina(p, COSSOS[p.f]().trim())]);
+  l.push(...castella(l).pagines);
   l.push(['sitemap.xml', sitemap()]);
   return l;
 };
@@ -2107,7 +2133,7 @@ const sortida = () => {
 /* Res s'escriu quan aquest fitxer es llegeix des d'un altre: `tools/check.js`
    el necessita per saber quines pàgines hi ha d'haver, i una guarda que
    reescriu el que ha de comprovar no comprova res. */
-module.exports = { PAGINES, AL_SOS, DOMINI, SOS, NUM, sortida };
+module.exports = { PAGINES, AL_SOS, DOMINI, SOS, NUM, sortida, castella };
 if (require.main !== module) return;
 
 if (CHECK) {
@@ -2123,6 +2149,7 @@ if (CHECK) {
   process.exit(mal ? 1 : 0);
 }
 
+mkdirSync(join(ARREL, 'es'), { recursive: true });
 for (const [f, html] of sortida()) writeFileSync(join(ARREL, f), html);
-console.log(`✅ ${PAGINES.length} pàgines i el sitemap · ${NUM.herois} herois, ` +
+console.log(`✅ ${PAGINES.length} pàgines, ${PAGINES.filter(p => p.es !== false).length} en castellà i el sitemap · ${NUM.herois} herois, ` +
   `${NUM.peces} peces (${NUM.pendents} sense enllaç), ${NUM.plans} plans (${NUM.durada})`);

@@ -6,6 +6,9 @@
 <title>Els personatges · Comando Molekulon</title>
 <meta name="description" content="Els catorze herois del còmic i, darrere, els personatges de la gent que s'hi apunta: el que sap fer cadascú, la seva superarma i què vol dir dins d'un equip.">
 <link rel="canonical" href="https://molekulon.org/personatges">
+<link rel="alternate" hreflang="ca" href="https://molekulon.org/personatges">
+<link rel="alternate" hreflang="es" href="https://molekulon.org/es/personatges">
+<link rel="alternate" hreflang="x-default" href="https://molekulon.org/personatges">
 <meta property="og:title" content="Els personatges · Comando Molekulon">
 <meta property="og:description" content="Els catorze herois del còmic i, darrere, els personatges de la gent que s'hi apunta: el que sap fer cadascú, la seva superarma i què vol dir dins d'un equip.">
 <meta property="og:type" content="website">
@@ -251,7 +254,10 @@ tr.te td{background:rgba(0,230,118,.06)}
 footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}
-@media (max-width:560px){nav.barra{padding:.5rem .7rem}nav.barra .dret{display:none}}
+nav.barra .idioma{display:flex;gap:.1rem;margin-left:.3rem}
+nav.barra .idioma .l{font-size:.74rem;font-weight:700;letter-spacing:.04em;padding:.3rem .45rem}
+nav.barra .idioma span.l{color:var(--text);border-bottom:2px solid var(--purple);border-radius:0}
+@media (max-width:560px){nav.barra{padding:.5rem .7rem}nav.barra .dret{display:none}nav.barra .idioma{margin-left:auto}}
 .cerca{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin:1rem 0 0}
 .cerca input{font:inherit;flex:1;min-width:12rem;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:.55rem .7rem}
 .cerca span{font-size:.84rem;color:var(--muted)}
@@ -275,6 +281,7 @@ footer a{color:var(--light)}
 <a class="l" href="/comic">El còmic</a>
 <a class="l" href="/kit">Fes-te el personatge</a>
 <a class="l dret" href="https://teamtowershuma.com/sos" rel="noopener">Obre el SOS ↗</a>
+<span class="idioma" role="group" aria-label="Llengua"><span class="l" lang="ca" aria-current="true">CAT</span><a class="l" href="/es/personatges" hreflang="es" lang="es">CAST</a></span>
 </nav>
 <main id="principal">
 <header class="hero">

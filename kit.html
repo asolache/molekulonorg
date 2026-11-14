@@ -6,6 +6,9 @@
 <title>Fes-te el personatge · el kit del Comando Molekulon</title>
 <meta name="description" content="Quatre preguntes i surt el teu cromo del Comando, amb la fitxa i el text del vídeo ja escrits. Sense compte de res, i si vols, l'envies a la col·lecció.">
 <link rel="canonical" href="https://molekulon.org/kit">
+<link rel="alternate" hreflang="ca" href="https://molekulon.org/kit">
+<link rel="alternate" hreflang="es" href="https://molekulon.org/es/kit">
+<link rel="alternate" hreflang="x-default" href="https://molekulon.org/kit">
 <meta property="og:title" content="Fes-te el personatge · el kit del Comando Molekulon">
 <meta property="og:description" content="Quatre preguntes i surt el teu cromo del Comando, amb la fitxa i el text del vídeo ja escrits. Sense compte de res, i si vols, l'envies a la col·lecció.">
 <meta property="og:type" content="website">
@@ -251,7 +254,10 @@ tr.te td{background:rgba(0,230,118,.06)}
 footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}
-@media (max-width:560px){nav.barra{padding:.5rem .7rem}nav.barra .dret{display:none}}
+nav.barra .idioma{display:flex;gap:.1rem;margin-left:.3rem}
+nav.barra .idioma .l{font-size:.74rem;font-weight:700;letter-spacing:.04em;padding:.3rem .45rem}
+nav.barra .idioma span.l{color:var(--text);border-bottom:2px solid var(--purple);border-radius:0}
+@media (max-width:560px){nav.barra{padding:.5rem .7rem}nav.barra .dret{display:none}nav.barra .idioma{margin-left:auto}}
 .kit .q{display:grid;gap:.3rem;padding:.85rem 0;border-top:1px dashed var(--border)}
 .kit .q:first-of-type{border-top:0}
 .kit label{font-weight:700}
@@ -310,6 +316,7 @@ footer a{color:var(--light)}
 <a class="l" href="/comic">El còmic</a>
 <a class="l" href="/kit" aria-current="page">Fes-te el personatge</a>
 <a class="l dret" href="https://teamtowershuma.com/sos" rel="noopener">Obre el SOS ↗</a>
+<span class="idioma" role="group" aria-label="Llengua"><span class="l" lang="ca" aria-current="true">CAT</span><a class="l" href="/es/kit" hreflang="es" lang="es">CAST</a></span>
 </nav>
 <main id="principal">
 <header class="hero">
@@ -594,6 +601,7 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
 
 (function(){
   "use strict";
+  /* llengua:fixa */
   var T = {
     ca: {
       senseNom: "Sense nom encara",
@@ -616,6 +624,7 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
            "Lo que sé y lo que tengo:"]
     }
   };
+  /* /llengua:fixa */
   /* Els errors de la base de dades, dits a la persona. El codi és el que
      llença «envia_cromo» (sql/001_comando_cromos.sql). */
   var ERR = {

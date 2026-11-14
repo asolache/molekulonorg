@@ -50,11 +50,12 @@ details{border-bottom:1px solid var(--line);padding:.45rem 0}summary{cursor:poin
 <table>
 <tr><th></th><th>carpeta</th><th>què hi entra</th></tr>
 <tr><td class="cara">obra</td><td><code>cromos/</code></td><td>Els retrats dels cromos del còmic</td></tr>
-<tr><td class="cara">obra</td><td><code>data/</code></td><td>Les dades de les pàgines: `comando.json` ve de teamtowershuma i no s'edita; `mostra.json` i `cromos.json`, sí</td></tr>
+<tr><td class="cara">obra</td><td><code>data/</code></td><td>Les dades de les pàgines: `comando.json` ve de teamtowershuma i no s'edita; `mostra.json`, `cromos.json` i `es.json` (el diccionari del castellà), sí</td></tr>
+<tr><td class="cara">obra</td><td><code>es/</code></td><td>La web en castellà: es genera de la catalana passant-la per `data/es.json` (`tools/llengua.js`). No s'edita a mà</td></tr>
 <tr><td class="cara">obra</td><td><code>herramientas/</code></td><td>El que el projecte hereta per treballar: l'editor del mapa, revisar-lo i treure'n la web. No s'edita aquí</td></tr>
 <tr><td class="cara">obra</td><td><code>mostra/</code></td><td>Les pàgines del còmic que es publiquen al lector</td></tr>
 <tr><td class="cara">obra</td><td><code>sql/</code></td><td>La base de dades dels cromos al Supabase del SOS: un fitxer per canvi, en ordre</td></tr>
-<tr><td class="cara">obra</td><td><code>tools/</code></td><td>El generador de les pàgines, la sincronia amb teamtowershuma i les seves guardes (`check.js`, `prova-firma.js`)</td></tr>
+<tr><td class="cara">obra</td><td><code>tools/</code></td><td>El generador de les pàgines, la traducció al castellà (`llengua.js`), la sincronia amb teamtowershuma i les seves guardes (`check.js`, `prova-firma.js`)</td></tr>
 <tr><td class="cara">prova</td><td><code>.github/</code></td><td>El CI: les guardes a cada empenta i la sincronia de dades cada dilluns</td></tr>
 <tr><td class="cara">prova</td><td><code>guardas/</code></td><td>L'eina del cervell, heretada: peta al CI si el mapa o el contracte menteixen</td></tr>
 <tr><td class="cara">saber</td><td><code>saber/</code></td><td>El cervell: mapa, codex, contracte de la IA, taxonomia, backlog, productes, el traspàs i l'estudi d'alta. `heredado/` ve de TeamTowers i no s'edita</td></tr>

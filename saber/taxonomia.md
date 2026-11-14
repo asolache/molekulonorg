@@ -21,10 +21,11 @@ Format: `- ruta · cara · una línia del que hi entra`. El generador llegeix
 aquesta llista i res més. Crear una carpeta sense declarar-la trenca el CI.
 
 - `saber` · saber · El cervell: mapa, codex, contracte de la IA, taxonomia, backlog, productes, el traspàs i l'estudi d'alta. `heredado/` ve de TeamTowers i no s'edita
-- `data` · obra · Les dades de les pàgines: `comando.json` ve de teamtowershuma i no s'edita; `mostra.json` i `cromos.json`, sí
+- `data` · obra · Les dades de les pàgines: `comando.json` ve de teamtowershuma i no s'edita; `mostra.json`, `cromos.json` i `es.json` (el diccionari del castellà), sí
+- `es` · obra · La web en castellà: es genera de la catalana passant-la per `data/es.json` (`tools/llengua.js`). No s'edita a mà
 - `cromos` · obra · Els retrats dels cromos del còmic
 - `mostra` · obra · Les pàgines del còmic que es publiquen al lector
-- `tools` · obra · El generador de les pàgines, la sincronia amb teamtowershuma i les seves guardes (`check.js`, `prova-firma.js`)
+- `tools` · obra · El generador de les pàgines, la traducció al castellà (`llengua.js`), la sincronia amb teamtowershuma i les seves guardes (`check.js`, `prova-firma.js`)
 - `sql` · obra · La base de dades dels cromos al Supabase del SOS: un fitxer per canvi, en ordre
 - `herramientas` · obra · El que el projecte hereta per treballar: l'editor del mapa, revisar-lo i treure'n la web. No s'edita aquí
 - `guardas` · prova · L'eina del cervell, heretada: peta al CI si el mapa o el contracte menteixen
