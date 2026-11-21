@@ -648,7 +648,20 @@
     "L'historial és a": "El historial está en",
     "El que costa": "Lo que cuesta",
     "El preu per token el posa qui ven el model; el que es gasta ho decidim nosaltres. Cada tasca va amb el model més petit que la fa bé. El cost real, amb la font i la data del preu, és a": "El precio por token lo pone quien vende el modelo; lo que se gasta lo decidimos nosotros. Cada tarea va con el modelo más pequeño que la hace bien. El coste real, con la fuente y la fecha del precio, está en",
-    ", i l'han de pagar els ingressos recurrents dels serveis. L'energia no la mesurem directament: els tokens en són l'aproximació, i ho diem així.": ", y lo tienen que pagar los ingresos recurrentes de los servicios. La energía no la medimos directamente: los tokens son la aproximación, y lo decimos así."
+    ", i l'han de pagar els ingressos recurrents dels serveis. L'energia no la mesurem directament: els tokens en són l'aproximació, i ho diem així.": ", y lo tienen que pagar los ingresos recurrentes de los servicios. La energía no la medimos directamente: los tokens son la aproximación, y lo decimos así.",
+    "Logo de": "Logo de",
+    "els artistes del Comando": "los artistas del Comando",
+    "Qui ha fet el logo, les cançons, els videoclips i les il·lustracions del Comando Molekulon, i on trobar la resta de la seva feina.": "Quién ha hecho el logo, las canciones, los videoclips y las ilustraciones del Comando Molekulon, y dónde encontrar el resto de su trabajo.",
+    "Els artistes · Comando Molekulon": "Los artistas · Comando Molekulon",
+    "Els artistes del Comando": "Los artistas del Comando",
+    "El logo del Comando Molekulon": "El logo del Comando Molekulon",
+    "Qui ho ha fet": "Quién lo ha hecho",
+    "El Comando és un còmic, una banda i una pel·lícula, i darrere de cada peça hi ha algú que l'ha feta. Aquí surten amb el seu nom i amb el camí cap a la resta de la seva feina.": "El Comando es un cómic, una banda y una película, y detrás de cada pieza hay alguien que la ha hecho. Aquí salen con su nombre y con el camino hacia el resto de su trabajo.",
+    "Il·lustrador i dissenyador": "Ilustrador y diseñador",
+    "El segell dentat amb els anells i la pistola de raigs. D'aquí surten els colors i la lletra de tota la web.": "El sello dentado con los anillos y la pistola de rayos. De aquí salen los colores y la letra de toda la web.",
+    "La seva web hi serà quan la confirmi.": "Su web estará aquí cuando la confirme.",
+    "Falta algú?": "¿Falta alguien?",
+    "Les cançons, els videoclips i les il·lustracions del còmic també tenen autor, i aniran sortint aquí. Si has fet alguna cosa per al Comando i no hi ets, digues-nos-ho a": "Las canciones, los videoclips y las ilustraciones del cómic también tienen autor, e irán saliendo aquí. Si has hecho algo para el Comando y no estás, dínoslo en"
   },
   "iguals": [
     "#comandomolekulon",
@@ -757,7 +770,9 @@
     "«Sexy motherfunky mito. Piensa con el corazón.»",
     "«Si estás deprimido, recuerda que eres el espermatozoide que ganó.»",
     "← Anterior",
-    "🎲 Sorpresa"
+    "🎲 Sorpresa",
+    "Pablo GG",
+    "Logo"
   ],
   "codi": {
     "kit.html": [

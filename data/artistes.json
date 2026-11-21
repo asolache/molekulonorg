@@ -1,0 +1,19 @@
+{
+  "_": "Qui ha fet què per al Comando: el logo, les cançons, els videoclips, les il·lustracions. S'edita en aquest repositori. Surt a /artistes i al peu de totes les pàgines. `web` només s'omple quan s'ha comprovat que és la seva; mentre és null, la pàgina no hi posa enllaç. `mena` és una de: logo, canco, videoclip, il·lustracio, comic, foto, altres.",
+  "artistes": [
+    {
+      "id": "pablo-gg",
+      "nom": "Pablo GG",
+      "ofici": "Il·lustrador i dissenyador",
+      "web": null,
+      "obres": [
+        {
+          "mena": "logo",
+          "titol": "El logo del Comando Molekulon",
+          "d": "El segell dentat amb els anells i la pistola de raigs. D'aquí surten els colors i la lletra de tota la web.",
+          "imatge": "/assets/logo/comando-molekulon-512.webp"
+        }
+      ]
+    }
+  ]
+}
