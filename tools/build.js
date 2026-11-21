@@ -44,6 +44,7 @@ const C = JSON.parse(readFileSync(join(ARREL, 'data', 'cromos.json'), 'utf8'));
    decisió d'aquesta web —qui surt i com se'l presenta— i per això viu aquí.
    La web d'un artista només s'enllaça quan s'ha comprovat (`web` no null). */
 const A = JSON.parse(readFileSync(join(ARREL, 'data', 'artistes.json'), 'utf8'));
+/* `A.dubtes` no es pinta: és la llista del que encara s'ha de confirmar. */
 const LOGO = A.artistes.flatMap(a => a.obres.map(o => ({ ...o, autor: a.nom }))).find(o => o.mena === 'logo');
 const RETRAT = Object.fromEntries(C.retrats.map(r => [r.heroi, r]));
 const PAGS_MOSTRA = M.comics.reduce((a, c) => a + c.pagines.length, 0);
@@ -239,7 +240,7 @@ nav.barra{display:flex;gap:.2rem;flex-wrap:wrap;align-items:center;
   padding:.5rem 1.2rem calc(.5rem + 12px);background:var(--anells) bottom/100% 12px no-repeat,var(--panel);position:sticky;top:0;z-index:5}
 nav.barra .marca{display:flex;align-items:center;gap:.5rem;font-family:var(--display);font-weight:800;font-size:1.08rem;
   text-transform:uppercase;letter-spacing:.04em;margin-right:.8rem;text-decoration:none;color:var(--text)}
-nav.barra .marca img{width:38px;height:38px;border-radius:50%;flex:none}
+nav.barra .marca img{width:38px;height:38px;flex:none}
 nav.barra .marca span{color:var(--purple)}
 nav.barra a.l{text-decoration:none;color:var(--light);font-family:var(--display);font-weight:600;font-size:.95rem;padding:.35rem .7rem;border-radius:20px}
 nav.barra a.l:hover{background:var(--card);color:var(--text)}
@@ -252,7 +253,7 @@ nav.barra .dret{margin-left:auto;font-size:.82rem}
 .hero-inner{max-width:880px;margin:0 auto}
 /* El logo, sencer i sense retocar, a la portada. Gira una mica en entrar,
    com un segell que es posa; qui ha demanat menys moviment el veu quiet. */
-.hero .segell{display:block;width:clamp(150px,26vw,230px);height:auto;margin:0 auto 1.2rem;border-radius:50%;
+.hero .segell{display:block;width:clamp(150px,26vw,230px);height:auto;margin:0 auto 1.2rem;
   filter:drop-shadow(0 6px 22px rgba(0,182,201,.35));animation:segell .7s ease-out both}
 @keyframes segell{from{transform:rotate(-14deg) scale(.85);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){.hero .segell{animation:none}}
@@ -469,7 +470,7 @@ tr.te td{background:rgba(0,230,118,.06)}
 .pregunta p{font-size:.86rem;margin:0}
 
 footer{background:var(--anells) top/100% 12px no-repeat,var(--panel);padding:calc(1.6rem + 12px) 1.2rem 2.4rem}
-footer .f img{width:44px;height:44px;border-radius:50%;flex:none}
+footer .f img{width:44px;height:44px;flex:none}
 footer .f{align-items:center}
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}
@@ -521,7 +522,9 @@ const pagina = (p, cos) => `<!DOCTYPE html>
 <meta property="og:type" content="website">
 <meta property="og:url" content="${url(p.f)}">
 <meta property="og:locale" content="ca_ES">
-<meta property="og:image" content="${DOMINI}/assets/logo/comando-molekulon.jpg">
+<meta property="og:image" content="${DOMINI}/assets/logo/comparteix.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="El logo del Comando Molekulon, de ${esc(LOGO.autor)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#21102c">
@@ -2146,7 +2149,11 @@ const ART_CSS = `
 .artistes{display:grid;gap:1rem}
 .artista{display:grid;grid-template-columns:minmax(0,200px) 1fr;gap:1.2rem;align-items:center;background:var(--card);
   border:1px solid var(--border);border-radius:18px;padding:1.1rem}
-.artista img{width:100%;height:auto;border-radius:50%}
+.artista img{width:100%;height:auto}
+.artista .inicials{display:grid;place-items:center;aspect-ratio:1;max-width:140px;width:100%;margin:0 auto;border-radius:50%;
+  background:var(--cian);color:var(--violeta);font-family:var(--display);font-weight:800;font-size:2.6rem;
+  box-shadow:0 0 0 5px var(--blanc),0 0 0 9px var(--purple),0 0 0 11px var(--orange)}
+.artista .obra .rol{color:var(--light);font-size:.86rem}
 section.box .artista h3{font-size:1.4rem;margin:0;text-transform:uppercase;letter-spacing:.03em}
 .artista .ofici{color:var(--cian);font-family:var(--display);font-weight:600;margin:.1rem 0 .6rem}
 .artista .obra{margin:.5rem 0}
@@ -2155,6 +2162,16 @@ section.box .artista h3{font-size:1.4rem;margin:0;text-transform:uppercase;lette
 .artista .obra p{margin:.3rem 0 0;font-size:.88rem;color:var(--light)}
 @media (max-width:560px){.artista{grid-template-columns:1fr}.artista img{max-width:180px;margin:0 auto}}
 `;
+/* Una obra que és una peça de `comando.json` en pren el títol i l'enllaç: el
+   nom de la cançó no s'escriu dues vegades. */
+const obra = o => {
+  const pc = o.peca ? PECA[o.peca] : null;
+  const titol = pc ? pc.titol : o.titol;
+  const enllaç = pc && /^https:/.test(pc.url || '') ? pc.url : null;
+  return `<div class="obra"><span class="k">${esc(OBRA_MENA[o.mena] || OBRA_MENA.altres)}</span>` +
+    (enllaç ? `<a href="${esc(enllaç)}" rel="noopener"><b>${esc(titol)}</b> ↗</a>` : `<b>${esc(titol)}</b>`) +
+    (o.rol ? ` <span class="rol">· ${esc(o.rol)}</span>` : '') + (o.d ? `<p>${esc(o.d)}</p>` : '') + '</div>';
+};
 const artistes = () => `
 <header class="hero">
 <div class="hero-inner">
@@ -2167,20 +2184,21 @@ Aquí surten amb el seu nom i amb el camí cap a la resta de la seva feina.</p>
 <div class="wrap">
 <section class="box">
 <div class="artistes">
-${A.artistes.map(a => `<article class="artista" id="${esc(a.id)}">
-${a.obres.find(o => o.imatge) ? `<img src="${esc(a.obres.find(o => o.imatge).imatge)}" width="200" height="200" alt="${esc(a.obres.find(o => o.imatge).titol)}" loading="lazy">` : '<span></span>'}
+${A.artistes.map(a => { const img = a.obres.find(o => o.imatge); return `<article class="artista" id="${esc(a.id)}">
+${img ? `<img src="${esc(img.imatge)}" width="200" height="200" alt="${esc(img.titol)}" loading="lazy">`
+  : `<span class="inicials" aria-hidden="true">${esc(a.nom.split(/\s+/).map(w => w[0]).slice(0, 2).join(''))}</span>`}
 <div>
 <h3>${esc(a.nom)}</h3>
-<p class="ofici">${esc(a.ofici)}</p>
-${a.obres.map(o => `<div class="obra"><span class="k">${esc(OBRA_MENA[o.mena] || OBRA_MENA.altres)}</span><b>${esc(o.titol)}</b>${o.d ? `<p>${esc(o.d)}</p>` : ''}</div>`).join('\n')}
+<p class="ofici">${a.aka ? `<b>${esc(a.aka)}</b> · ` : ''}${esc(a.ofici)}</p>
+${a.obres.map(obra).join('\n')}
 ${a.web ? `<p><a href="${esc(a.web)}" rel="noopener">La seva web ↗</a></p>` : `<p class="mut">La seva web hi serà quan la confirmi.</p>`}
 </div>
-</article>`).join('\n')}
+</article>`; }).join('\n')}
 </div>
 </section>
 <section class="box">
 <h3>Falta algú?</h3>
-<p class="lead">Les cançons, els videoclips i les il·lustracions del còmic també tenen autor, i aniran sortint aquí.
+<p class="lead">Els videoclips, els altres temes i les il·lustracions del còmic també tenen autor, i aniran sortint aquí.
 Si has fet alguna cosa per al Comando i no hi ets, digues-nos-ho a <a href="https://github.com/asolache/molekulonorg/issues" rel="noopener">github.com/asolache/molekulonorg</a>.</p>
 </section>
 </div>`;

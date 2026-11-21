@@ -661,7 +661,14 @@
     "El segell dentat amb els anells i la pistola de raigs. D'aquí surten els colors i la lletra de tota la web.": "El sello dentado con los anillos y la pistola de rayos. De aquí salen los colores y la letra de toda la web.",
     "La seva web hi serà quan la confirmi.": "Su web estará aquí cuando la confirme.",
     "Falta algú?": "¿Falta alguien?",
-    "Les cançons, els videoclips i les il·lustracions del còmic també tenen autor, i aniran sortint aquí. Si has fet alguna cosa per al Comando i no hi ets, digues-nos-ho a": "Las canciones, los videoclips y las ilustraciones del cómic también tienen autor, e irán saliendo aquí. Si has hecho algo para el Comando y no estás, dínoslo en"
+    "Cançó": "Canción",
+    "· La cançó": "· La canción",
+    "Músic": "Músico",
+    "· Músic": "· Músico",
+    "· Part de la lletra": "· Parte de la letra",
+    "Autor del Comando": "Autor del Comando",
+    "· La música i la lletra, amb part de la lletra de Parpelman": "· La música y la letra, con parte de la letra de Parpelman",
+    "Els videoclips, els altres temes i les il·lustracions del còmic també tenen autor, i aniran sortint aquí. Si has fet alguna cosa per al Comando i no hi ets, digues-nos-ho a": "Los videoclips, los demás temas y las ilustraciones del cómic también tienen autor, e irán saliendo aquí. Si has hecho algo para el Comando y no estás, dínoslo en"
   },
   "iguals": [
     "#comandomolekulon",
@@ -772,7 +779,16 @@
     "← Anterior",
     "🎲 Sorpresa",
     "Pablo GG",
-    "Logo"
+    "Logo",
+    "FZ",
+    "UD",
+    "AM",
+    "ÀS",
+    "Federico Zendagorta",
+    "Urs Dosselmann",
+    "Alberto Mota",
+    "Parpelman",
+    "Àlvar Solache"
   ],
   "codi": {
     "kit.html": [
