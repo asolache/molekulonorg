@@ -491,7 +491,7 @@ ${PAGINES.find(p => p.f === actual).es === false ? '' : LL.selector(actual, 'ca'
 const peu = `<footer>
 <div class="f">
 <img src="/assets/logo/comando-molekulon-128.webp" width="44" height="44" alt="">
-<span>Comando Molekulon · un projecte de <a href="${SOS}" rel="noopener">TeamTowers Humà</a></span>
+<span>Comando Molekulon · un projecte de <a href="/">Molekulon.org</a> i de <a href="${SOS}" rel="noopener">TeamTowers Humà</a></span>
 <span>Logo de <b>${esc(LOGO.autor)}</b> · <a href="/artistes">els artistes del Comando</a></span>
 <span>L'eina que hi ha a sota és el <a href="${SOS}/sos" rel="noopener">SOS</a>, i és lliure</span>
 <span class="mut">Aquesta web es genera de les dades, no s'escriu a mà, i es fa amb IA a la vista: <a href="/ia">com</a>.</span>
@@ -506,7 +506,7 @@ const jsonld = p => JSON.stringify({
   url: url(p.f),
   inLanguage: 'ca',
   isPartOf: { '@type': 'WebSite', name: 'Comando Molekulon', url: DOMINI + '/' },
-  publisher: { '@type': 'Organization', name: 'TeamTowers Humà', url: SOS }
+  publisher: [{ '@type': 'Organization', name: 'Molekulon.org', url: DOMINI + '/' }, { '@type': 'Organization', name: 'TeamTowers Humà', url: SOS }]
 });
 
 const pagina = (p, cos) => `<!DOCTYPE html>

@@ -122,6 +122,6 @@ El domini és a **Porkbun** i els servidors de nom són els de **Netlify DNS**
 
 ---
 
-*Un projecte de [TeamTowers Humà](https://teamtowershuma.com). L'eina és lliure;
+*Un projecte de [Molekulon.org](https://molekulon.org) i de [TeamTowers Humà](https://teamtowershuma.com). L'eina és lliure;
 el còmic i la música, encara no tenen llicència escrita — i mentre no la tinguin,
 aquest README no en promet cap.*
