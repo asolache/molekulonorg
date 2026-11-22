@@ -40,6 +40,12 @@ const PECA = Object.fromEntries(D.videos.map(v => [v.id, v]));
    d'aquesta web —quin tros de quina vinyeta fa de cara de qui— i no una dada del
    SOS. Qui mana sobre els noms segueix sent la llista canònica. */
 const C = JSON.parse(readFileSync(join(ARREL, 'data', 'cromos.json'), 'utf8'));
+/* Els artistes: qui ha fet el logo, les cançons, els videoclips. També és una
+   decisió d'aquesta web —qui surt i com se'l presenta— i per això viu aquí.
+   La web d'un artista només s'enllaça quan s'ha comprovat (`web` no null). */
+const A = JSON.parse(readFileSync(join(ARREL, 'data', 'artistes.json'), 'utf8'));
+/* `A.dubtes` no es pinta: és la llista del que encara s'ha de confirmar. */
+const LOGO = A.artistes.flatMap(a => a.obres.map(o => ({ ...o, autor: a.nom }))).find(o => o.mena === 'logo');
 const RETRAT = Object.fromEntries(C.retrats.map(r => [r.heroi, r]));
 const PAGS_MOSTRA = M.comics.reduce((a, c) => a + c.pagines.length, 0);
 const MOSTRA1 = M.comics[0].pagines.length;
@@ -88,6 +94,11 @@ const PAGINES = [
   { f: 'ia.html', nav: 'La IA', t: 'Com fem servir la IA', menu: false, mapa: true,
     tit: 'Com fem servir la IA · Comando Molekulon',
     desc: 'Què fa la IA en aquesta web i què fem nosaltres, el que es pot comprovar a l\'historial i el compromís de gastar el mínim per token.' },
+  /* Els artistes: fora del menú, però al peu de totes les pàgines i al
+     sitemap. És el lloc per donar a conèixer qui ha fet el material. */
+  { f: 'artistes.html', nav: 'Els artistes', t: 'Els artistes del Comando', menu: false, mapa: true,
+    tit: 'Els artistes · Comando Molekulon',
+    desc: 'Qui ha fet el logo, les cançons, els videoclips i les il·lustracions del Comando Molekulon, i on trobar la resta de la seva feina.' },
   /* La moderació dels cromos: ni menú, ni sitemap, ni cercadors. */
   /* No té versió en castellà (`es: false`): només la fa servir l'autor. */
   { f: 'modera.html', nav: 'Moderar', t: 'Moderar els cromos', menu: false, noindex: true, es: false,
@@ -202,31 +213,50 @@ const NUM = {
    un fitxer CSS a part seria una petició més i un fitxer més per desincronitzar
    -se, i el que hi ha aquí cap de sobres a la primera pantalla. */
 const CSS = `
-:root{--bg:#0b0b12;--panel:#141420;--card:#1a1a28;--text:#f5f5f7;--muted:#82828d;--light:#c7c7d1;
-  --purple:#e040fb;--blue:#00b0ff;--green:#00e676;--orange:#ff9100;--gold:#ffd700;
-  --border:rgba(255,255,255,.09);--mono:'SF Mono',Monaco,Consolas,monospace}
+/* La paleta i la lletra surten del logo del Comando, de Pablo GG: la vora
+   dentada blau verdós, els dos anells magenta i taronja, el centre cian i el
+   lila fosc de la pistola i de les lletres. El fons és aquell lila, apagat
+   fins a fer de nit, perquè els vídeos i els cromos llueixin a sobre.
+   Els noms de sempre (--purple, --blue) es queden: ara volen dir magenta i
+   blau verdós, i així cap regla de més avall ha de canviar. */
+@font-face{font-family:'Dosis';src:url('/assets/fonts/dosis.woff2') format('woff2');font-weight:200 800;font-style:normal;font-display:swap}
+:root{--bg:#170a1f;--panel:#21102c;--card:#2b1539;--text:#fff8fd;--muted:#a993b5;--light:#e4d6ec;
+  --purple:#ff2db2;--blue:#4fd8e6;--green:#00e676;--orange:#ffb400;--gold:#ffc000;
+  --teal:#00b6c9;--cian:#87e8ee;--violeta:#4c1f5d;--blanc:#ffffff;
+  --border:rgba(135,232,238,.13);--mono:'SF Mono',Monaco,Consolas,monospace;
+  --display:'Dosis','Arial Rounded MT Bold','Trebuchet MS',sans-serif;
+  --anells:linear-gradient(180deg,var(--teal) 0 3px,var(--blanc) 3px 5px,var(--purple) 5px 9px,var(--blanc) 9px 10px,var(--orange) 10px 12px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);line-height:1.55;
   font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
 img{max-width:100%}
 a{color:var(--blue)}
-h1,h2,h3,h4{line-height:1.2;margin:0}
+h1,h2,h3,h4{line-height:1.2;margin:0;font-family:var(--display);font-weight:800;letter-spacing:.01em}
 .skip{position:absolute;left:-9999px}
-.skip:focus{left:.6rem;top:.6rem;background:var(--purple);color:#0b0b12;padding:.5rem .9rem;border-radius:8px;z-index:9}
+.skip:focus{left:.6rem;top:.6rem;background:var(--orange);color:var(--violeta);padding:.5rem .9rem;border-radius:8px;z-index:9}
 
+/* La barra porta a sota els anells del logo: blau verdós, magenta i taronja. */
 nav.barra{display:flex;gap:.2rem;flex-wrap:wrap;align-items:center;
-  padding:.6rem 1.2rem;border-bottom:1px solid var(--border);background:var(--panel);position:sticky;top:0;z-index:5}
-nav.barra .marca{font-weight:800;letter-spacing:-.02em;margin-right:.8rem;text-decoration:none;color:var(--text)}
+  padding:.5rem 1.2rem calc(.5rem + 12px);background:var(--anells) bottom/100% 12px no-repeat,var(--panel);position:sticky;top:0;z-index:5}
+nav.barra .marca{display:flex;align-items:center;gap:.5rem;font-family:var(--display);font-weight:800;font-size:1.08rem;
+  text-transform:uppercase;letter-spacing:.04em;margin-right:.8rem;text-decoration:none;color:var(--text)}
+nav.barra .marca img{width:38px;height:38px;flex:none}
 nav.barra .marca span{color:var(--purple)}
-nav.barra a.l{text-decoration:none;color:var(--light);font-size:.86rem;padding:.35rem .7rem;border-radius:8px}
+nav.barra a.l{text-decoration:none;color:var(--light);font-family:var(--display);font-weight:600;font-size:.95rem;padding:.35rem .7rem;border-radius:20px}
 nav.barra a.l:hover{background:var(--card);color:var(--text)}
 nav.barra a.l[aria-current]{background:var(--card);color:var(--text);font-weight:700}
 nav.barra .dret{margin-left:auto;font-size:.82rem}
 
 .hero{padding:3.2rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden;isolation:isolate;
-  background:radial-gradient(ellipse at top,rgba(224,64,251,.16),transparent 60%),
-             radial-gradient(ellipse at bottom right,rgba(0,176,255,.13),transparent 55%),var(--bg)}
+  background:radial-gradient(ellipse at top,rgba(255,45,178,.16),transparent 60%),
+             radial-gradient(ellipse at bottom right,rgba(0,182,201,.13),transparent 55%),var(--bg)}
 .hero-inner{max-width:880px;margin:0 auto}
+/* El logo, sencer i sense retocar, a la portada. Gira una mica en entrar,
+   com un segell que es posa; qui ha demanat menys moviment el veu quiet. */
+.hero .segell{display:block;width:clamp(150px,26vw,230px);height:auto;margin:0 auto 1.2rem;
+  filter:drop-shadow(0 6px 22px rgba(0,182,201,.35));animation:segell .7s ease-out both}
+@keyframes segell{from{transform:rotate(-14deg) scale(.85);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.hero .segell{animation:none}}
 
 /* El vídeo de fons. La caixa cobreix la capçalera sencera i el vel el fa
    llegible: un text blanc damunt d'un videoclip de colors saturats no es llegeix
@@ -235,7 +265,7 @@ nav.barra .dret{margin-left:auto;font-size:.82rem}
 .fons iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   width:100vw;height:56.25vw;min-height:100%;min-width:177.78vh;border:0}
 .vel{position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:linear-gradient(180deg,rgba(11,11,18,.88) 0%,rgba(11,11,18,.74) 40%,rgba(11,11,18,.97) 100%)}
+  background:linear-gradient(180deg,rgba(23,10,31,.88) 0%,rgba(23,10,31,.74) 40%,rgba(23,10,31,.97) 100%)}
 .hero.fosc{padding-top:4rem}
 .credit{margin:1.1rem 0 0;font-size:.78rem;color:var(--muted)}
 .credit a{color:var(--light)}
@@ -245,18 +275,21 @@ nav.barra .dret{margin-left:auto;font-size:.82rem}
    mòbils. Els dos es queden amb el degradat, que ja era la portada d'abans. */
 @media (prefers-reduced-motion:reduce){.fons{display:none}}
 @media (max-width:700px){.fons,.vel{display:none}}
-.tag{display:inline-block;background:rgba(224,64,251,.14);color:var(--purple);padding:.3rem .8rem;border-radius:20px;
+.tag{display:inline-block;background:rgba(255,45,178,.14);color:var(--purple);padding:.3rem .8rem;border-radius:20px;
   font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
-.hero h1{font-size:clamp(1.9rem,5.2vw,3.1rem);margin:0 0 .9rem;font-weight:800;line-height:1.06}
-.hero h1 em{font-style:normal;background:linear-gradient(90deg,#e040fb,#00b0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1{font-size:clamp(2.1rem,5.8vw,3.5rem);margin:0 0 .9rem;font-weight:800;line-height:1.02;text-transform:uppercase;letter-spacing:.02em}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--purple),var(--orange) 55%,var(--cian));-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero .sub{font-size:clamp(1rem,2.1vw,1.15rem);color:var(--light);max-width:740px;margin:0 auto}
 .hero .sub strong{color:var(--text)}
 .crida{font-size:clamp(1rem,2.3vw,1.22rem);font-weight:600;color:var(--text);margin:1.2rem auto 0;max-width:640px}
-.crida b{background:linear-gradient(90deg,#e040fb,#00b0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.crida b{background:linear-gradient(90deg,var(--purple),var(--orange) 55%,var(--cian));-webkit-background-clip:text;background-clip:text;color:transparent}
 .acts{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:1.4rem}
-.acts a{text-decoration:none;font-size:.88rem;font-weight:600;padding:.6rem 1.1rem;border-radius:10px;
-  border:1px solid var(--border);background:var(--card);color:var(--text)}
-.acts a.pri{background:var(--purple);border-color:var(--purple);color:#0b0b12}
+.acts a{text-decoration:none;font-family:var(--display);font-size:1rem;font-weight:700;padding:.55rem 1.2rem;border-radius:999px;
+  border:2px solid var(--teal);background:var(--card);color:var(--text)}
+.acts a:hover{background:var(--violeta)}
+/* El botó principal fa d'anell del logo: taronja per dins, magenta per fora. */
+.acts a.pri{background:var(--orange);border-color:var(--orange);color:var(--violeta);box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--purple)}
+.acts a.pri:hover{background:var(--gold)}
 
 .wrap{max-width:1060px;margin:0 auto;padding:0 1.2rem 4rem}
 .avis{max-width:880px;margin:1.4rem auto 0;padding:.7rem 1rem;border:1px solid var(--border);
@@ -264,7 +297,7 @@ nav.barra .dret{margin-left:auto;font-size:.82rem}
   font-size:.82rem;color:var(--light);text-align:left}
 .avis strong{color:var(--text)}
 
-section.box{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.2rem;margin:1rem 0}
+section.box{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:1.1rem 1.2rem;margin:1rem 0}
 section.box h2{font-size:1.15rem;margin-bottom:.5rem}
 section.box h3{font-size:1.02rem;margin-bottom:.5rem}
 .lead{color:var(--light);font-size:.9rem;margin:.2rem 0 .9rem}
@@ -275,8 +308,8 @@ section.box h3{font-size:1.02rem;margin-bottom:.5rem}
 /* El propòsit. Es distingeix de la resta de caixes a posta: és l'única que no
    informa de res —diu per a què és tot plegat— i si es veiés igual que les
    altres es llegiria com una més i se saltaria. */
-section.box.proposit{border-left:3px solid var(--purple);
-  background:linear-gradient(120deg,rgba(224,64,251,.08),rgba(0,176,255,.05) 60%,transparent),var(--panel)}
+section.box.proposit{border-left:4px solid var(--purple);
+  background:linear-gradient(120deg,rgba(255,45,178,.08),rgba(0,182,201,.05) 60%,transparent),var(--panel)}
 section.box.proposit h2{font-size:clamp(1.2rem,2.6vw,1.5rem)}
 .gran{font-size:clamp(.98rem,2vw,1.1rem);color:var(--light);margin:.5rem 0 1rem;max-width:760px}
 .gran b{color:var(--text)}
@@ -307,7 +340,7 @@ section.box.proposit h2{font-size:clamp(1.2rem,2.6vw,1.5rem)}
    El marc té proporció fixa encara que el retrat no hi sigui: una col·lecció on
    les caselles ballen d'alçada no sembla una col·lecció, sembla una llista. */
 .cromos{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.8rem;margin:1rem 0}
-.cromo{background:linear-gradient(160deg,rgba(224,64,251,.12),rgba(0,176,255,.06) 55%,transparent),var(--card);
+.cromo{background:linear-gradient(160deg,rgba(255,45,178,.12),rgba(0,182,201,.06) 55%,transparent),var(--card);
   border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
 .cromo .marc{position:relative;aspect-ratio:3/4;background:#05050a;overflow:hidden}
 .cromo .marc img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
@@ -315,9 +348,9 @@ section.box.proposit h2{font-size:clamp(1.2rem,2.6vw,1.5rem)}
   color:var(--muted);font-size:.76rem;text-align:center;padding:1rem;
   background:repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 10px,transparent 10px 20px)}
 .cromo .num{position:absolute;top:.5rem;left:.5rem;font-family:var(--mono);font-size:.72rem;font-weight:700;
-  background:rgba(11,11,18,.82);color:var(--gold);padding:.15rem .45rem;border-radius:6px}
+  background:rgba(23,10,31,.82);color:var(--gold);padding:.15rem .45rem;border-radius:6px}
 .cromo .avis-retrat{position:absolute;bottom:0;left:0;right:0;font-size:.66rem;color:var(--light);
-  background:rgba(11,11,18,.78);padding:.25rem .45rem}
+  background:rgba(23,10,31,.78);padding:.25rem .45rem}
 .cromo .cos{padding:.8rem .85rem;display:flex;flex-direction:column;gap:.35rem}
 .cromo h3{font-size:1rem}
 .cromo .rol{color:var(--purple);font-size:.78rem;font-weight:600}
@@ -344,7 +377,7 @@ tr.te td{background:rgba(0,230,118,.06)}
 
 .est{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.13rem .45rem;border-radius:20px;white-space:nowrap}
 .est.si{background:rgba(0,230,118,.16);color:var(--green)}
-.est.no{background:rgba(255,145,0,.16);color:var(--orange)}
+.est.no{background:rgba(255,180,0,.16);color:var(--orange)}
 
 .nota{font-size:.84rem;color:var(--light);border-left:2px solid var(--border);padding-left:.65rem;margin:.8rem 0}
 .nota b{color:var(--text)}
@@ -372,7 +405,7 @@ tr.te td{background:rgba(0,230,118,.06)}
   font-size:.84rem;color:var(--light);margin:.5rem 0 0}
 .so b{color:var(--text)}
 .so button{font:inherit;font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:20px;cursor:pointer;
-  border:1px solid var(--purple);background:rgba(224,64,251,.14);color:var(--purple)}
+  border:1px solid var(--purple);background:rgba(255,45,178,.14);color:var(--purple)}
 .so .cap{height:0;overflow:hidden;width:0}
 .so .cap.veu{height:auto;width:100%;flex-basis:100%;margin-top:.5rem}
 .so iframe{width:0;height:0;border:0}
@@ -393,7 +426,7 @@ tr.te td{background:rgba(0,230,118,.06)}
 .acte .fons-img{position:absolute;inset:0;z-index:-2}
 .acte .fons-img img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:saturate(.85)}
 .acte .vel-acte{position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(180deg,rgba(11,11,18,.92),rgba(11,11,18,.78) 45%,rgba(11,11,18,.97))}
+  background:linear-gradient(180deg,rgba(23,10,31,.92),rgba(23,10,31,.78) 45%,rgba(23,10,31,.97))}
 .acte .dins{max-width:900px;margin:0 auto;width:100%}
 .acte .numero{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
   color:var(--purple);font-weight:700;margin-bottom:.7rem}
@@ -415,14 +448,14 @@ tr.te td{background:rgba(0,230,118,.06)}
 /* El guió, en forma de taulell: número gros i la veu en off. Aquí no hi va la
    taula de /peli —allà hi és sencera—, hi va el que es veu. */
 .plans{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.6rem;margin:1rem 0}
-.pla{background:rgba(20,20,32,.78);border:1px solid var(--border);border-radius:12px;padding:.75rem .8rem}
+.pla{background:rgba(33,16,44,.78);border:1px solid var(--border);border-radius:12px;padding:.75rem .8rem}
 .pla .n{font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--purple);line-height:1}
 .pla h4{font-size:.9rem;margin:.3rem 0 .3rem}
 .pla p{font-size:.8rem;margin:0;color:var(--light)}
 .pla .est{margin-top:.5rem;display:inline-block}
 
 .vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.6rem;margin:1rem 0}
-.vid{display:block;text-decoration:none;background:rgba(20,20,32,.78);border:1px solid var(--border);
+.vid{display:block;text-decoration:none;background:rgba(33,16,44,.78);border:1px solid var(--border);
   border-radius:12px;padding:.7rem .75rem;color:var(--text)}
 .vid:hover{border-color:var(--purple)}
 .vid b{display:block;font-size:.88rem}
@@ -430,13 +463,15 @@ tr.te td{background:rgba(0,230,118,.06)}
 
 /* Les tres preguntes. Són el final de la pàgina i el principi de tot: el que
    demanem no és una donació, és un vídeo de 30 segons. */
-.pregunta{display:flex;gap:.9rem;align-items:flex-start;background:rgba(20,20,32,.7);
+.pregunta{display:flex;gap:.9rem;align-items:flex-start;background:rgba(33,16,44,.7);
   border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:12px;padding:.9rem 1rem;margin:.6rem 0}
 .pregunta .q{font-family:var(--mono);font-size:1.3rem;font-weight:700;color:var(--purple);line-height:1}
 .pregunta h4{font-size:1rem;margin-bottom:.25rem}
 .pregunta p{font-size:.86rem;margin:0}
 
-footer{border-top:1px solid var(--border);background:var(--panel);padding:1.6rem 1.2rem 2.4rem}
+footer{background:var(--anells) top/100% 12px no-repeat,var(--panel);padding:calc(1.6rem + 12px) 1.2rem 2.4rem}
+footer .f img{width:44px;height:44px;flex:none}
+footer .f{align-items:center}
 footer .f{max-width:1060px;margin:0 auto;font-size:.82rem;color:var(--muted);display:flex;gap:1.2rem;flex-wrap:wrap}
 footer a{color:var(--light)}
 nav.barra .idioma{display:flex;gap:.1rem;margin-left:.3rem}
@@ -447,7 +482,7 @@ nav.barra .idioma span.l{color:var(--text);border-bottom:2px solid var(--purple)
 
 /* ══ L'ESQUELET ══════════════════════════════════════════════════════════════ */
 const nav = actual => `<nav class="barra" aria-label="Principal">
-<a class="marca" href="/">Comando <span>Molekulon</span></a>
+<a class="marca" href="/"><img src="/assets/logo/comando-molekulon-128.webp" width="38" height="38" alt="">Comando <span>Molekulon</span></a>
 ${PAGINES.filter(p => p.menu !== false).map(p => `<a class="l" href="${p.f === 'index.html' ? '/' : '/' + p.f.replace(/\.html$/, '')}"${p.f === actual ? ' aria-current="page"' : ''}>${esc(p.nav)}</a>`).join('\n')}
 <a class="l dret" href="${SOS}/sos" rel="noopener">Obre el SOS ↗</a>
 ${PAGINES.find(p => p.f === actual).es === false ? '' : LL.selector(actual, 'ca')}
@@ -455,7 +490,9 @@ ${PAGINES.find(p => p.f === actual).es === false ? '' : LL.selector(actual, 'ca'
 
 const peu = `<footer>
 <div class="f">
+<img src="/assets/logo/comando-molekulon-128.webp" width="44" height="44" alt="">
 <span>Comando Molekulon · un projecte de <a href="${SOS}" rel="noopener">TeamTowers Humà</a></span>
+<span>Logo de <b>${esc(LOGO.autor)}</b> · <a href="/artistes">els artistes del Comando</a></span>
 <span>L'eina que hi ha a sota és el <a href="${SOS}/sos" rel="noopener">SOS</a>, i és lliure</span>
 <span class="mut">Aquesta web es genera de les dades, no s'escriu a mà, i es fa amb IA a la vista: <a href="/ia">com</a>.</span>
 </div>
@@ -485,10 +522,18 @@ const pagina = (p, cos) => `<!DOCTYPE html>
 <meta property="og:type" content="website">
 <meta property="og:url" content="${url(p.f)}">
 <meta property="og:locale" content="ca_ES">
+<meta property="og:image" content="${DOMINI}/assets/logo/comparteix.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="El logo del Comando Molekulon, de ${esc(LOGO.autor)}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#21102c">
+<link rel="icon" type="image/png" href="/assets/logo/favicon-64.png">
+<link rel="apple-touch-icon" href="/assets/logo/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/dosis.woff2" as="font" type="font/woff2" crossorigin>
 <script type="application/ld+json">${jsonld(p)}</script>
 <style>
-${CSS}${p.f === 'kit.html' ? KIT_CSS : ''}${p.f === 'personatges.html' ? GENT_CSS : ''}${p.f === 'modera.html' ? MODERA_CSS : ''}${p.f === 'ia.html' ? IA_CSS : ''}
+${CSS}${p.f === 'kit.html' ? KIT_CSS : ''}${p.f === 'personatges.html' ? GENT_CSS : ''}${p.f === 'modera.html' ? MODERA_CSS : ''}${p.f === 'ia.html' ? IA_CSS : ''}${p.f === 'artistes.html' ? ART_CSS : ''}
 </style>
 </head>
 <body>
@@ -523,6 +568,7 @@ const portada = () => `
 <header class="hero${FONS ? ' fosc' : ''}">
 ${fonsHtml()}
 <div class="hero-inner">
+<img class="segell" src="/assets/logo/comando-molekulon-512.webp" width="230" height="230" alt="Comando Molekulon">
 <span class="tag">${esc(D.tesi.entrada)}</span>
 <h1><em>${esc(D.tesi.titol)}</em></h1>
 <p class="sub">${cap(D.tesi.sub)}</p>
@@ -1191,7 +1237,7 @@ const KIT_CSS = `
 .kit input:focus,.kit textarea:focus{outline:2px solid var(--purple);outline-offset:1px}
 .kit .exemple{font-size:.84rem;color:var(--light);background:var(--card);border-radius:10px;padding:.6rem .8rem;margin:.4rem 0 0}
 .kit button{font:inherit;font-weight:700;cursor:pointer;border-radius:10px}
-.kit .fer{font-size:.95rem;padding:.65rem 1.2rem;background:var(--purple);border:1px solid var(--purple);color:#0b0b12}
+.kit .fer{font-size:.95rem;padding:.65rem 1.2rem;background:var(--orange);border:1px solid var(--orange);color:var(--violeta);box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--purple)}
 .kit .fer:disabled{opacity:.5;cursor:default}
 .kit .seg{font-size:.9rem;padding:.6rem 1rem;background:transparent;border:1px solid var(--border);color:var(--text)}
 .kit .botons{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem}
@@ -1200,11 +1246,11 @@ const KIT_CSS = `
 .kit .bloc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem;margin-top:.9rem}
 .kit .bloc h3{display:flex;justify-content:space-between;align-items:center;gap:.6rem;font-size:.98rem}
 .kit .copia{font-size:.78rem;padding:.25rem .7rem;background:transparent;border:1px solid var(--border);color:var(--text)}
-.kit .copia.fet{background:var(--green);border-color:var(--green);color:#0b0b12}
+.kit .copia.fet{background:var(--green);border-color:var(--green);color:var(--violeta)}
 .kit pre{font-family:var(--mono);font-size:.82rem;white-space:pre-wrap;word-break:break-word;margin:.5rem 0 0;color:var(--light)}
 .kit .llengua{display:flex;gap:.3rem;justify-content:flex-end}
 .kit .llengua button{font-size:.76rem;padding:.2rem .6rem;background:transparent;border:1px solid var(--border);color:var(--light)}
-.kit .llengua button[aria-pressed="true"]{background:var(--text);color:#0b0b12}
+.kit .llengua button[aria-pressed="true"]{background:var(--text);color:var(--violeta)}
 .kit-graella{display:grid;gap:1.2rem;align-items:start}
 @media (min-width:860px){.kit-graella{grid-template-columns:minmax(0,1fr) 320px}.kit-cromo{position:sticky;top:64px}}
 .kit-cromo canvas{width:100%;max-width:320px;display:block;margin:0 auto;border-radius:14px;border:1px solid var(--border);background:var(--card)}
@@ -1215,7 +1261,7 @@ const KIT_CSS = `
 .aspecte .k{font-size:.8rem;color:var(--muted)}
 .tries{display:flex;flex-wrap:wrap;gap:.3rem}
 .tries button{font-size:.8rem;font-weight:600;padding:.25rem .6rem;background:transparent;border:1px solid var(--border);color:var(--light);border-radius:999px}
-.tries button[aria-pressed="true"]{background:var(--text);color:#0b0b12;border-color:var(--text)}
+.tries button[aria-pressed="true"]{background:var(--text);color:var(--violeta);border-color:var(--text)}
 .tries button.color{width:1.7rem;height:1.7rem;padding:0;border:2px solid var(--border)}
 .tries button.color[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:2px}
 .kit .accepto{display:flex;gap:.55rem;align-items:flex-start;font-weight:400;color:var(--light);font-size:.88rem}
@@ -1307,7 +1353,7 @@ var CROMO = (function(){
   function pinta(cv, d){
     var W = 600, H = 840, x = cv.getContext("2d"), f = aspecte(d.aspecte), cx = 300, cy = 250;
     var g = x.createLinearGradient(0, 0, W, H);
-    g.addColorStop(0, f.col1); g.addColorStop(1, "#0b0b12");
+    g.addColorStop(0, f.col1); g.addColorStop(1, "#170a1f");
     x.fillStyle = g; x.fillRect(0, 0, W, H);
     x.fillStyle = "rgba(0,0,0,.32)"; x.fillRect(0, 0, W, H);
     x.strokeStyle = f.col2; x.lineWidth = 10; x.strokeRect(7, 7, W - 14, H - 14);
@@ -1937,10 +1983,10 @@ const MODERA_CSS = `
 .mod input,.mod textarea{font:inherit;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:.5rem .7rem}
 .mod .clau input{flex:1;min-width:14rem;font-family:var(--mono)}
 .mod button{font:inherit;font-weight:700;cursor:pointer;border-radius:10px;padding:.45rem .9rem;border:1px solid var(--border);background:transparent;color:var(--text)}
-.mod button.si{background:var(--green);border-color:var(--green);color:#0b0b12}
+.mod button.si{background:var(--green);border-color:var(--green);color:var(--violeta)}
 .mod button.no{border-color:var(--orange);color:var(--orange)}
 .mod .filtres{display:flex;gap:.4rem;flex-wrap:wrap;margin:.8rem 0}
-.mod .filtres button[aria-pressed="true"]{background:var(--text);color:#0b0b12}
+.mod .filtres button[aria-pressed="true"]{background:var(--text);color:var(--violeta)}
 .mod .estat{min-height:1.3em;font-size:.86rem;color:var(--orange)}
 .mod-llista{display:grid;gap:.8rem}
 .mod-fila{display:grid;grid-template-columns:150px 1fr;gap:.9rem;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.7rem}
@@ -2097,6 +2143,66 @@ L'energia no la mesurem directament: els tokens en són l'aproximació, i ho die
 </div>
 <script src="${SOS}/js/ia-a-la-vista.js" defer></script>`;
 
+/* ══ ELS ARTISTES ════════════════════════════════════════════════════════════ */
+const OBRA_MENA = { logo: 'Logo', canco: 'Cançó', videoclip: 'Videoclip', 'il·lustracio': 'Il·lustració', comic: 'Còmic', foto: 'Fotografia', altres: 'Altres' };
+const ART_CSS = `
+.artistes{display:grid;gap:1rem}
+.artista{display:grid;grid-template-columns:minmax(0,200px) 1fr;gap:1.2rem;align-items:center;background:var(--card);
+  border:1px solid var(--border);border-radius:18px;padding:1.1rem}
+.artista img{width:100%;height:auto}
+.artista .inicials{display:grid;place-items:center;aspect-ratio:1;max-width:140px;width:100%;margin:0 auto;border-radius:50%;
+  background:var(--cian);color:var(--violeta);font-family:var(--display);font-weight:800;font-size:2.6rem;
+  box-shadow:0 0 0 5px var(--blanc),0 0 0 9px var(--purple),0 0 0 11px var(--orange)}
+.artista .obra .rol{color:var(--light);font-size:.86rem}
+section.box .artista h3{font-size:1.4rem;margin:0;text-transform:uppercase;letter-spacing:.03em}
+.artista .ofici{color:var(--cian);font-family:var(--display);font-weight:600;margin:.1rem 0 .6rem}
+.artista .obra{margin:.5rem 0}
+.artista .obra .k{display:inline-block;font-family:var(--display);font-weight:700;font-size:.72rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--violeta);background:var(--cian);border-radius:20px;padding:.1rem .55rem;margin-right:.4rem}
+.artista .obra p{margin:.3rem 0 0;font-size:.88rem;color:var(--light)}
+@media (max-width:560px){.artista{grid-template-columns:1fr}.artista img{max-width:180px;margin:0 auto}}
+`;
+/* Una obra que és una peça de `comando.json` en pren el títol i l'enllaç: el
+   nom de la cançó no s'escriu dues vegades. */
+const obra = o => {
+  const pc = o.peca ? PECA[o.peca] : null;
+  const titol = pc ? pc.titol : o.titol;
+  const enllaç = pc && /^https:/.test(pc.url || '') ? pc.url : null;
+  return `<div class="obra"><span class="k">${esc(OBRA_MENA[o.mena] || OBRA_MENA.altres)}</span>` +
+    (enllaç ? `<a href="${esc(enllaç)}" rel="noopener"><b>${esc(titol)}</b> ↗</a>` : `<b>${esc(titol)}</b>`) +
+    (o.rol ? ` <span class="rol">· ${esc(o.rol)}</span>` : '') + (o.d ? `<p>${esc(o.d)}</p>` : '') + '</div>';
+};
+const artistes = () => `
+<header class="hero">
+<div class="hero-inner">
+<span class="tag">Qui ho ha fet</span>
+<h1><em>Els artistes del Comando</em></h1>
+<p class="sub">El Comando és un còmic, una banda i una pel·lícula, i darrere de cada peça hi ha algú que l'ha feta.
+Aquí surten amb el seu nom i amb el camí cap a la resta de la seva feina.</p>
+</div>
+</header>
+<div class="wrap">
+<section class="box">
+<div class="artistes">
+${A.artistes.map(a => { const img = a.obres.find(o => o.imatge); return `<article class="artista" id="${esc(a.id)}">
+${img ? `<img src="${esc(img.imatge)}" width="200" height="200" alt="${esc(img.titol)}" loading="lazy">`
+  : `<span class="inicials" aria-hidden="true">${esc(a.nom.split(/\s+/).map(w => w[0]).slice(0, 2).join(''))}</span>`}
+<div>
+<h3>${esc(a.nom)}</h3>
+<p class="ofici">${a.aka ? `<b>${esc(a.aka)}</b> · ` : ''}${esc(a.ofici)}</p>
+${a.obres.map(obra).join('\n')}
+${a.web ? `<p><a href="${esc(a.web)}" rel="noopener">${/instagram\.com/.test(a.web) ? 'El seu Instagram' : 'La seva web'} ↗</a></p>` : `<p class="mut">La seva web hi serà quan la confirmi.</p>`}
+</div>
+</article>`; }).join('\n')}
+</div>
+</section>
+<section class="box">
+<h3>Falta algú?</h3>
+<p class="lead">Els videoclips, els altres temes i les il·lustracions del còmic també tenen autor, i aniran sortint aquí.
+Si has fet alguna cosa per al Comando i no hi ets, digues-nos-ho a <a href="https://github.com/asolache/molekulonorg/issues" rel="noopener">github.com/asolache/molekulonorg</a>.</p>
+</section>
+</div>`;
+
 /* ══ EL SITEMAP ══════════════════════════════════════════════════════════════ */
 const sitemap = () => `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -2106,7 +2212,7 @@ ${PAGINES.filter(p => (p.menu !== false || p.mapa) && p.es !== false).map(p => `
 `;
 
 /* ══ ESCRIURE ════════════════════════════════════════════════════════════════ */
-const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic, 'kit.html': kit, 'modera.html': modera, 'ia.html': ia };
+const COSSOS = { 'index.html': portada, 'historia.html': historia, 'personatges.html': personatges, 'peli.html': peli, 'musica.html': musica, 'comic.html': comic, 'kit.html': kit, 'modera.html': modera, 'ia.html': ia, 'artistes.html': artistes };
 /* La versió en castellà surt de la catalana, passada pel diccionari
    (`tools/llengua.js`). El que falta per traduir no atura el build —la pàgina
    surt amb el tros en català— però `tools/check.js` no la deixa passar. */

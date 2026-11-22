@@ -1,0 +1,84 @@
+{
+  "_": "Qui ha fet què per al Comando: el logo, les cançons, els videoclips, les il·lustracions. S'edita en aquest repositori. Surt a /artistes i al peu de totes les pàgines. `web` només s'omple quan s'ha comprovat que és la seva; mentre és null, la pàgina no hi posa enllaç. Una obra o porta `peca` (un `id` de comando.json, i el títol i l'enllaç surten d'allà) o porta `titol`. `mena`: logo, canco, videoclip, il·lustracio, comic, foto, altres. `aka`: el nom de personatge o artístic. `dubtes`: el que encara no està confirmat; no surt a la web.",
+  "artistes": [
+    {
+      "id": "pablo-gg",
+      "nom": "Pablo GG",
+      "ofici": "Il·lustrador i dissenyador",
+      "web": "https://www.instagram.com/pablo_je_je/",
+      "obres": [
+        {
+          "mena": "logo",
+          "titol": "El logo del Comando Molekulon",
+          "d": "El segell dentat amb els anells i la pistola de raigs. D'aquí surten els colors i la lletra de tota la web.",
+          "imatge": "/assets/logo/comando-molekulon-512.webp"
+        }
+      ]
+    },
+    {
+      "id": "federico-zendagorta",
+      "nom": "Federico Zendagorta",
+      "aka": "Horacio Motomachi",
+      "ofici": "Músic",
+      "web": null,
+      "obres": [
+        {
+          "mena": "canco",
+          "peca": "horacio-tema",
+          "rol": "La cançó"
+        }
+      ]
+    },
+    {
+      "id": "urs-dosselmann",
+      "nom": "Urs Dosselmann",
+      "ofici": "Músic",
+      "web": null,
+      "obres": [
+        {
+          "mena": "canco",
+          "peca": "guiriguay-tema",
+          "rol": "La cançó"
+        }
+      ]
+    },
+    {
+      "id": "alberto-mota",
+      "nom": "Alberto Mota",
+      "aka": "Parpelman",
+      "ofici": "Músic",
+      "web": null,
+      "obres": [
+        {
+          "mena": "canco",
+          "peca": "bomba-disco",
+          "rol": "La cançó"
+        },
+        {
+          "mena": "canco",
+          "peca": "mazinguer-tema",
+          "rol": "Part de la lletra"
+        }
+      ]
+    },
+    {
+      "id": "alvar-solache",
+      "nom": "Àlvar Solache",
+      "ofici": "Autor del Comando",
+      "web": null,
+      "obres": [
+        {
+          "mena": "canco",
+          "peca": "mazinguer-tema",
+          "rol": "La música i la lletra, amb part de la lletra de Parpelman"
+        }
+      ]
+    }
+  ],
+  "dubtes": [
+    {
+      "que": "La lletra del tema d'Afrodita podria ser d'Alberto Mota (Parpelman)",
+      "qui_ho_diu": "Àlvar, 21/11/2026, sense confirmar"
+    }
+  ]
+}
