@@ -28,7 +28,7 @@ El que comprova que l'obra compleix la llei. Ha de petar quan toca, i només lla
 
 | carpeta | què hi entra | fitxers |
 |---|---|---|
-| `.github/` | El CI: les guardes a cada empenta i la sincronia de dades cada dilluns | 2 · 2 KB |
+| `.github/` | El CI: les guardes a cada empenta i la sincronia de dades cada dilluns | 3 · 3 KB |
 | `guardas/` | L'eina del cervell, heretada: peta al CI si el mapa o el contracte menteixen | 2 · 37 KB |
 
 ## saber
