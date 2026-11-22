@@ -2191,7 +2191,7 @@ ${img ? `<img src="${esc(img.imatge)}" width="200" height="200" alt="${esc(img.t
 <h3>${esc(a.nom)}</h3>
 <p class="ofici">${a.aka ? `<b>${esc(a.aka)}</b> · ` : ''}${esc(a.ofici)}</p>
 ${a.obres.map(obra).join('\n')}
-${a.web ? `<p><a href="${esc(a.web)}" rel="noopener">La seva web ↗</a></p>` : `<p class="mut">La seva web hi serà quan la confirmi.</p>`}
+${a.web ? `<p><a href="${esc(a.web)}" rel="noopener">${/instagram\.com/.test(a.web) ? 'El seu Instagram' : 'La seva web'} ↗</a></p>` : `<p class="mut">La seva web hi serà quan la confirmi.</p>`}
 </div>
 </article>`; }).join('\n')}
 </div>

@@ -5,7 +5,7 @@
       "id": "pablo-gg",
       "nom": "Pablo GG",
       "ofici": "Il·lustrador i dissenyador",
-      "web": null,
+      "web": "https://www.instagram.com/pablo_je_je/",
       "obres": [
         {
           "mena": "logo",
@@ -79,10 +79,6 @@
     {
       "que": "La lletra del tema d'Afrodita podria ser d'Alberto Mota (Parpelman)",
       "qui_ho_diu": "Àlvar, 21/11/2026, sense confirmar"
-    },
-    {
-      "que": "La web de Pablo GG (potser pablogg.com)",
-      "qui_ho_diu": "Àlvar, 21/11/2026; no s'ha pogut obrir"
     }
   ]
 }
