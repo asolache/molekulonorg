@@ -1,0 +1,26 @@
+name: Desperta la base dels cromos
+
+# Els cromos de la gent viuen al Supabase del SOS (projecte Teamtowershuma), i
+# el pla gratuït el posa a dormir quan passa uns dies sense cap consulta. Dormit,
+# el kit no pot enviar i /personatges surt sense la gent (va passar el
+# 2026-11-21). Això li fa una lectura pública dos cops per setmana, la mateixa
+# que fa la web: `directori_cromos`, amb la clau publicable que ja surt a les
+# pàgines. No escriu res.
+on:
+  schedule:
+    - cron: '17 7 * * 1,4'
+  workflow_dispatch:
+
+jobs:
+  desperta:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Una lectura del directori
+        run: |
+          code=$(curl -sS -o resposta.json -w '%{http_code}' -X POST \
+            'https://grkgrceioxktmbwdhvmm.supabase.co/rest/v1/rpc/directori_cromos' \
+            -H 'apikey: sb_publishable_xsEfyOqJ5tJwaxcoH_CiNg_SlsqDZb1' \
+            -H 'Content-Type: application/json' -d '{}')
+          echo "HTTP $code"
+          # Si torna error, la base està dormida o caiguda: que el CI ho digui.
+          test "$code" = 200
