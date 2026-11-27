@@ -46,6 +46,7 @@ const C = JSON.parse(readFileSync(join(ARREL, 'data', 'cromos.json'), 'utf8'));
 const A = JSON.parse(readFileSync(join(ARREL, 'data', 'artistes.json'), 'utf8'));
 /* `A.dubtes` no es pinta: és la llista del que encara s'ha de confirmar. */
 const LOGO = A.artistes.flatMap(a => a.obres.map(o => ({ ...o, autor: a.nom }))).find(o => o.mena === 'logo');
+const T = JSON.parse(readFileSync(join(ARREL, 'data', 'trailer.json'), 'utf8'));
 const RETRAT = Object.fromEntries(C.retrats.map(r => [r.heroi, r]));
 const PAGS_MOSTRA = M.comics.reduce((a, c) => a + c.pagines.length, 0);
 const MOSTRA1 = M.comics[0].pagines.length;
@@ -533,7 +534,7 @@ const pagina = (p, cos) => `<!DOCTYPE html>
 <link rel="preload" href="/assets/fonts/dosis.woff2" as="font" type="font/woff2" crossorigin>
 <script type="application/ld+json">${jsonld(p)}</script>
 <style>
-${CSS}${p.f === 'kit.html' ? KIT_CSS : ''}${p.f === 'personatges.html' ? GENT_CSS : ''}${p.f === 'modera.html' ? MODERA_CSS : ''}${p.f === 'ia.html' ? IA_CSS : ''}${p.f === 'artistes.html' ? ART_CSS : ''}
+${CSS}${p.f === 'kit.html' ? KIT_CSS + TRAILER_CSS : ''}${p.f === 'personatges.html' ? GENT_CSS : ''}${p.f === 'modera.html' ? MODERA_CSS : ''}${p.f === 'ia.html' ? IA_CSS : ''}${p.f === 'artistes.html' ? ART_CSS : ''}
 </style>
 </head>
 <body>
@@ -1225,6 +1226,71 @@ t'encaixen, el que compta és que l'etiqueta hi sigui perquè algú et pugui tro
        compte, enganxant el text a qualsevol xat (estudi d'alta, §5).
    3 · **L'enviament al directori.** Va al Supabase del SOS (vegeu «El directori,
        viu» més avall) i queda pendent fins que l'autor l'aprova. */
+
+/* ══ EL TRÀILER DE RECLUTAMENT ══════════════════════════════════════════════
+   La crida del Comando, a dalt del kit: qui la veu s'allista sense canviar de
+   pàgina. Surt de data/trailer.json. Els rètols són HTML i no cadenes d'script,
+   perquè el diccionari del castellà els tradueixi com la resta. El tema és un
+   enllaç curt de SoundCloud, que el reproductor no sap resoldre (vegeu
+   `widgetSC`): mentre ho sigui, s'obre fora i els rètols corren aquí. */
+const trailer = () => `
+<section class="box trailer" id="trailer" aria-labelledby="trailer-t">
+<span class="tag">Crida del Comando</span>
+<h2 id="trailer-t">${esc(T.titol)}</h2>
+<div class="pantalla" data-fi="${T.fi}">
+${T.plans.map((p, i) => `<div class="pla${p.color ? ' color' : ''}" data-s="${p.s}"${i ? ' hidden' : ''}>
+${p.logo ? `<img src="/assets/logo/comando-molekulon-128.webp" width="96" height="96" alt="">` : ''}<p class="retol">${esc(p.retol)}</p>
+<p class="veu">${esc(p.veu)}</p>
+</div>`).join('\n')}
+</div>
+<div class="acts"><button type="button" class="mira" aria-controls="trailer">Mira el tràiler</button>
+<a href="${esc(T.tema.soundcloud)}" rel="noopener">Posa-hi el tema «${esc(T.tema.titol)}» ↗</a>
+<a href="#kit">Allista't aquí sota</a></div>
+<p class="ajuda">Seixanta segons. Obre el tema a SoundCloud i dona-li al play alhora: els rètols van al seu ritme.</p>
+</section>`;
+
+const TRAILER_CSS = `
+.trailer .pantalla{position:relative;min-height:15rem;border-radius:14px;overflow:hidden;display:grid;place-items:center;text-align:center;
+  background:#1d1d22;padding:1.5rem;margin:.8rem 0;border:1px solid var(--border)}
+.trailer .pla{display:grid;gap:.6rem;justify-items:center;animation:entra .35s ease-out both}
+.trailer .pla[hidden]{display:none}
+.trailer .pla.color{color:var(--text)}
+.trailer .pantalla.color{background:radial-gradient(ellipse at top,rgba(255,45,178,.35),transparent 60%),radial-gradient(ellipse at bottom,rgba(0,182,201,.3),transparent 60%),var(--violeta)}
+.trailer .retol{margin:0;font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(1.5rem,5vw,2.6rem);line-height:1.1}
+.trailer .pla:not(.color) .retol{color:#cfcfd6}
+.trailer .pla.color .retol{color:var(--orange)}
+.trailer .veu{margin:0;max-width:34rem;color:var(--light);font-style:italic}
+.trailer .mira{font:inherit;font-weight:700;cursor:pointer;border-radius:10px;padding:.55rem 1.1rem;background:var(--orange);border:1px solid var(--orange);color:var(--violeta)}
+@keyframes entra{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.trailer .pla{animation:none}}
+`;
+
+const TRAILER_JS = String.raw`
+(() => {
+  const caixa = document.getElementById('trailer');
+  if (!caixa) return;
+  const pantalla = caixa.querySelector('.pantalla'), plans = [...pantalla.querySelectorAll('.pla')];
+  const fi = +pantalla.dataset.fi, boto = caixa.querySelector('.mira');
+  let rellotge = null;
+  const mostra = i => {
+    plans.forEach((p, j) => { p.hidden = j !== i; });
+    pantalla.classList.toggle('color', plans[i].classList.contains('color'));
+  };
+  boto.addEventListener('click', () => {
+    clearInterval(rellotge);
+    const inici = Date.now();
+    mostra(0);
+    rellotge = setInterval(() => {
+      const t = (Date.now() - inici) / 1000;
+      if (t >= fi) { clearInterval(rellotge); return; }
+      let i = 0;
+      plans.forEach((p, j) => { if (t >= +p.dataset.s) i = j; });
+      if (plans[i].hidden) mostra(i);
+    }, 200);
+  });
+})();
+`;
+
 const KIT_CSS = `
 .kit .q{display:grid;gap:.3rem;padding:.85rem 0;border-top:1px dashed var(--border)}
 .kit .q:first-of-type{border-top:0}
@@ -1685,6 +1751,7 @@ al costat dels del còmic, l'envies des d'aquí mateix.</p>
 </div>
 </header>
 <div class="wrap">
+${trailer()}
 <section class="box kit" id="kit">
 <div class="llengua" role="group" aria-label="Llengua de la fitxa">
 <button type="button" data-llengua="ca" aria-pressed="true">CAT</button>
@@ -1790,7 +1857,8 @@ perquè no tenim el teu correu. Si tornes a enviar, s'envia una versió nova del
 </div>
 <script>${CROMO_JS}
 CROMO.API.url = ${JSON.stringify(SUPA.url)}; CROMO.API.key = ${JSON.stringify(SUPA.key)};
-${KIT_JS}</script>`;
+${KIT_JS}
+${TRAILER_JS}</script>`;
 
 /* ══ ELS CROMOS DE LA GENT, VIUS ═════════════════════════════════════════════
    Una sola llista: els catorze del còmic i, a continuació, els de la gent que

@@ -1,0 +1,19 @@
+{
+  "_": "El tràiler de reclutament del Comando: la crida a allistar-se, amb el tema «Comando Ska». Surt a dalt de /kit. S'edita en aquest repositori, en català; el castellà va a data/es.json. `s` és on comença cada pla, en segons; `fi` és la durada total. Els temps són provisionals fins que es quadrin amb la cançó. No diu res del final de la història.",
+  "titol": "Mou l'esquelet al ritme de ska",
+  "tema": {
+    "titol": "Comando Ska",
+    "soundcloud": "https://on.soundcloud.com/2vcyLl5GB2EjZpr383"
+  },
+  "fi": 60,
+  "plans": [
+    { "s": 0,  "retol": "Transmissió del Comando Molekulon", "veu": "Aquí el Comando. Si ens sents, encara ets viu." },
+    { "s": 5,  "retol": "Mundo Muerto", "veu": "El Mundo Muerto avança. No dispara: t'adorm. Et treu el ritme." },
+    { "s": 11, "retol": "Som en missió", "veu": "Som en missió. I ens falten mans." },
+    { "s": 17, "retol": "Es busquen 150.000 superherois", "veu": "Busquem cent cinquanta mil superherois. No cal fabricar-los. Ja hi són." },
+    { "s": 24, "retol": "T'apuntes?", "veu": "Tu. Sí, tu. T'apuntes?", "color": true },
+    { "s": 32, "retol": "El teu superpoder ja el tens", "veu": "El que ja fas al teu barri és el teu superpoder. Només et falta l'antifaç.", "color": true },
+    { "s": 42, "retol": "Mou l'esquelet al ritme de ska", "veu": "Comando ska!", "color": true },
+    { "s": 52, "retol": "Allistament obert", "veu": "Fes-te el personatge. La missió comença quan arribes.", "color": true, "logo": true }
+  ]
+}
