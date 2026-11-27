@@ -669,7 +669,26 @@
     "Autor del Comando": "Autor del Comando",
     "· La música i la lletra, amb part de la lletra de Parpelman": "· La música y la letra, con parte de la letra de Parpelman",
     "Els videoclips, els altres temes i les il·lustracions del còmic també tenen autor, i aniran sortint aquí. Si has fet alguna cosa per al Comando i no hi ets, digues-nos-ho a": "Los videoclips, los demás temas y las ilustraciones del cómic también tienen autor, e irán saliendo aquí. Si has hecho algo para el Comando y no estás, dínoslo en",
-    "El seu Instagram ↗": "Su Instagram ↗"
+    "El seu Instagram ↗": "Su Instagram ↗",
+    "Crida del Comando": "Llamada del Comando",
+    "Mou l'esquelet al ritme de ska": "Mueve el esqueleto al ritmo de ska",
+    "Transmissió del Comando Molekulon": "Transmisión del Comando Molekulon",
+    "Aquí el Comando. Si ens sents, encara ets viu.": "Aquí el Comando. Si nos oyes, todavía estás vivo.",
+    "El Mundo Muerto avança. No dispara: t'adorm. Et treu el ritme.": "El Mundo Muerto avanza. No dispara: te duerme. Te quita el ritmo.",
+    "Som en missió": "Estamos en misión",
+    "Som en missió. I ens falten mans.": "Estamos en misión. Y nos faltan manos.",
+    "Es busquen 150.000 superherois": "Se buscan 150.000 superhéroes",
+    "Busquem cent cinquanta mil superherois. No cal fabricar-los. Ja hi són.": "Buscamos ciento cincuenta mil superhéroes. No hay que fabricarlos. Ya existen.",
+    "T'apuntes?": "¿Te apuntas?",
+    "Tu. Sí, tu. T'apuntes?": "Tú. Sí, tú. ¿Te apuntas?",
+    "El teu superpoder ja el tens": "Tu superpoder ya lo tienes",
+    "El que ja fas al teu barri és el teu superpoder. Només et falta l'antifaç.": "Lo que ya haces en tu barrio es tu superpoder. Solo te falta el antifaz.",
+    "Allistament obert": "Alistamiento abierto",
+    "Fes-te el personatge. La missió comença quan arribes.": "Hazte el personaje. La misión empieza cuando llegas.",
+    "Mira el tràiler": "Mira el tráiler",
+    "Posa-hi el tema «Comando Ska» ↗": "Ponle el tema «Comando Ska» ↗",
+    "Allista't aquí sota": "Alístate aquí abajo",
+    "Seixanta segons. Obre el tema a SoundCloud i dona-li al play alhora: els rètols van al seu ritme.": "Sesenta segundos. Abre el tema en SoundCloud y dale al play a la vez: los rótulos van a su ritmo."
   },
   "iguals": [
     "#comandomolekulon",
@@ -789,7 +808,9 @@
     "Urs Dosselmann",
     "Alberto Mota",
     "Parpelman",
-    "Àlvar Solache"
+    "Àlvar Solache",
+    "Mundo Muerto",
+    "Comando ska!"
   ],
   "codi": {
     "kit.html": [

@@ -334,6 +334,20 @@ nav.barra .idioma span.l{color:var(--text);border-bottom:2px solid var(--purple)
 .kit details{margin-top:.8rem}
 .kit summary{cursor:pointer;font-weight:600;color:var(--light);font-size:.9rem}
 
+.trailer .pantalla{position:relative;min-height:15rem;border-radius:14px;overflow:hidden;display:grid;place-items:center;text-align:center;
+  background:#1d1d22;padding:1.5rem;margin:.8rem 0;border:1px solid var(--border)}
+.trailer .pla{display:grid;gap:.6rem;justify-items:center;animation:entra .35s ease-out both}
+.trailer .pla[hidden]{display:none}
+.trailer .pla.color{color:var(--text)}
+.trailer .pantalla.color{background:radial-gradient(ellipse at top,rgba(255,45,178,.35),transparent 60%),radial-gradient(ellipse at bottom,rgba(0,182,201,.3),transparent 60%),var(--violeta)}
+.trailer .retol{margin:0;font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(1.5rem,5vw,2.6rem);line-height:1.1}
+.trailer .pla:not(.color) .retol{color:#cfcfd6}
+.trailer .pla.color .retol{color:var(--orange)}
+.trailer .veu{margin:0;max-width:34rem;color:var(--light);font-style:italic}
+.trailer .mira{font:inherit;font-weight:700;cursor:pointer;border-radius:10px;padding:.55rem 1.1rem;background:var(--orange);border:1px solid var(--orange);color:var(--violeta)}
+@keyframes entra{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.trailer .pla{animation:none}}
+
 </style>
 </head>
 <body>
@@ -359,6 +373,49 @@ nav.barra .idioma span.l{color:var(--text);border-bottom:2px solid var(--purple)
 </div>
 </header>
 <div class="wrap">
+
+<section class="box trailer" id="trailer" aria-labelledby="trailer-t">
+<span class="tag">Llamada del Comando</span>
+<h2 id="trailer-t">Mueve el esqueleto al ritmo de ska</h2>
+<div class="pantalla" data-fi="60">
+<div class="pla" data-s="0">
+<p class="retol">Transmisión del Comando Molekulon</p>
+<p class="veu">Aquí el Comando. Si nos oyes, todavía estás vivo.</p>
+</div>
+<div class="pla" data-s="5" hidden>
+<p class="retol">Mundo Muerto</p>
+<p class="veu">El Mundo Muerto avanza. No dispara: te duerme. Te quita el ritmo.</p>
+</div>
+<div class="pla" data-s="11" hidden>
+<p class="retol">Estamos en misión</p>
+<p class="veu">Estamos en misión. Y nos faltan manos.</p>
+</div>
+<div class="pla" data-s="17" hidden>
+<p class="retol">Se buscan 150.000 superhéroes</p>
+<p class="veu">Buscamos ciento cincuenta mil superhéroes. No hay que fabricarlos. Ya existen.</p>
+</div>
+<div class="pla color" data-s="24" hidden>
+<p class="retol">¿Te apuntas?</p>
+<p class="veu">Tú. Sí, tú. ¿Te apuntas?</p>
+</div>
+<div class="pla color" data-s="32" hidden>
+<p class="retol">Tu superpoder ya lo tienes</p>
+<p class="veu">Lo que ya haces en tu barrio es tu superpoder. Solo te falta el antifaz.</p>
+</div>
+<div class="pla color" data-s="42" hidden>
+<p class="retol">Mueve el esqueleto al ritmo de ska</p>
+<p class="veu">Comando ska!</p>
+</div>
+<div class="pla color" data-s="52" hidden>
+<img src="/assets/logo/comando-molekulon-128.webp" width="96" height="96" alt=""><p class="retol">Alistamiento abierto</p>
+<p class="veu">Hazte el personaje. La misión empieza cuando llegas.</p>
+</div>
+</div>
+<div class="acts"><button type="button" class="mira" aria-controls="trailer">Mira el tráiler</button>
+<a href="https://on.soundcloud.com/2vcyLl5GB2EjZpr383" rel="noopener">Ponle el tema «Comando Ska» ↗</a>
+<a href="#kit">Alístate aquí abajo</a></div>
+<p class="ajuda">Sesenta segundos. Abre el tema en SoundCloud y dale al play a la vez: los rótulos van a su ritmo.</p>
+</section>
 <section class="box kit" id="kit">
 <div class="llengua" role="group" aria-label="Idioma de la ficha">
 <button type="button" data-llengua="ca" aria-pressed="false">CAT</button>
@@ -839,6 +896,31 @@ CROMO.API.url = "https://grkgrceioxktmbwdhvmm.supabase.co"; CROMO.API.key = "sb_
     });
   });
   tries(); pintaDesat(); redibuixa(); munta();
+})();
+
+
+(() => {
+  const caixa = document.getElementById('trailer');
+  if (!caixa) return;
+  const pantalla = caixa.querySelector('.pantalla'), plans = [...pantalla.querySelectorAll('.pla')];
+  const fi = +pantalla.dataset.fi, boto = caixa.querySelector('.mira');
+  let rellotge = null;
+  const mostra = i => {
+    plans.forEach((p, j) => { p.hidden = j !== i; });
+    pantalla.classList.toggle('color', plans[i].classList.contains('color'));
+  };
+  boto.addEventListener('click', () => {
+    clearInterval(rellotge);
+    const inici = Date.now();
+    mostra(0);
+    rellotge = setInterval(() => {
+      const t = (Date.now() - inici) / 1000;
+      if (t >= fi) { clearInterval(rellotge); return; }
+      let i = 0;
+      plans.forEach((p, j) => { if (t >= +p.dataset.s) i = j; });
+      if (plans[i].hidden) mostra(i);
+    }, 200);
+  });
 })();
 </script>
 </main>

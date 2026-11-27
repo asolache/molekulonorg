@@ -21,7 +21,7 @@ Format: `- ruta · cara · una línia del que hi entra`. El generador llegeix
 aquesta llista i res més. Crear una carpeta sense declarar-la trenca el CI.
 
 - `saber` · saber · El cervell: mapa, codex, contracte de la IA, taxonomia, backlog, productes, el traspàs i l'estudi d'alta. `heredado/` ve de TeamTowers i no s'edita
-- `data` · obra · Les dades de les pàgines: `comando.json` ve de teamtowershuma i no s'edita; `mostra.json`, `cromos.json`, `artistes.json` (qui ha fet què) i `es.json` (el diccionari del castellà), sí
+- `data` · obra · Les dades de les pàgines: `comando.json` ve de teamtowershuma i no s'edita; `mostra.json`, `cromos.json`, `artistes.json` (qui ha fet què), `trailer.json` (la crida de reclutament) i `es.json` (el diccionari del castellà), sí
 - `es` · obra · La web en castellà: es genera de la catalana passant-la per `data/es.json` (`tools/llengua.js`). No s'edita a mà
 - `assets` · obra · La marca: el logo del Comando (de Pablo GG, vegeu `data/artistes.json`), retallat sense fons blanc, en les mides que fa servir la web, i la lletra Dosis (llicència OFL) servida des de casa
 - `cromos` · obra · Els retrats dels cromos del còmic
